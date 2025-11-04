@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-base-100 min-h-screen">
+    <!-- Header -->
+    <div class="navbar bg-primary text-primary-content shadow-lg">
+        <div class="navbar-start">
+            <a href="../index.html" class="btn btn-ghost">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+        <div class="navbar-center">
+            <h1 class="text-xl font-bold">🐍 Snake Game</h1>
+        </div>
+        <div class="navbar-end">
+            <button onclick="resetGame()" class="btn btn-ghost">
+                <i class="fas fa-redo mr-2"></i>Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <!-- Game Stats -->
+            <div class="stats shadow mb-6 w-full">
+                <div class="stat">
+                    <div class="stat-title">Score</div>
+                    <div class="stat-value text-primary" id="score">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">High Score</div>
+                    <div class="stat-value text-secondary" id="highScore">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Status</div>
+                    <div class="stat-value text-accent text-sm" id="gameStatus">Ready</div>
+                </div>
+            </div>
+
+            <!-- Game Canvas -->
+            <div class="text-center mb-6">
+                <canvas id="gameCanvas" width="400" height="400" class="border-4 border-primary rounded-lg shadow-lg bg-base-200"></canvas>
+            </div>
+
+            <!-- Controls -->
+            <div class="text-center mb-6">
+                <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto">
+                    <div></div>
+                    <button class="btn btn-outline" onclick="changeDirection('up')">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                    <div></div>
+                    <button class="btn btn-outline" onclick="changeDirection('left')">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="playPauseBtn" class="btn btn-primary" onclick="toggleGame()">
+                        <i class="fas fa-play"></i> Start
+                    </button>
+                    <button class="btn btn-outline" onclick="changeDirection('right')">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <div></div>
+                    <button class="btn btn-outline" onclick="changeDirection('down')">
+                        <i class="fas fa-arrow-down"></i>
+                    </button>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <h3 class="font-bold">How to Play:</h3>
+                    <p>Use arrow keys or buttons to control the snake. Eat food to grow and increase your score!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/snake.js"></script>
+</body>
+</html>

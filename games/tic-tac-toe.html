@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-base-100 min-h-screen">
+    <!-- Header -->
+    <div class="navbar bg-primary text-primary-content shadow-lg">
+        <div class="navbar-start">
+            <a href="../index.html" class="btn btn-ghost">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+        <div class="navbar-center">
+            <h1 class="text-xl font-bold">🎮 Tic Tac Toe</h1>
+        </div>
+        <div class="navbar-end">
+            <button onclick="resetGame()" class="btn btn-ghost">
+                <i class="fas fa-redo mr-2"></i>Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto">
+            <!-- Game Status -->
+            <div class="text-center mb-6">
+                <div class="stats shadow">
+                    <div class="stat">
+                        <div class="stat-title">Current Player</div>
+                        <div class="stat-value text-primary" id="currentPlayer">X</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Board -->
+            <div class="grid grid-cols-3 gap-2 mb-6 animate__animated animate__fadeInUp">
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(0)"></button>
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(1)"></button>
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(2)"></button>
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(3)"></button>
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(4)"></button>
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(5)"></button>
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(6)"></button>
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(7)"></button>
+                <button class="cell btn btn-outline btn-lg h-20 text-3xl font-bold hover:btn-primary" onclick="makeMove(8)"></button>
+            </div>
+
+            <!-- Game Result -->
+            <div id="gameResult" class="text-center hidden">
+                <div class="alert alert-success">
+                    <i class="fas fa-trophy"></i>
+                    <span id="resultText"></span>
+                </div>
+            </div>
+
+            <!-- Score Board -->
+            <div class="stats stats-vertical lg:stats-horizontal shadow w-full">
+                <div class="stat">
+                    <div class="stat-title">Player X Wins</div>
+                    <div class="stat-value text-primary" id="xWins">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Player O Wins</div>
+                    <div class="stat-value text-secondary" id="oWins">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Draws</div>
+                    <div class="stat-value text-accent" id="draws">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/tic-tac-toe.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Flip - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-base-100 min-h-screen">
+    <!-- Header -->
+    <div class="navbar bg-primary text-primary-content shadow-lg">
+        <div class="navbar-start">
+            <a href="../index.html" class="btn btn-ghost">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+        <div class="navbar-center">
+            <h1 class="text-xl font-bold">🧠 Memory Flip</h1>
+        </div>
+        <div class="navbar-end">
+            <button onclick="resetGame()" class="btn btn-ghost">
+                <i class="fas fa-redo mr-2"></i>New Game
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <!-- Game Stats -->
+            <div class="stats shadow mb-6 w-full">
+                <div class="stat">
+                    <div class="stat-title">Moves</div>
+                    <div class="stat-value text-primary" id="moves">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Matches</div>
+                    <div class="stat-value text-secondary" id="matches">0/8</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Best Score</div>
+                    <div class="stat-value text-accent" id="bestScore">-</div>
+                </div>
+            </div>
+
+            <!-- Game Board -->
+            <div id="gameBoard" class="grid grid-cols-4 gap-3 mb-6 max-w-md mx-auto">
+                <!-- Cards will be generated here -->
+            </div>
+
+            <!-- Game Result -->
+            <div id="gameResult" class="text-center hidden mb-6">
+                <div class="alert alert-success">
+                    <i class="fas fa-trophy"></i>
+                    <span id="resultText"></span>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <h3 class="font-bold">How to Play:</h3>
+                    <p>Click cards to flip them. Match pairs of identical emojis. Complete all matches with the fewest moves!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/memory.js"></script>
+</body>
+</html>

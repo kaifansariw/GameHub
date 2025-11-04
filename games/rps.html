@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-base-100 min-h-screen">
+    <!-- Header -->
+    <div class="navbar bg-primary text-primary-content shadow-lg">
+        <div class="navbar-start">
+            <a href="../index.html" class="btn btn-ghost">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+        <div class="navbar-center">
+            <h1 class="text-xl font-bold">✂️ Rock Paper Scissors</h1>
+        </div>
+        <div class="navbar-end">
+            <button onclick="resetGame()" class="btn btn-ghost">
+                <i class="fas fa-redo mr-2"></i>Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <!-- Score Board -->
+            <div class="stats shadow mb-8 w-full">
+                <div class="stat">
+                    <div class="stat-title">Your Wins</div>
+                    <div class="stat-value text-primary" id="playerWins">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Computer Wins</div>
+                    <div class="stat-value text-secondary" id="computerWins">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Draws</div>
+                    <div class="stat-value text-accent" id="draws">0</div>
+                </div>
+            </div>
+
+            <!-- Game Area -->
+            <div class="text-center mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <!-- Player Choice -->
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold mb-4">You</h3>
+                        <div id="playerChoice" class="text-8xl mb-4 animate__animated">❓</div>
+                    </div>
+
+                    <!-- VS -->
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-primary">VS</div>
+                    </div>
+
+                    <!-- Computer Choice -->
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold mb-4">Computer</h3>
+                        <div id="computerChoice" class="text-8xl mb-4 animate__animated">❓</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div id="gameResult" class="text-center mb-8 hidden">
+                <div class="alert">
+                    <i class="fas fa-trophy"></i>
+                    <span id="resultText" class="text-xl font-bold"></span>
+                </div>
+            </div>
+
+            <!-- Choice Buttons -->
+            <div class="text-center mb-8">
+                <h3 class="text-xl font-bold mb-4">Make Your Choice:</h3>
+                <div class="flex justify-center gap-4 flex-wrap">
+                    <button onclick="playGame('rock')" class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110">
+                        <span class="text-4xl mr-2">🪨</span>Rock
+                    </button>
+                    <button onclick="playGame('paper')" class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110">
+                        <span class="text-4xl mr-2">📄</span>Paper
+                    </button>
+                    <button onclick="playGame('scissors')" class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110">
+                        <span class="text-4xl mr-2">✂️</span>Scissors
+                    </button>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <h3 class="font-bold">Rules:</h3>
+                    <p>Rock beats Scissors • Paper beats Rock • Scissors beats Paper</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/rps.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Says - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-base-100 min-h-screen">
+    <!-- Header -->
+    <div class="navbar bg-primary text-primary-content shadow-lg">
+        <div class="navbar-start">
+            <a href="../index.html" class="btn btn-ghost">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+        <div class="navbar-center">
+            <h1 class="text-xl font-bold">🎵 Simon Says</h1>
+        </div>
+        <div class="navbar-end">
+            <button onclick="resetGame()" class="btn btn-ghost">
+                <i class="fas fa-redo mr-2"></i>Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <!-- Game Stats -->
+            <div class="stats shadow mb-6 w-full">
+                <div class="stat">
+                    <div class="stat-title">Level</div>
+                    <div class="stat-value text-primary" id="level">1</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">High Score</div>
+                    <div class="stat-value text-secondary" id="highScore">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Status</div>
+                    <div class="stat-value text-accent text-sm" id="gameStatus">Ready</div>
+                </div>
+            </div>
+
+            <!-- Simon Board -->
+            <div class="text-center mb-6">
+                <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
+                    <button id="btn-0" class="simon-btn aspect-square rounded-lg text-6xl font-bold transition-all duration-200 bg-red-500 hover:bg-red-400 active:bg-red-300" onclick="playerInput(0)">
+                        🔴
+                    </button>
+                    <button id="btn-1" class="simon-btn aspect-square rounded-lg text-6xl font-bold transition-all duration-200 bg-blue-500 hover:bg-blue-400 active:bg-blue-300" onclick="playerInput(1)">
+                        🔵
+                    </button>
+                    <button id="btn-2" class="simon-btn aspect-square rounded-lg text-6xl font-bold transition-all duration-200 bg-green-500 hover:bg-green-400 active:bg-green-300" onclick="playerInput(2)">
+                        🟢
+                    </button>
+                    <button id="btn-3" class="simon-btn aspect-square rounded-lg text-6xl font-bold transition-all duration-200 bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-300" onclick="playerInput(3)">
+                        🟡
+                    </button>
+                </div>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="text-center mb-6">
+                <button id="startBtn" onclick="startGame()" class="btn btn-primary btn-lg mr-4">
+                    <i class="fas fa-play mr-2"></i>Start Game
+                </button>
+                <button onclick="resetGame()" class="btn btn-outline btn-lg">
+                    <i class="fas fa-redo mr-2"></i>Reset
+                </button>
+            </div>
+
+            <!-- Game Result -->
+            <div id="gameResult" class="text-center hidden mb-6">
+                <div class="alert">
+                    <i class="fas fa-trophy"></i>
+                    <span id="resultText"></span>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <h3 class="font-bold">How to Play:</h3>
+                    <p>Watch the sequence of colors, then repeat it by clicking the buttons in the same order. Each level adds one more color to remember!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/simon.js"></script>
+</body>
+</html>
