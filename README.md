@@ -143,6 +143,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **[⭐ Star this repo](https://github.com/your-username/GameHub)** • **[🐛 Report Bug](https://github.com/your-username/GameHub/issues)** • **[✨ Request Feature](https://github.com/your-username/GameHub/issues)**
 
-Made with ❤️ by [Your Name](https://github.com/your-username)
+Made with ❤️ by [Kaif Ansari](https://github.com/kaifansariw)
 
 </div>
