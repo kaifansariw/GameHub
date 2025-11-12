@@ -39,16 +39,7 @@ const games = [
         image: 'https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
         file: 'games/rps.html',
         category: 'strategy'
-    },
-    {
-    id: 'sliding-puzzle',
-    title: 'Sliding Tile Puzzle',
-    description: 'Rearrange the tiles to arrange the numbers !',
-    image: 'https://assets.slidingtiles.com/puzzle/026/211/original.jpg',
-    file: 'games/sliding-puzzle.html',
-    category: 'puzzle'
-}
-
+    }
 ];
 
 // Initialize AOS
