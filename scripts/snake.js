@@ -1,4 +1,4 @@
-// Snake Game Logic
+// Snake Game Logic (Purple-Blue Neon Theme)
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -28,8 +28,6 @@ function generateFood() {
         x: Math.floor(Math.random() * tileCount),
         y: Math.floor(Math.random() * tileCount)
     };
-    
-    // Make sure food doesn't spawn on snake
     for (let segment of snake) {
         if (segment.x === food.x && segment.y === food.y) {
             generateFood();
@@ -40,20 +38,37 @@ function generateFood() {
 
 // Draw game elements
 function drawGame() {
-    // Clear canvas
-    ctx.fillStyle = 'hsl(var(--b2))';
+    // Background gradient (purple-blue)
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, '#1e1b4b'); // deep indigo
+    gradient.addColorStop(1, '#312e81'); // rich purple-blue
+    ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw snake
-    ctx.fillStyle = 'hsl(var(--p))';
-    for (let segment of snake) {
-        ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
+    // Snake (bright neon purple)
+    for (let i = 0; i < snake.length; i++) {
+        const intensity = 1 - i / snake.length;
+        ctx.fillStyle = `rgba(168, 85, 247, ${0.7 * intensity + 0.3})`; // bright purple
+        ctx.shadowColor = '#a855f7';
+        ctx.shadowBlur = 10;
+        ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize - 2, gridSize - 2);
     }
+    ctx.shadowBlur = 0;
 
-    // Draw food
-    ctx.fillStyle = 'hsl(var(--er))';
-    ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 2, gridSize - 2);
+    // Food (animated neon pink pulse)
+    const pulse = Math.sin(Date.now() / 200) * 4 + gridSize - 6;
+    ctx.shadowColor = '#ec4899';
+    ctx.shadowBlur = 15;
+    ctx.fillStyle = '#f472b6';
+    ctx.fillRect(
+        food.x * gridSize + 2,
+        food.y * gridSize + 2,
+        pulse,
+        pulse
+    );
+    ctx.shadowBlur = 0;
 }
+
 
 // Update game state
 function updateGame() {
@@ -61,13 +76,12 @@ function updateGame() {
 
     const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-    // Check wall collision
+    // Collision detection
     if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
         gameOver();
         return;
     }
 
-    // Check self collision
     for (let segment of snake) {
         if (head.x === segment.x && head.y === segment.y) {
             gameOver();
@@ -77,7 +91,7 @@ function updateGame() {
 
     snake.unshift(head);
 
-    // Check food collision
+    // Food collision
     if (head.x === food.x && head.y === food.y) {
         score += 10;
         document.getElementById('score').textContent = score;
@@ -89,7 +103,7 @@ function updateGame() {
     drawGame();
 }
 
-// Change snake direction
+// Direction controls
 function changeDirection(direction) {
     if (!gameRunning) return;
 
@@ -109,82 +123,83 @@ function changeDirection(direction) {
     }
 }
 
-// Toggle game play/pause
-function toggleGame() {
-    const btn = document.getElementById('playPauseBtn');
-    const status = document.getElementById('gameStatus');
-
-    if (!gameRunning) {
-        gameRunning = true;
-        gameLoop = setInterval(updateGame, 150);
-        btn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-        status.textContent = 'Playing';
-    } else {
-        gameRunning = false;
-        clearInterval(gameLoop);
-        btn.innerHTML = '<i class="fas fa-play"></i> Resume';
-        status.textContent = 'Paused';
-    }
-}
-
-// Game over
 function gameOver() {
     gameRunning = false;
     clearInterval(gameLoop);
-    
+
+    const status = document.getElementById('gameStatus');
+    const btn = document.getElementById('playPauseBtn');
+
+    status.textContent = 'Game Over';
+    btn.innerHTML = '<i class="fas fa-play mr-2"></i>Restart';
+
+    // ✅ Reset movement and show final score
+    dx = 0;
+    dy = 0;
+
+    // ✅ Save high score if beaten
     if (score > highScore) {
         highScore = score;
         localStorage.setItem('snakeHighScore', highScore);
         document.getElementById('highScore').textContent = highScore;
     }
-
-    document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i> Start';
-    document.getElementById('gameStatus').textContent = 'Game Over';
 }
 
-// Reset game
+function toggleGame() {
+    const btn = document.getElementById('playPauseBtn');
+    const status = document.getElementById('gameStatus');
+
+    // If game over, restart fresh
+    if (status.textContent === 'Game Over') {
+        resetGame();
+    }
+
+    if (!gameRunning) {
+        if (dx === 0 && dy === 0) {
+            dx = 1;  // Start moving right
+            dy = 0;
+        }
+
+        gameRunning = true;
+        gameLoop = setInterval(updateGame, 150);
+        btn.innerHTML = '<i class="fas fa-pause mr-2"></i>Pause';
+        status.textContent = 'Playing';
+    } else {
+        gameRunning = false;
+        clearInterval(gameLoop);
+        btn.innerHTML = '<i class="fas fa-play mr-2"></i>Resume';
+        status.textContent = 'Paused';
+    }
+}
+
+// Reset
 function resetGame() {
     gameRunning = false;
     clearInterval(gameLoop);
-    
+
     snake = [{ x: 10, y: 10 }];
     dx = 0;
     dy = 0;
     score = 0;
-    
+
     document.getElementById('score').textContent = score;
     document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-play"></i> Start';
     document.getElementById('gameStatus').textContent = 'Ready';
-    
+
     generateFood();
     drawGame();
 }
 
-// Keyboard controls
+// Keyboard Controls
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
-        case 'ArrowUp':
-            e.preventDefault();
-            changeDirection('up');
-            break;
-        case 'ArrowDown':
-            e.preventDefault();
-            changeDirection('down');
-            break;
-        case 'ArrowLeft':
-            e.preventDefault();
-            changeDirection('left');
-            break;
-        case 'ArrowRight':
-            e.preventDefault();
-            changeDirection('right');
-            break;
-        case ' ':
-            e.preventDefault();
-            toggleGame();
-            break;
+        case 'ArrowUp': e.preventDefault(); changeDirection('up'); break;
+        case 'ArrowDown': e.preventDefault(); changeDirection('down'); break;
+        case 'ArrowLeft': e.preventDefault(); changeDirection('left'); break;
+        case 'ArrowRight': e.preventDefault(); changeDirection('right'); break;
+        case ' ': e.preventDefault(); toggleGame(); break;
     }
 });
 
-// Initialize game when page loads
+// Initialize
 document.addEventListener('DOMContentLoaded', initGame);
