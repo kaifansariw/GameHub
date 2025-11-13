@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symbol Swap | Mini JS Games Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>Symbol Swap 🔥</h1>
+    <p class="description">Swap symbols to match the target pattern before time runs out!</p>
+
+    <div class="controls">
+      <button id="start-btn">Start</button>
+      <button id="pause-btn">Pause</button>
+      <button id="restart-btn">Restart</button>
+      <span id="timer">Time: 60s</span>
+    </div>
+
+    <div class="symbol-line" id="symbol-line">
+      <!-- Symbols will appear here -->
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <!-- Sounds -->
+  <audio id="swap-sound" src="https://freesound.org/data/previews/341/341695_6249033-lq.mp3"></audio>
+  <audio id="success-sound" src="https://freesound.org/data/previews/219/219465_4104511-lq.mp3"></audio>
+  <audio id="fail-sound" src="https://freesound.org/data/previews/331/331912_3248244-lq.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
