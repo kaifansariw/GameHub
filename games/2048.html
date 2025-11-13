@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+            --secondary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --board-bg: linear-gradient(135deg, #2d3748, #4a5568);
+            --glow-purple: rgba(147, 51, 234, 0.6);
+            --glow-blue: rgba(59, 130, 246, 0.6);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0f172a, #1e293b, #2d3748);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .navbar {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(106, 17, 203, 0.3);
+        }
+
+        .game-container {
+            background: linear-gradient(145deg, var(--card-bg), #2a3441);
+            border-radius: 24px;
+            box-shadow: 
+                0 0 40px rgba(102, 51, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border: 1px solid rgba(147, 51, 234, 0.2);
+        }
+
+        .stats {
+            background: linear-gradient(145deg, var(--card-bg), #2a3441);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat {
+            background: transparent;
+        }
+
+        .stat-value {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 8px rgba(147, 51, 234, 0.5));
+        }
+
+        .game-board {
+            background: var(--board-bg);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            margin: 0 auto;
+            width: 450px;
+            height: 450px;
+            box-shadow: 
+                0 0 50px rgba(102, 51, 255, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(147, 51, 234, 0.3);
+        }
+
+        .grid-container {
+            position: absolute;
+            z-index: 1;
+        }
+
+        .grid-row {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .grid-cell {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(145deg, rgba(238, 228, 218, 0.1), rgba(238, 228, 218, 0.05));
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tile-container {
+            position: absolute;
+            z-index: 2;
+        }
+
+        .tile {
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
+            font-weight: 700;
+            line-height: 90px;
+            text-align: center;
+            font-size: 42px;
+            position: absolute;
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Enhanced tile colors with gradients and glows */
+        .tile-2 { 
+            background: linear-gradient(145deg, #f4f3f0, #e6e4e1);
+            color: #776e65;
+            box-shadow: 0 4px 15px rgba(118, 110, 101, 0.2);
+        }
+        .tile-4 { 
+            background: linear-gradient(145deg, #ede0c8, #e8d5b7);
+            color: #776e65;
+            box-shadow: 0 4px 15px rgba(118, 110, 101, 0.2);
+        }
+        .tile-8 { 
+            background: linear-gradient(145deg, #f2b179, #f5a25d);
+            color: #f9f6f2;
+            box-shadow: 0 4px 20px rgba(242, 177, 121, 0.4);
+        }
+        .tile-16 { 
+            background: linear-gradient(145deg, #f59563, #f7824e);
+            color: #f9f6f2;
+            box-shadow: 0 4px 20px rgba(245, 149, 99, 0.4);
+        }
+        .tile-32 { 
+            background: linear-gradient(145deg, #f67c5f, #f8654a);
+            color: #f9f6f2;
+            box-shadow: 0 4px 25px rgba(246, 124, 95, 0.5);
+        }
+        .tile-64 { 
+            background: linear-gradient(145deg, #f65e3b, #f84c2a);
+            color: #f9f6f2;
+            box-shadow: 0 6px 25px rgba(246, 94, 59, 0.5);
+        }
+        .tile-128 { 
+            background: linear-gradient(145deg, #edcf72, #f0d95a);
+            color: #f9f6f2;
+            font-size: 36px;
+            box-shadow: 0 6px 30px rgba(237, 207, 114, 0.6);
+            animation: pulse-gold 2s ease-in-out infinite;
+        }
+        .tile-256 { 
+            background: linear-gradient(145deg, #edcc61, #f1d449);
+            color: #f9f6f2;
+            font-size: 36px;
+            box-shadow: 0 8px 30px rgba(237, 204, 97, 0.6);
+            animation: pulse-gold 2s ease-in-out infinite;
+        }
+        .tile-512 { 
+            background: linear-gradient(145deg, #edc850, #f2cf37);
+            color: #f9f6f2;
+            font-size: 36px;
+            box-shadow: 0 8px 35px rgba(237, 200, 80, 0.7);
+            animation: pulse-gold 2s ease-in-out infinite;
+        }
+        .tile-1024 { 
+            background: linear-gradient(145deg, #edc53f, #f3ca25);
+            color: #f9f6f2;
+            font-size: 30px;
+            box-shadow: 0 10px 40px rgba(237, 197, 63, 0.8);
+            animation: pulse-legendary 1.5s ease-in-out infinite;
+        }
+        .tile-2048 { 
+            background: linear-gradient(145deg, #edc22e, #f4c714);
+            color: #f9f6f2;
+            font-size: 30px;
+            box-shadow: 0 12px 50px rgba(237, 194, 46, 0.9);
+            animation: pulse-legendary 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes pulse-legendary {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 12px 50px rgba(237, 194, 46, 0.9);
+            }
+            50% { 
+                transform: scale(1.08);
+                box-shadow: 0 15px 60px rgba(237, 194, 46, 1);
+            }
+        }
+
+        .control-btn {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            border-radius: 16px;
+            color: #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.4);
+            border-color: rgba(147, 51, 234, 0.8);
+        }
+
+        /* Enhanced button visibility */
+        .btn-outline {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:disabled {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            color: rgba(255, 255, 255, 0.4) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        #undoBtn:not(:disabled) {
+            color: #a855f7 !important;
+            border-color: #a855f7 !important;
+        }
+
+
+
+
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 1024px) {
+            .rules-section {
+                max-height: 300px;
+                padding: 1rem;
+            }
+            
+            .game-container {
+                padding: 1.5rem;
+            }
+        }
+
+        .rules-section {
+            background: linear-gradient(145deg, var(--card-bg), #2a3441);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .rules-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .rules-section::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .rules-section::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
+
+        .rule-item {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border-left: 4px solid;
+            border-image: var(--primary-gradient) 1;
+            padding: 0.8rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+
+        .rule-item:hover {
+            transform: translateX(4px);
+        }
+
+        .game-over-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-won {
+            background: linear-gradient(145deg, rgba(237, 194, 46, 0.9), rgba(244, 199, 20, 0.9)) !important;
+        }
+
+        .game-lost {
+            background: linear-gradient(145deg, rgba(238, 228, 218, 0.9), rgba(220, 210, 200, 0.9)) !important;
+        }
+
+        @keyframes tile-appear {
+            0% { 
+                opacity: 0; 
+                transform: scale(0) rotate(180deg);
+            }
+            70% {
+                transform: scale(1.1) rotate(0deg);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes tile-merge {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .tile-new {
+            animation: tile-appear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .tile-merged {
+            animation: tile-merge 0.3s ease-in-out;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .game-board {
+                width: 350px;
+                height: 350px;
+                padding: 15px;
+            }
+            
+            .grid-row {
+                margin-bottom: 15px;
+                gap: 15px;
+            }
+            
+            .grid-cell, .tile {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .tile {
+                line-height: 70px;
+                font-size: 32px;
+            }
+            
+            .tile-128, .tile-256, .tile-512 {
+                font-size: 28px;
+            }
+            
+            .tile-1024, .tile-2048 {
+                font-size: 24px;
+            }
+        }
+
+        /* Floating particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(147, 51, 234, 0.6);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <div class="navbar shadow-lg">
+        <div class="navbar-start">
+            <a href="../index.html" class="btn btn-ghost text-white">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+        <div class="navbar-center">
+            <h1 class="text-xl font-bold text-white">🎯 2048 Game</h1>
+        </div>
+        <div class="navbar-end">
+            <button onclick="newGame()" class="btn btn-ghost text-white">
+                <i class="fas fa-redo mr-2"></i>New Game
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div class="container mx-auto px-4 py-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Floating Particles -->
+            <div class="particles" id="particles"></div>
+
+            <div class="flex flex-col lg:flex-row gap-6 items-start">
+                <!-- Left Side - Stats and Rules -->
+                <div class="lg:w-80 w-full">
+                    <!-- Game Stats -->
+                    <div class="stats shadow mb-4 w-full">
+                        <div class="stat">
+                            <div class="stat-title text-gray-300">Score</div>
+                            <div class="stat-value text-2xl" id="score">0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title text-gray-300">Best</div>
+                            <div class="stat-value text-2xl" id="bestScore">0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title text-gray-300">Moves</div>
+                            <div class="stat-value text-2xl" id="moves">0</div>
+                        </div>
+                    </div>
+
+                    <!-- Compact Game Rules -->
+                    <div class="rules-section">
+                        <h3 class="text-lg font-bold mb-3 text-center">
+                            <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                <i class="fas fa-question-circle mr-2"></i>Quick Guide
+                            </span>
+                        </h3>
+                        
+                        <div class="space-y-2">
+                            <div class="rule-item">
+                                <h4 class="font-semibold mb-1 flex items-center text-sm">
+                                    <i class="fas fa-arrows-alt mr-2 text-blue-400"></i>
+                                    Controls
+                                </h4>
+                                <p class="text-xs text-gray-300">Arrow keys, WASD, or touch to move tiles</p>
+                            </div>
+
+                            <div class="rule-item">
+                                <h4 class="font-semibold mb-1 flex items-center text-sm">
+                                    <i class="fas fa-plus mr-2 text-green-400"></i>
+                                    Merge
+                                </h4>
+                                <p class="text-xs text-gray-300">Same numbers combine: 2+2=4, 4+4=8...</p>
+                            </div>
+
+                            <div class="rule-item">
+                                <h4 class="font-semibold mb-1 flex items-center text-sm">
+                                    <i class="fas fa-target mr-2 text-yellow-400"></i>
+                                    Goal
+                                </h4>
+                                <p class="text-xs text-gray-300">Reach 2048 to win! Continue for higher scores</p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center - Game Board -->
+                <div class="game-container flex-1 max-w-2xl">
+                    <div class="text-center mb-4">
+                        <h2 class="text-2xl font-bold mb-4">
+                            <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                🎯 2048 Challenge
+                            </span>
+                        </h2>
+                        <div class="game-board mx-auto relative">
+                            <div class="grid-container">
+                                <div class="grid-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="grid-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="grid-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="grid-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                            </div>
+                            <div class="tile-container" id="tile-container">
+                            </div>
+                            <div class="game-over-overlay" id="game-over">
+                                <div class="text-center">
+                                    <div class="text-5xl font-bold mb-6" id="game-over-text">Game Over!</div>
+                                    <div class="text-xl mb-6" id="final-score-text"></div>
+                                    <div class="flex gap-4 justify-center">
+                                        <button onclick="newGame()" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-redo mr-2"></i>Try Again
+                                        </button>
+                                        <a href="../index.html" class="btn btn-outline btn-lg">
+                                            <i class="fas fa-home mr-2"></i>Home
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Controls -->
+                    <div class="text-center">
+                        <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto mb-4">
+                            <div></div>
+                            <button class="control-btn btn btn-md" onclick="move('up')">
+                                <i class="fas fa-arrow-up text-lg"></i>
+                            </button>
+                            <div></div>
+                            <button class="control-btn btn btn-md" onclick="move('left')">
+                                <i class="fas fa-arrow-left text-lg"></i>
+                            </button>
+                            <button onclick="newGame()" class="btn btn-primary btn-md">
+                                <i class="fas fa-refresh text-lg"></i>
+                            </button>
+                            <button class="control-btn btn btn-md" onclick="move('right')">
+                                <i class="fas fa-arrow-right text-lg"></i>
+                            </button>
+                            <div></div>
+                            <button class="control-btn btn btn-md" onclick="move('down')">
+                                <i class="fas fa-arrow-down text-lg"></i>
+                            </button>
+                            <div></div>
+                        </div>
+                        <div class="flex justify-center gap-3 mb-3">
+                            <button onclick="undoMove()" class="btn btn-outline btn-sm text-white border-purple-400 hover:bg-purple-500" id="undoBtn" disabled>
+                                <i class="fas fa-undo mr-1"></i>Undo
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-400">
+                            <i class="fas fa-keyboard mr-1"></i>
+                            Arrow keys, WASD, or buttons
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Side - Additional Info -->
+                <div class="lg:w-80 w-full">
+                    <div class="game-container">
+                        <h3 class="text-lg font-bold mb-3 text-center">
+                            <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                                <i class="fas fa-trophy mr-2"></i>Game Status
+                            </span>
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <div class="bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-3 rounded-lg border border-purple-400/30">
+                                <h4 class="font-semibold text-sm mb-2 text-purple-300">
+                                    <i class="fas fa-bullseye mr-2"></i>Current Objective
+                                </h4>
+                                <p class="text-xs text-gray-300" id="currentObjective">Merge tiles to reach 2048!</p>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 p-3 rounded-lg border border-green-400/30">
+                                <h4 class="font-semibold text-sm mb-2 text-green-300">
+                                    <i class="fas fa-chart-line mr-2"></i>Progress
+                                </h4>
+                                <div class="text-xs text-gray-300">
+                                    <div>Highest Tile: <span id="highestTile" class="font-bold">2</span></div>
+                                    <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
+                                        <div class="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full" style="width: 0%" id="progressBar"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="bg-gradient-to-r from-pink-500/20 to-purple-500/20 p-3 rounded-lg border border-pink-400/30">
+                                <h4 class="font-semibold text-sm mb-2 text-pink-300">
+                                    <i class="fas fa-keyboard mr-2"></i>Shortcuts
+                                </h4>
+                                <div class="text-xs text-gray-300 space-y-1">
+                                    <div>• <kbd class="bg-gray-700 px-1 rounded">Ctrl+Z</kbd> Undo</div>
+                                    <div>• <kbd class="bg-gray-700 px-1 rounded">Space</kbd> New Game</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/2048.js"></script>
+    <script>
+        // Create floating particles effect
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                
+                // Random colors
+                const colors = [
+                    'rgba(147, 51, 234, 0.6)',
+                    'rgba(59, 130, 246, 0.6)',
+                    'rgba(236, 72, 153, 0.6)',
+                    'rgba(139, 92, 246, 0.6)'
+                ];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+    </script>
+</body>
+</html>
