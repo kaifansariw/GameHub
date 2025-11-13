@@ -4,8 +4,7 @@ const games = [
     id: "tic-tac-toe",
     title: "Tic Tac Toe",
     description: "Classic 3x3 grid game",
-    image:
-      "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=400&h=250&fit=crop&crop=center&auto=format&q=80",
+    image: "assets/tiktactoe.png",
     file: "games/tic-tac-toe.html",
     category: "strategy",
   },
@@ -13,8 +12,7 @@ const games = [
     id: "snake",
     title: "Snake Game",
     description: "Eat food and grow longer",
-    image:
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=250&fit=crop&crop=center&auto=format&q=80",
+    image: "assets/snake_game.png",
     file: "games/snake.html",
     category: "arcade",
   },
@@ -22,8 +20,7 @@ const games = [
     id: "simon",
     title: "Simon Says",
     description: "Memory pattern game",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=250&fit=crop&crop=center&auto=format&q=80",
+    image: "assets/simon_says.png",
     file: "games/simon.html",
     category: "memory",
   },
@@ -31,8 +28,7 @@ const games = [
     id: "memory",
     title: "Memory Flip",
     description: "Match pairs of cards",
-    image:
-      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop&crop=center&auto=format&q=80",
+    image: "assets/memory_flip.png",
     file: "games/memory.html",
     category: "memory",
   },
@@ -40,27 +36,9 @@ const games = [
     id: "rps",
     title: "Rock Paper Scissors",
     description: "Classic hand game",
-    image:
-      "https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?w=400&h=250&fit=crop&crop=center&auto=format&q=80",
+    image: "assets/rockpaperscissors.png",
     file: "games/rps.html",
     category: "strategy",
-  },
-  {
-    id: "sliding-puzzle",
-    title: "Sliding Tile Puzzle",
-    description: "Rearrange the tiles to arrange the numbers !",
-    image: "https://assets.slidingtiles.com/puzzle/026/211/original.jpg",
-    file: "games/sliding-puzzle.html",
-    category: "puzzle",
-  },
-  {
-    id: "catch-ball",
-    title: "Catch The Ball",
-    description: "Move the paddle to catch falling balls and score points!",
-    image:
-      "https://media-exp1.licdn.com/dms/image/D4E12AQFOUlObqcurHw/article-cover_image-shrink_720_1280/0/1665063553611?e=2147483647&v=beta&t=Le-LiVJgP1OqjhogNEUBC8jBZcvkxY8Y4wIrlyel_Vw",
-    file: "games/catch-ball.html",
-    category: "arcade",
   },
 ];
 
@@ -219,6 +197,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setupThemeToggle();
   createParticles();
 });
+
+// Updating footer year
+document.getElementById('footeryear').textContent =  new Date().getFullYear();
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

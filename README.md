@@ -5,6 +5,10 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+![GitHub Repo stars](https://img.shields.io/github/stars/kaifansariw/GameHub?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/kaifansariw/GameHub?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues/kaifansariw/GameHub?style=for-the-badge)
+
 
 A futuristic browser gaming platform with 5 classic games, glassmorphism UI, and smooth animations. Built with vanilla HTML, CSS & JavaScript..
 

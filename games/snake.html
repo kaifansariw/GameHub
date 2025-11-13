@@ -1,92 +1,134 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="cupcake">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game - GameHub</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game-GameHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+      color: white;
+    }
+  </style>
 </head>
-<body class="bg-base-100 min-h-screen">
-    <!-- Header -->
-    <div class="navbar bg-primary text-primary-content shadow-lg">
-        <div class="navbar-start">
-            <a href="../index.html" class="btn btn-ghost">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Home
-            </a>
-        </div>
-        <div class="navbar-center">
-            <h1 class="text-xl font-bold">🐍 Snake Game</h1>
-        </div>
-        <div class="navbar-end">
-            <button onclick="resetGame()" class="btn btn-ghost">
-                <i class="fas fa-redo mr-2"></i>Reset
-            </button>
-        </div>
+<body class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <div class="navbar bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg">
+    <div class="navbar-start">
+      <a href="../index.html" class="btn btn-ghost text-white">
+        <i class="fas fa-arrow-left mr-2"></i>Back to Home
+      </a>
     </div>
+    <div class="navbar-center">
+      <h1 class="text-xl font-bold tracking-wide">🐍 Snake Game</h1>
+    </div>
+    <div class="navbar-end">
+      <button onclick="resetGame()" class="btn btn-ghost text-white">
+        <i class="fas fa-redo mr-2"></i>Reset
+      </button>
+    </div>
+  </div>
 
-    <!-- Game Container -->
-    <div class="container mx-auto px-4 py-8">
-        <div class="max-w-2xl mx-auto">
-            <!-- Game Stats -->
-            <div class="stats shadow mb-6 w-full">
-                <div class="stat">
-                    <div class="stat-title">Score</div>
-                    <div class="stat-value text-primary" id="score">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-title">High Score</div>
-                    <div class="stat-value text-secondary" id="highScore">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-title">Status</div>
-                    <div class="stat-value text-accent text-sm" id="gameStatus">Ready</div>
-                </div>
-            </div>
+  <!-- Game Section -->
+  <main class="flex-grow container mx-auto px-4 py-10">
+    <div class="max-w-2xl mx-auto">
+      <!-- Stats -->
+      <div class="stats shadow mb-6 w-full bg-white/10 backdrop-blur-lg border border-white/20 text-white">
+        <div class="stat">
+          <div class="stat-title text-white/70">Score</div>
+          <div class="stat-value text-pink-300" id="score">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title text-white/70">High Score</div>
+          <div class="stat-value text-blue-300" id="highScore">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title text-white/70">Status</div>
+          <div class="stat-value text-yellow-300 text-sm" id="gameStatus">Ready</div>
+        </div>
+      </div>
 
-            <!-- Game Canvas -->
-            <div class="text-center mb-6">
-                <canvas id="gameCanvas" width="400" height="400" class="border-4 border-primary rounded-lg shadow-lg bg-base-200"></canvas>
-            </div>
+      <canvas id="gameCanvas" width="400" height="400"
+  class="border-4 border-purple-400 rounded-lg shadow-2xl"
+  style="background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);"></canvas>
 
-            <!-- Controls -->
-            <div class="text-center mb-6">
-                <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto">
-                    <div></div>
-                    <button class="btn btn-outline" onclick="changeDirection('up')">
-                        <i class="fas fa-arrow-up"></i>
-                    </button>
-                    <div></div>
-                    <button class="btn btn-outline" onclick="changeDirection('left')">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <button id="playPauseBtn" class="btn btn-primary" onclick="toggleGame()">
-                        <i class="fas fa-play"></i> Start
-                    </button>
-                    <button class="btn btn-outline" onclick="changeDirection('right')">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                    <div></div>
-                    <button class="btn btn-outline" onclick="changeDirection('down')">
-                        <i class="fas fa-arrow-down"></i>
-                    </button>
-                    <div></div>
-                </div>
-            </div>
 
-            <!-- Instructions -->
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle"></i>
-                <div>
-                    <h3 class="font-bold">How to Play:</h3>
-                    <p>Use arrow keys or buttons to control the snake. Eat food to grow and increase your score!</p>
+      <!-- Controls -->
+      <div class="text-center mb-10">
+        <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto">
+          <div></div>
+          <button class="btn btn-outline border-purple-300 text-white hover:bg-purple-600" onclick="changeDirection('up')">
+            <i class="fas fa-arrow-up"></i>
+          </button>
+          <div></div>
+          <button class="btn btn-outline border-purple-300 text-white hover:bg-purple-600" onclick="changeDirection('left')">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button id="playPauseBtn" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white" onclick="toggleGame()">
+            <i class="fas fa-play mr-2"></i>Start
+          </button>
+          <button class="btn btn-outline border-purple-300 text-white hover:bg-purple-600" onclick="changeDirection('right')">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+          <div></div>
+          <button class="btn btn-outline border-purple-300 text-white hover:bg-purple-600" onclick="changeDirection('down')">
+            <i class="fas fa-arrow-down"></i>
+          </button>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div class="alert bg-gradient-to-r from-purple-700/60 to-blue-700/60 text-white shadow-lg mb-8">
+        <i class="fas fa-info-circle text-yellow-300"></i>
+        <div>
+          <h3 class="font-bold text-lg">How to Play:</h3>
+          <p>Use arrow keys or the control buttons to guide your snake. Eat food to grow longer and increase your score. Avoid hitting walls or yourself!</p>
+        </div>
+      </div>
+
+      <!-- Game Rules Section -->
+      <section class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 mb-10">
+        <h2 class="text-2xl font-bold text-center text-blue-200 mb-4">📜 Game Rules</h2>
+        <ul class="list-disc list-inside space-y-2 text-white/90">
+          <li>The game starts when you press the <strong>Start</strong> button.</li>
+          <li>Control the snake using arrow keys or the on-screen buttons.</li>
+          <li>Each food you eat increases your score and snake length.</li>
+          <li>If the snake collides with itself or the wall, the game ends.</li>
+          <li>Try to beat your high score every time!</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  
+    <!-- Footer -->
+    <footer class="relative py-12 border-t border-white/10">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-sm"></i>
+                    </div>
+                    <span class="font-orbitron font-bold text-xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
                 </div>
+                <p class="font-rajdhani text-gray-400 mb-6">Made with ❤️ for gamers worldwide</p>
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p class="font-rajdhani text-sm text-gray-500">© 2024 GameHub. All rights reserved.</p>
             </div>
         </div>
-    </div>
-
+    </footer>
     <script src="../scripts/snake.js"></script>
+
 </body>
 </html>
