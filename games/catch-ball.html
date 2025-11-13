@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cupcake">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catch The Ball - GameHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+    }
+    canvas {
+      background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
+      border: 4px solid #8b5cf6;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <div class="navbar bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg">
+    <div class="navbar-start">
+      <a href="../index.html" class="btn btn-ghost text-white">
+        <i class="fas fa-arrow-left mr-2"></i>Back to Home
+      </a>
+    </div>
+    <div class="navbar-center">
+      <h1 class="text-xl font-bold tracking-wide">🏀 Catch The Ball</h1>
+    </div>
+    <div class="navbar-end">
+      <button onclick="resetGame()" class="btn btn-ghost text-white">
+        <i class="fas fa-redo mr-2"></i>Reset
+      </button>
+    </div>
+  </div>
+
+  <!-- Game Container -->
+  <main class="flex-grow container mx-auto px-4 py-10">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="stats shadow mb-6 w-full bg-white/10 backdrop-blur-lg border border-white/20 text-white">
+        <div class="stat">
+          <div class="stat-title text-white/70">Score</div>
+          <div class="stat-value text-pink-300" id="score">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title text-white/70">High Score</div>
+          <div class="stat-value text-blue-300" id="highScore">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title text-white/70">Status</div>
+          <div class="stat-value text-yellow-300 text-sm" id="gameStatus">Ready</div>
+        </div>
+      </div>
+
+      <canvas id="gameCanvas" width="400" height="500"></canvas>
+
+      <div class="mt-6 space-x-4">
+        <button onclick="startGame()" id="startBtn" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+          <i class="fas fa-play mr-2"></i>Start
+        </button>
+        <button onclick="resetGame()" class="btn btn-outline border-purple-400 text-white hover:bg-purple-600">
+          <i class="fas fa-redo mr-2"></i>Reset
+        </button>
+      </div>
+
+      <div class="alert bg-gradient-to-r from-purple-700/60 to-blue-700/60 text-white mt-8">
+        <i class="fas fa-info-circle text-yellow-300"></i>
+        <div>
+          <h3 class="font-bold text-lg">How to Play:</h3>
+          <p>Move the paddle left and right to catch the falling balls. Each ball you catch earns points. Don’t let them fall!</p>
+        </div>
+      </div>
+
+      <!-- Rules Section -->
+      <section class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 mt-8">
+        <h2 class="text-2xl font-bold text-center text-blue-200 mb-4">📜 Game Rules</h2>
+        <ul class="list-disc list-inside space-y-2 text-white/90 text-left">
+          <li>Press <strong>Start</strong> to begin the game.</li>
+          <li>Use the <strong>←</strong> and <strong>→</strong> arrow keys to move the paddle.</li>
+          <li>Catch balls to increase your score.</li>
+          <li>Missing a ball will end the game.</li>
+          <li>Try to beat your <strong>High Score</strong>!</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+ 
+    <!-- Footer -->
+    <footer class="relative py-12 border-t border-white/10">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-sm"></i>
+                    </div>
+                    <span class="font-orbitron font-bold text-xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
+                </div>
+                <p class="font-rajdhani text-gray-400 mb-6">Made with ❤️ for gamers worldwide</p>
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p class="font-rajdhani text-sm text-gray-500">© 2024 GameHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+  <script src="../scripts/catch-ball.js"></script>
+</body>
+</html>

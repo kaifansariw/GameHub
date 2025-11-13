@@ -40,7 +40,25 @@ const games = [
     file: "games/rps.html",
     category: "strategy",
   },
+   {
+    id: "sliding-puzzle",
+    title: "Sliding Tile Puzzle",
+    description: "Rearrange the tiles to arrange the numbers !",
+    image: "https://assets.slidingtiles.com/puzzle/026/211/original.jpg",
+    file: "games/sliding-puzzle.html",
+    category: "puzzle",
+  },
+  {
+    id: "catch-ball",
+    title: "Catch The Ball",
+    description: "Move the paddle to catch falling balls and score points!",
+    image:
+      "https://media-exp1.licdn.com/dms/image/D4E12AQFOUlObqcurHw/article-cover_image-shrink_720_1280/0/1665063553611?e=2147483647&v=beta&t=Le-LiVJgP1OqjhogNEUBC8jBZcvkxY8Y4wIrlyel_Vw",
+    file: "games/catch-ball.html",
+    category: "arcade",
+  },
 ];
+
 
 // Initialize AOS
 AOS.init({
