@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>⚖️ Weight Balance Game</h1>
+        <div class="scale">
+            <div class="left-pan pan" id="left-pan"></div>
+            <div class="right-pan pan" id="right-pan"></div>
+        </div>
+        <div class="bulbs">
+            <span class="bulb" id="bulb1"></span>
+            <span class="bulb" id="bulb2"></span>
+            <span class="bulb" id="bulb3"></span>
+            <span class="bulb" id="bulb4"></span>
+            <span class="bulb" id="bulb5"></span>
+        </div>
+        <p id="score">Score: 0</p>
+        <p id="message"></p>
+        <div class="controls">
+            <button id="start-btn">Start</button>
+            <button id="pause-btn">Pause</button>
+            <button id="restart-btn">Restart</button>
+        </div>
+    </div>
+
+    <!-- Sounds -->
+    <audio id="success-sound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+    <audio id="fail-sound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
