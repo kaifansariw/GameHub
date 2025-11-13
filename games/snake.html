@@ -1,134 +1,463 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cupcake">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snake Game-GameHub</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    body {
-      background: linear-gradient(to bottom right, #6a11cb, #2575fc);
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+            --secondary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --board-bg: linear-gradient(135deg, #2d3748, #4a5568);
+            --glow-purple: rgba(147, 51, 234, 0.6);
+            --glow-blue: rgba(59, 130, 246, 0.6);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0f172a, #1e293b, #2d3748);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .navbar {
+            background: var(--primary-gradient);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(147, 51, 234, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat {
+            background: transparent;
+            border-radius: 16px;
+            color: #e2e8f0;
+        }
+
+        .stat-value {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .rules-section {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(147, 51, 234, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .rule-item {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border-left: 3px solid rgba(147, 51, 234, 0.6);
+            padding: 0.8rem 1rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+
+        .rule-item:hover {
+            transform: translateX(4px);
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-board {
+            background: var(--board-bg);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            backdrop-filter: blur(20px);
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        #gameCanvas {
+            border-radius: 16px;
+            box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(145deg, #1a202c, #2d3748);
+        }
+
+        .control-btn {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            border-radius: 16px;
+            color: #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+            padding: 12px;
+            min-width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.4);
+            border-color: rgba(147, 51, 234, 0.8);
+        }
+
+        .control-btn.primary {
+            background: var(--primary-gradient);
+            border-color: rgba(147, 51, 234, 0.8);
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+        }
+
+        .progress-section {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(147, 51, 234, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(147, 51, 234, 0.6);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .achievement {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .achievement.locked {
+            opacity: 0.5;
+            border-left-color: rgba(147, 51, 234, 0.3);
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            border-left-color: #10b981;
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            animation: achievementUnlock 0.6s ease-out;
+        }
+
+        .achievement i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+
+        @keyframes achievementUnlock {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col">
-  <!-- Header -->
-  <div class="navbar bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-lg">
-    <div class="navbar-start">
-      <a href="../index.html" class="btn btn-ghost text-white">
-        <i class="fas fa-arrow-left mr-2"></i>Back to Home
-      </a>
+<body class="min-h-screen">
+    <!-- Header -->
+    <div class="navbar shadow-lg">
+        <div class="navbar-start">
+            <a href="../index.html" class="btn btn-ghost text-white">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+        <div class="navbar-center">
+            <h1 class="text-xl font-bold text-white">🐍 Snake Game</h1>
+        </div>
+        <div class="navbar-end">
+            <button onclick="resetGame()" class="btn btn-ghost text-white">
+                <i class="fas fa-redo mr-2"></i>Reset
+            </button>
+        </div>
     </div>
-    <div class="navbar-center">
-      <h1 class="text-xl font-bold tracking-wide">🐍 Snake Game</h1>
-    </div>
-    <div class="navbar-end">
-      <button onclick="resetGame()" class="btn btn-ghost text-white">
-        <i class="fas fa-redo mr-2"></i>Reset
-      </button>
-    </div>
-  </div>
 
-  <!-- Game Section -->
-  <main class="flex-grow container mx-auto px-4 py-10">
-    <div class="max-w-2xl mx-auto">
-      <!-- Stats -->
-      <div class="stats shadow mb-6 w-full bg-white/10 backdrop-blur-lg border border-white/20 text-white">
-        <div class="stat">
-          <div class="stat-title text-white/70">Score</div>
-          <div class="stat-value text-pink-300" id="score">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-title text-white/70">High Score</div>
-          <div class="stat-value text-blue-300" id="highScore">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-title text-white/70">Status</div>
-          <div class="stat-value text-yellow-300 text-sm" id="gameStatus">Ready</div>
-        </div>
-      </div>
+    <!-- Game Container -->
+    <div class="container mx-auto px-4 py-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Floating Particles -->
+            <div class="particles" id="particles"></div>
 
-      <canvas id="gameCanvas" width="400" height="400"
-  class="border-4 border-purple-400 rounded-lg shadow-2xl"
-  style="background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);"></canvas>
-
-
-      <!-- Controls -->
-      <div class="text-center mb-10">
-        <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto">
-          <div></div>
-          <button class="btn btn-outline border-purple-300 text-white hover:bg-purple-600" onclick="changeDirection('up')">
-            <i class="fas fa-arrow-up"></i>
-          </button>
-          <div></div>
-          <button class="btn btn-outline border-purple-300 text-white hover:bg-purple-600" onclick="changeDirection('left')">
-            <i class="fas fa-arrow-left"></i>
-          </button>
-          <button id="playPauseBtn" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white" onclick="toggleGame()">
-            <i class="fas fa-play mr-2"></i>Start
-          </button>
-          <button class="btn btn-outline border-purple-300 text-white hover:bg-purple-600" onclick="changeDirection('right')">
-            <i class="fas fa-arrow-right"></i>
-          </button>
-          <div></div>
-          <button class="btn btn-outline border-purple-300 text-white hover:bg-purple-600" onclick="changeDirection('down')">
-            <i class="fas fa-arrow-down"></i>
-          </button>
-          <div></div>
-        </div>
-      </div>
-
-      <!-- Instructions -->
-      <div class="alert bg-gradient-to-r from-purple-700/60 to-blue-700/60 text-white shadow-lg mb-8">
-        <i class="fas fa-info-circle text-yellow-300"></i>
-        <div>
-          <h3 class="font-bold text-lg">How to Play:</h3>
-          <p>Use arrow keys or the control buttons to guide your snake. Eat food to grow longer and increase your score. Avoid hitting walls or yourself!</p>
-        </div>
-      </div>
-
-      <!-- Game Rules Section -->
-      <section class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/20 mb-10">
-        <h2 class="text-2xl font-bold text-center text-blue-200 mb-4">📜 Game Rules</h2>
-        <ul class="list-disc list-inside space-y-2 text-white/90">
-          <li>The game starts when you press the <strong>Start</strong> button.</li>
-          <li>Control the snake using arrow keys or the on-screen buttons.</li>
-          <li>Each food you eat increases your score and snake length.</li>
-          <li>If the snake collides with itself or the wall, the game ends.</li>
-          <li>Try to beat your high score every time!</li>
-        </ul>
-      </section>
-    </div>
-  </main>
-
-  
-    <!-- Footer -->
-    <footer class="relative py-12 border-t border-white/10">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center">
-                <div class="flex items-center justify-center space-x-2 mb-4">
-                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-gamepad text-white text-sm"></i>
+            <div class="flex flex-col lg:flex-row gap-6 items-start">
+                <!-- Left Side - Stats and Rules -->
+                <div class="lg:w-80 w-full">
+                    <!-- Game Stats -->
+                    <div class="stats shadow mb-4 w-full">
+                        <div class="stat">
+                            <div class="stat-title text-gray-300">Score</div>
+                            <div class="stat-value text-2xl" id="score">0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title text-gray-300">High Score</div>
+                            <div class="stat-value text-2xl" id="highScore">0</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-title text-gray-300">Status</div>
+                            <div class="stat-value text-lg" id="gameStatus">Ready</div>
+                        </div>
                     </div>
-                    <span class="font-orbitron font-bold text-xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
+
+                    <!-- Compact Game Rules -->
+                    <div class="rules-section">
+                        <h3 class="text-lg font-bold mb-3 text-center">
+                            <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                <i class="fas fa-question-circle mr-2"></i>Quick Guide
+                            </span>
+                        </h3>
+                        
+                        <div class="space-y-2">
+                            <div class="rule-item">
+                                <h4 class="font-semibold mb-1 flex items-center text-sm">
+                                    <i class="fas fa-arrows-alt mr-2 text-blue-400"></i>
+                                    Controls
+                                </h4>
+                                <p class="text-xs text-gray-300">Arrow keys, WASD, or directional buttons</p>
+                            </div>
+
+                            <div class="rule-item">
+                                <h4 class="font-semibold mb-1 flex items-center text-sm">
+                                    <i class="fas fa-apple-alt mr-2 text-red-400"></i>
+                                    Eat Food
+                                </h4>
+                                <p class="text-xs text-gray-300">Collect red food to grow and score points</p>
+                            </div>
+
+                            <div class="rule-item">
+                                <h4 class="font-semibold mb-1 flex items-center text-sm">
+                                    <i class="fas fa-exclamation-triangle mr-2 text-yellow-400"></i>
+                                    Avoid Collision
+                                </h4>
+                                <p class="text-xs text-gray-300">Don't hit walls or your own body!</p>
+                            </div>
+
+                            <div class="rule-item">
+                                <h4 class="font-semibold mb-1 flex items-center text-sm">
+                                    <i class="fas fa-keyboard mr-2 text-green-400"></i>
+                                    Shortcuts
+                                </h4>
+                                <p class="text-xs text-gray-300">Spacebar to pause/resume game</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="font-rajdhani text-gray-400 mb-6">Made with ❤️ for gamers worldwide</p>
-                <div class="flex justify-center space-x-6 mb-6">
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+
+                <!-- Center - Game Board -->
+                <div class="game-container flex-1 max-w-2xl">
+                    <div class="text-center mb-4">
+                        <h2 class="text-2xl font-bold mb-4">
+                            <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                🐍 Snake Challenge
+                            </span>
+                        </h2>
+                        <div class="game-board mx-auto relative">
+                            <canvas id="gameCanvas" width="400" height="400" class="rounded-lg"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="text-center">
+                        <div class="grid grid-cols-3 gap-3 max-w-xs mx-auto mb-4">
+                            <div></div>
+                            <button class="control-btn" onclick="changeDirection('up')">
+                                <i class="fas fa-arrow-up text-lg"></i>
+                            </button>
+                            <div></div>
+                            <button class="control-btn" onclick="changeDirection('left')">
+                                <i class="fas fa-arrow-left text-lg"></i>
+                            </button>
+                            <button id="playPauseBtn" class="control-btn primary" onclick="toggleGame()">
+                                <i class="fas fa-play mr-2"></i> Start
+                            </button>
+                            <button class="control-btn" onclick="changeDirection('right')">
+                                <i class="fas fa-arrow-right text-lg"></i>
+                            </button>
+                            <div></div>
+                            <button class="control-btn" onclick="changeDirection('down')">
+                                <i class="fas fa-arrow-down text-lg"></i>
+                            </button>
+                            <div></div>
+                        </div>
+                    </div>
                 </div>
-                <p class="font-rajdhani text-sm text-gray-500">© 2024 GameHub. All rights reserved.</p>
+
+                <!-- Right Side - Progress and Achievements -->
+                <div class="lg:w-80 w-full">
+                    <div class="progress-section mb-4">
+                        <h3 class="text-lg font-bold mb-3 text-center">
+                            <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                <i class="fas fa-trophy mr-2"></i>Progress
+                            </span>
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-lg p-3 border border-purple-400/20">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium">Length</span>
+                                    <span class="text-sm text-purple-400" id="snakeLength">1</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300" 
+                                         style="width: 5%" id="lengthProgress"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-lg p-3 border border-blue-400/20">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-medium">Speed Level</span>
+                                    <span class="text-sm text-blue-400" id="speedLevel">1</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-300" 
+                                         style="width: 10%" id="speedProgress"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-lg p-3 border border-green-400/20">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm font-medium">Food Eaten</span>
+                                    <span class="text-sm text-green-400" id="foodEaten">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="progress-section">
+                        <h3 class="text-lg font-bold mb-3 text-center">
+                            <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                <i class="fas fa-medal mr-2"></i>Achievements
+                            </span>
+                        </h3>
+                        
+                        <div class="space-y-2" id="achievementsList">
+                            <div class="achievement locked">
+                                <i class="fas fa-baby text-yellow-500"></i>
+                                <span>First Bite - Eat your first food</span>
+                            </div>
+                            <div class="achievement locked">
+                                <i class="fas fa-fire text-orange-500"></i>
+                                <span>Growing Fast - Reach length 5</span>
+                            </div>
+                            <div class="achievement locked">
+                                <i class="fas fa-crown text-purple-500"></i>
+                                <span>Snake Master - Reach length 10</span>
+                            </div>
+                            <div class="achievement locked">
+                                <i class="fas fa-trophy text-gold-500"></i>
+                                <span>Century Club - Score 100 points</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
-    <script src="../scripts/snake.js"></script>
+    </div>
 
+    <script>
+        // Create floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            
+            const colors = ['rgba(147, 51, 234, 0.6)', 'rgba(59, 130, 246, 0.6)', 'rgba(16, 185, 129, 0.6)'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.getElementById('particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 8000);
+        }
+
+        // Generate particles continuously
+        setInterval(createParticle, 300);
+
+        // Initialize some particles immediately
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createParticle, i * 100);
+        }
+    </script>
+    <script src="../scripts/snake.js"></script>
 </body>
 </html>
