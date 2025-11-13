@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipe Twister</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>Pipe Twister</h1>
+    <div class="controls">
+      <button id="restart">Restart</button>
+      <button id="pause">Pause</button>
+      <button id="resume" disabled>Resume</button>
+    </div>
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <p id="status"></p>
+  </div>
+
+  <audio id="rotate-sound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+  <audio id="success-sound" src="https://www.soundjay.com/misc/success-fanfare-01.mp3"></audio>
+  <audio id="fail-sound" src="https://www.soundjay.com/misc/fail-buzzer-01.mp3"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
