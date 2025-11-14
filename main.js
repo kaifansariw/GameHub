@@ -80,7 +80,7 @@ function renderGames(gamesToRender = games) {
                     ${game.title}
                 </h3>
                 <p class="font-rajdhani text-gray-400 mb-4">${game.description}</p>
-                <button onclick="playGame('${game.file}')" class="game-play-btn w-full">
+                <button onclick="playGame('${game.file}')" class="pixel-btn glow-on-hover game-play-btn w-full">
                     <i class="fas fa-rocket mr-2"></i>Play Now
                 </button>
             </div>
