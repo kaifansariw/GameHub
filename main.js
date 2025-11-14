@@ -63,6 +63,14 @@ const games = [
         image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
         file: 'games/minesweeper.html',
         category: 'puzzle'
+  },
+  {
+        id: 'breakout',
+        title: 'Breakout',
+        description: 'Break all the bricks with paddle and ball',
+        image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+        file: 'games/breakout.html',
+        category: 'arcade'
   }
 ];
 

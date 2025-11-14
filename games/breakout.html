@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakout - GameHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../assets/ps4.ico">
+    
+    <!-- Audio System -->
+    <script src="../scripts/audio-system.js"></script>
+    <script src="../scripts/audio-ui.js"></script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+            --secondary-gradient: linear-gradient(135deg, #667eea, #764ba2);
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --text-light: #e2e8f0;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            background: var(--bg-dark);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0f172a, #1e293b, #2d3748);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .game-container {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .game-header {
+            background: var(--primary-gradient);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .stats-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--secondary-gradient);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .game-canvas {
+            border: 3px solid rgba(147, 51, 234, 0.5);
+            border-radius: 15px;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.3);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .controls-info {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(147, 51, 234, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .control-btn {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            border-radius: 12px;
+            color: var(--text-light);
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-btn:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(147, 51, 234, 0.4);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--secondary-gradient);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .level-info {
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .power-up-info {
+            background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 10px;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .game-over-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-text {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(147, 51, 234, 0.6);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            .stats-panel {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .stat-item {
+                flex-direction: row;
+                gap: 1rem;
+            }
+            
+            .game-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <button class="back-btn" onclick="window.location.href='../index.html'">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Hub</span>
+    </button>
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="game-container animate__animated animate__fadeIn">
+            <div class="game-header">
+                <h1 class="text-3xl font-bold text-white mb-2">🎯 Breakout</h1>
+                <p class="text-white opacity-90">Break all the bricks with your paddle and ball!</p>
+            </div>
+
+            <div class="stats-panel">
+                <div class="stat-item">
+                    <div class="stat-value" id="score">0</div>
+                    <div class="stat-label">Score</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="level">1</div>
+                    <div class="stat-label">Level</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="lives">3</div>
+                    <div class="stat-label">Lives</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="bricks">0</div>
+                    <div class="stat-label">Bricks Left</div>
+                </div>
+            </div>
+
+            <div class="level-info">
+                <div class="text-lg font-semibold text-green-400 mb-1">Level <span id="currentLevel">1</span></div>
+                <div class="text-sm opacity-80" id="levelDescription">Warm up - Basic bricks</div>
+            </div>
+
+            <canvas id="gameCanvas" class="game-canvas" width="800" height="600"></canvas>
+
+            <div class="controls-info">
+                <div class="text-lg font-semibold mb-2">
+                    <i class="fas fa-gamepad text-purple-400 mr-2"></i>Controls
+                </div>
+                <div class="flex flex-wrap justify-center items-center gap-4 text-sm">
+                    <div><i class="fas fa-mouse text-blue-400 mr-2"></i>Move Mouse = Paddle</div>
+                    <div><i class="fas fa-hand-pointer text-green-400 mr-2"></i>Click = Launch Ball</div>
+                    <div><i class="fas fa-pause text-yellow-400 mr-2"></i>Space = Pause</div>
+                </div>
+                
+                <div class="power-up-info">
+                    <div class="text-center font-semibold text-yellow-400 mb-1">Power-ups</div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                        <div><span class="text-blue-400">🔵</span> Multi Ball</div>
+                        <div><span class="text-green-400">🟢</span> Bigger Paddle</div>
+                        <div><span class="text-red-400">🔴</span> Laser</div>
+                        <div><span class="text-yellow-400">🟡</span> Extra Life</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="control-btn" id="startBtn">
+                    <i class="fas fa-play"></i>
+                    Start Game
+                </button>
+                <button class="control-btn" id="pauseBtn" style="display: none;">
+                    <i class="fas fa-pause"></i>
+                    Pause
+                </button>
+                <button class="control-btn" id="resetBtn">
+                    <i class="fas fa-refresh"></i>
+                    Reset
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="gameOverModal" class="game-over-modal">
+        <div class="modal-content animate__animated animate__zoomIn">
+            <div id="modalIcon" class="modal-icon">🎉</div>
+            <h2 id="modalTitle" class="modal-title">Game Over!</h2>
+            <p id="modalText" class="modal-text">Great job breaking those bricks!</p>
+            <div class="flex gap-3 justify-center">
+                <button class="control-btn" onclick="breakout.startGame()">
+                    <i class="fas fa-refresh"></i>
+                    Play Again
+                </button>
+                <button class="control-btn" onclick="breakout.hideModal()">
+                    <i class="fas fa-times"></i>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            
+            const colors = ['rgba(147, 51, 234, 0.6)', 'rgba(59, 130, 246, 0.6)', 'rgba(16, 185, 129, 0.6)'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.getElementById('particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 8000);
+        }
+
+        // Generate particles continuously
+        setInterval(createParticle, 300);
+
+        // Initialize some particles immediately
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createParticle, i * 100);
+        }
+    </script>
+    <script src="../scripts/breakout.js"></script>
+</body>
+</html>
