@@ -11,8 +11,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Audio System -->
+    <script src="scripts/audio-system.js"></script>
+    <script src="scripts/audio-ui.js"></script>
 </head>
-<body class="bg-gray-900 text-white overflow-x-hidden">
+<body class="bg-gray-900 text-white overflow-x-hidden home-page">
     <!-- Animated Background -->
     <div class="fixed inset-0 z-0">
         <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 animate-gradient"></div>
@@ -25,7 +29,9 @@
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center space-x-8">
                     <div class="flex items-center space-x-2">
-                        <i class="fas fa-gamepad text-3xl text-purple-400"></i>
+                        <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-gamepad text-white text-sm"></i>
+                        </div>
                         <span class="font-orbitron font-bold text-xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
                     </div>
                     <div class="hidden md:flex space-x-6">
@@ -139,7 +145,9 @@
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center">
                 <div class="flex items-center justify-center space-x-2 mb-4">
-                    <i class="fas fa-gamepad text-3xl text-purple-400"></i>
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-sm"></i>
+                    </div>
                     <span class="font-orbitron font-bold text-xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
                 </div>
                 <p class="font-rajdhani text-gray-400 mb-6">Made with ❤️ for gamers worldwide</p>
@@ -149,7 +157,7 @@
                     <a href="#" class="social-link"><i class="fab fa-github"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                 </div>
-                <p class="font-rajdhani text-sm text-gray-500">© <span id="footeryear"></span> GameHub. All rights reserved.</p>
+                <p class="font-rajdhani text-sm text-gray-500">© 2024 GameHub. All rights reserved.</p>
             </div>
         </div>
     </footer>
