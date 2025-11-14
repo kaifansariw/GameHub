@@ -69,6 +69,15 @@ body {
 }
 
 /* Navigation Styles */
+.navbar {
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-section02{
+    margin-right: 600px;
+}
+
 .nav-link {
     position: relative;
     padding: 8px 16px;
@@ -134,6 +143,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
+    margin-left: 25px;
 }
 
 .theme-toggle:hover {
@@ -361,4 +371,10 @@ body {
 
 .floating {
     animation: float 6s ease-in-out infinite;
+}
+
+/* Footer */
+.footer-container{
+    display: flex;
+    justify-content: center;
 }
