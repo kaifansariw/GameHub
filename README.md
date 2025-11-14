@@ -199,12 +199,3 @@ Made with ❤️ by [Kaif Ansari](https://github.com/kaifansariw)
 
 </div>
 
-# ✨ Contributors
-
-#### Thanks to all the wonderful contributors 💖
-
-<a href="https://github.com/kaifanasariw/GameHub/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=kaifanasariw/GameHub" />
-</a>
-
-#### See full list of contributor contribution [Contribution Graph](https://github.com/kaifanasariw/GameHub/graphs/contributors)
