@@ -1,0 +1,40 @@
+body {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  font-family: Arial;
+}
+
+#game {
+  width: 320px;
+  height: 500px;
+  background: #222;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+.column {
+  width: 25%;
+  height: 100%;
+  position: relative;
+}
+
+.tile {
+  width: 100%;
+  height: 100px;
+  background: black;
+  position: absolute;
+  top: -100px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.tile.hit {
+  background: #4caf50 !important;
+}
+
+.tile.miss {
+  background: #e74c3c !important;
+}
