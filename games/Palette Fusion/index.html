@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Palette Fusion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Palette Fusion</h1>
+
+<div class="container">
+  <div class="color-box">
+    <h3>Target Color</h3>
+    <div id="targetColor" class="box"></div>
+  </div>
+
+  <div class="color-box">
+    <h3>Your Color</h3>
+    <div id="userColor" class="box"></div>
+  </div>
+</div>
+
+<div class="sliders">
+  <label>Red: <input type="range" id="r" min="0" max="255" value="0"></label>
+  <label>Green: <input type="range" id="g" min="0" max="255" value="0"></label>
+  <label>Blue: <input type="range" id="b" min="0" max="255" value="0"></label>
+</div>
+
+<button id="checkBtn">Check Match</button>
+<button id="nextBtn">Next Color</button>
+
+<h2 id="result"></h2>
+
+<script src="script.js"></script>
+</body>
+</html>
