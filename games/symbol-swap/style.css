@@ -1,0 +1,89 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #0d0d0d;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.game-container {
+  background: #1a1a1a;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+}
+
+.description {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.controls {
+  margin-bottom: 20px;
+}
+
+.controls button {
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+  box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+}
+
+.controls button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+}
+
+#timer {
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.symbol-line {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.symbol {
+  font-size: 2rem;
+  padding: 15px;
+  background: #222;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 5px #ff00ff;
+}
+
+.symbol.selected {
+  box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+  transform: scale(1.2);
+}
+
+.message {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  min-height: 30px;
+}
