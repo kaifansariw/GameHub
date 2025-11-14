@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ChronoQuest 🕰</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>ChronoQuest</h1>
+    <p class="subtitle">Arrange historical events in the correct chronological order</p>
+  </header>
+
+  <main class="wrap">
+    <section class="controls">
+      <label for="level">Level:</label>
+      <select id="level">
+        <option value="1">Level 1 — 4 items</option>
+        <option value="2">Level 2 — 6 items</option>
+        <option value="3">Level 3 — 8 items</option>
+      </select>
+
+      <button id="startBtn">▶ Start</button>
+      <button id="checkBtn" disabled>✔ Check Order</button>
+      <button id="hintBtn" disabled>💡 Hint</button>
+      <button id="restartBtn">🔄 Restart</button>
+
+      <div class="status">
+        <span>Attempts: <b id="attempts">0</b></span>
+        <span>Score: <b id="score">0</b></span>
+      </div>
+    </section>
+
+    <section class="game">
+      <p class="instruction">Drag the event cards to arrange them from earliest → latest.</p>
+
+      <ul id="timeline" class="timeline" aria-label="Timeline list">
+        <!-- cards injected here -->
+      </ul>
+    </section>
+
+    <div id="message" class="message" aria-live="polite"></div>
+  </main>
+
+  <template id="card-template">
+    <li class="card" draggable="true">
+      <div class="card-content">
+        <h3 class="evt-title"></h3>
+        <p class="evt-desc"></p>
+      </div>
+      <div class="evt-year" aria-hidden="true"></div>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>

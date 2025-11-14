@@ -1,0 +1,108 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --accent:#ff6b6b;
+  --muted:#94a3b8;
+  --glass: rgba(255,255,255,0.03);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, system-ui, Arial;
+  background: linear-gradient(180deg,var(--bg) 0%, #071023 100%);
+  color:#e6eef8;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.container{
+  width:100%;
+  max-width:520px;
+}
+
+h1{
+  text-align:center;
+  margin:0 0 18px 0;
+  font-size:20px;
+}
+
+.game{
+  background:var(--card);
+  border-radius:12px;
+  padding:18px;
+  box-shadow: 0 6px 24px rgba(3,7,18,0.6);
+  border:1px solid rgba(255,255,255,0.03);
+}
+
+.panel{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+  align-items:center;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.player{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.control{
+  background:var(--glass);
+  color:inherit;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.primary{
+  background:linear-gradient(90deg,var(--accent), #ff9b6b);
+  color:#06101b;
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.choices{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.choice{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+  border:1px solid rgba(255,255,255,0.03);
+  transition:transform .12s ease, box-shadow .12s;
+}
+
+.choice:active{ transform:translateY(2px); }
+.choice.disabled{ cursor:default; opacity:0.6; pointer-events:none; }
+
+.choice.correct{ box-shadow:0 8px 18px rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.25); }
+.choice.wrong{ box-shadow:0 8px 18px rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.25); }
+
+.timer{ color:var(--muted); font-size:14px; }
+
+.credits{ margin-top:14px; font-size:13px; color:var(--muted); text-align:center; }
+code{ background:rgba(255,255,255,0.02); padding:2px 6px; border-radius:4px; font-size:13px; }
+@media (max-width:480px){
+  .choices{ grid-template-columns:1fr; }
+}
