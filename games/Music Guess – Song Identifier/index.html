@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Music Guess — Song Identifier</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>🎶 Music Guess — Song Identifier</h1>
+
+    <div class="game">
+      <div class="panel top">
+        <div>Round: <span id="round">0</span>/<span id="totalRounds">5</span></div>
+        <div>Score: <span id="score">0</span></div>
+        <div>High: <span id="highScore">0</span></div>
+      </div>
+
+      <div class="player">
+        <button id="playBtn" class="control">▶ Play Clip</button>
+        <button id="replayBtn" class="control">↻ Replay</button>
+        <div class="timer">Time left: <span id="timeLeft">0</span>s</div>
+      </div>
+
+      <div id="choices" class="choices"></div>
+
+      <div class="panel bottom">
+        <button id="startBtn" class="primary">Start Game</button>
+        <button id="nextBtn" class="primary" disabled>Next</button>
+      </div>
+
+      <audio id="audio"></audio>
+    </div>
+
+    <p class="credits">Add audio files under <code>/games/music-guess/assets/</code> and update the songs list in <code>script.js</code>.</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
