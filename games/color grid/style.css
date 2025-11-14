@@ -1,0 +1,201 @@
+:root{
+  --bg:#071426;
+  --panel:#0f2130;
+  --accent:#7be9a7;
+  --muted:rgba(230,238,246,0.65);
+  --gap:8px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background: radial-gradient(circle at 10% 10%, #0a2430, #071426 60%);
+  color:#e9f4f8;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:28px;
+}
+
+.wrapper{
+  width:100%;
+  max-width:760px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:12px;
+  padding:18px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.topbar h1{
+  margin:0;
+  color:var(--accent);
+  font-size:20px;
+}
+
+.controls{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.controls select, .controls button{
+  padding:8px 10px;
+  border-radius:8px;
+  border:none;
+  background: rgba(255,255,255,0.03);
+  color:var(--muted);
+  cursor:pointer;
+}
+
+.infobar{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  margin-bottom:12px;
+  font-weight:600;
+  color:var(--muted);
+}
+
+.message{
+  margin-left:8px;
+  color:#ffd28a;
+  font-weight:700;
+}
+
+main{
+  display:grid;
+  grid-template-columns: 1fr 220px;
+  gap:16px;
+}
+
+.grid-container{
+  background: linear-gradient(180deg,#071a24,#061018);
+  border-radius:10px;
+  padding:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* responsive: move rotate panel below on narrow screens */
+@media (max-width:880px){
+  main{ grid-template-columns: 1fr; }
+  .rotate-panel{ order:2; margin-top:12px; }
+}
+
+/* dynamic grid (tiles placed inside .board) */
+.board{
+  width:100%;
+  max-width:520px;
+  aspect-ratio:1;
+  display:grid;
+  gap:var(--gap);
+  padding:var(--gap);
+}
+
+/* tile */
+.tile{
+  border-radius:8px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:700;
+  user-select:none;
+  cursor:pointer;
+  transition: transform 180ms ease, opacity 180ms ease;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+  border:2px solid rgba(255,255,255,0.03);
+}
+
+/* color classes */
+.tile.c-0{ background: linear-gradient(180deg,#ffd7d7,#ff9b9b); }
+.tile.c-1{ background: linear-gradient(180deg,#fff4b0,#ffd34d); }
+.tile.c-2{ background: linear-gradient(180deg,#bff7d0,#7be9a7); }
+.tile.c-3{ background: linear-gradient(180deg,#bfe0ff,#84c7ff); }
+.tile.c-4{ background: linear-gradient(180deg,#e7baff,#ff8af5); }
+.tile.c-5{ background: linear-gradient(180deg,#d1c7ff,#a792ff); }
+
+/* subtle selected highlight (when user clicks a tile to focus a row/col) */
+.tile.selected{
+  outline: 4px solid rgba(255,255,255,0.06);
+  transform: scale(1.03);
+}
+
+/* fade animation applied during rotate */
+.tile.rotating{
+  opacity:0.35;
+  transform: scale(0.96);
+}
+
+/* rotate-panel */
+.rotate-panel{
+  background: rgba(255,255,255,0.02);
+  border-radius:10px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.rotate-panel .label{
+  color:var(--muted);
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.buttons-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:8px;
+}
+
+.btn-rotate{
+  padding:8px;
+  border-radius:8px;
+  background: linear-gradient(90deg,#7be9a7,#7bd8d9);
+  color:#04101a;
+  font-weight:800;
+  cursor:pointer;
+  border:none;
+}
+
+/* win overlay */
+.win-overlay{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(0deg, rgba(2,6,23,0.6), rgba(2,6,23,0.6));
+  z-index:2000;
+}
+.win-card{
+  background:linear-gradient(180deg,#071a24,#082032);
+  padding:22px;
+  border-radius:10px;
+  text-align:center;
+  color: #fff9e6;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+.win-card h2{ margin:0 0 8px 0; color:var(--accent) }
+.win-card button{
+  margin-top:12px;
+  padding:8px 12px;
+  border-radius:8px;
+  border:none;
+  background:linear-gradient(90deg,#ffd28a,#ffb36a);
+  cursor:pointer;
+  font-weight:800;
+  color:#041018;
+}
