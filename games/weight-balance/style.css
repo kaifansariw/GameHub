@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0e0e0e;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.game-container {
+    text-align: center;
+}
+
+.scale {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    margin: 20px auto;
+}
+
+.pan {
+    width: 200px;
+    height: 30px;
+    background-color: #444;
+    border-radius: 5px;
+    position: relative;
+}
+
+.bulbs {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    gap: 10px;
+}
+
+.bulb {
+    width: 30px;
+    height: 30px;
+    background-color: #222;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #000;
+    transition: 0.3s;
+}
+
+.bulb.active {
+    background-color: yellow;
+    box-shadow: 0 0 20px yellow, 0 0 40px yellow;
+}
+
+.controls button {
+    margin: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    transition: 0.2s;
+}
+
+.controls button:hover {
+    background-color: #555;
+}
