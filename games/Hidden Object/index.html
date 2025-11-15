@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mystic Seekers — Hidden Object</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <h1>Mystic Seekers 🔎</h1>
+      <p class="subtitle">Find all hidden objects in the scene before the time runs out.</p>
+    </header>
+
+    <section class="game-row">
+      <div class="scene-area">
+        <!-- Scene image -->
+        <!-- Place your scene jpg at games/mystic-seekers/assets/scene.jpg -->
+        <img id="sceneImg" src="assets/scene.jpg" alt="Hidden Object Scene" />
+        <!-- svg overlay for hotspots -->
+        <svg id="hotspotLayer" class="hotspots" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div id="toast" class="toast hidden"></div>
+      </div>
+
+      <aside class="panel">
+        <div class="meta">
+          <div>Time: <b id="time">01:30</b></div>
+          <div>Found: <b id="foundCount">0</b>/<b id="totalCount">0</b></div>
+        </div>
+
+        <ul id="targets" class="targets" aria-live="polite">
+          <!-- list injected -->
+        </ul>
+
+        <div class="buttons">
+          <button id="startBtn">Start</button>
+          <button id="hintBtn" disabled>Hint</button>
+          <button id="restartBtn" disabled>Restart</button>
+        </div>
+
+        <div class="notes">
+          <p>Tip: Click on the scene where you think an item is. Hints reveal approximate area.</p>
+        </div>
+      </aside>
+    </section>
+
+    <div id="endOverlay" class="overlay hidden">
+      <div class="panelBox">
+        <h2 id="endTitle">You Win!</h2>
+        <p id="endText">Great job — you found all items.</p>
+        <button id="playAgain">Play Again</button>
+      </div>
+    </div>
+
+    <footer class="footer">Mystic Seekers — Hidden Object Game</footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
