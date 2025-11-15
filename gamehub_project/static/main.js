@@ -74,6 +74,14 @@ const games = [
     category: 'arcade'
   },
   {
+    id: "carrom-clash",
+    title: "Carrom Clash",
+    description: "Flick the striker to pocket coins",
+    image: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=400&h=250&fit=crop&crop=center&auto=format&q=80",
+    file: "/static/games/carrom-clash.html",
+    category: "strategy"
+  },
+  {
     id: "balloon-popper",
     title: "Balloon Popper",
     description: "Pop balloons before time runs out",
@@ -498,55 +506,42 @@ function setupEnhancedSearch() {
   });
 }
 
-// Add particle effect
-function createParticles() {
-  const particleContainer = document.createElement("div");
-  particleContainer.className = "fixed inset-0 pointer-events-none z-0";
-  document.body.appendChild(particleContainer);
+// Category filter
+function setupCategoryFilter() {
+  const categoryButtons = document.querySelectorAll(".category-btn");
 
-  for (let i = 0; i < 50; i++) {
-    const particle = document.createElement("div");
-    particle.className =
-      "absolute w-1 h-1 bg-purple-400 rounded-full opacity-30";
-    particle.style.left = Math.random() * 100 + "%";
-    particle.style.top = Math.random() * 100 + "%";
-    particle.style.animationDelay = Math.random() * 6 + "s";
-    particle.classList.add("floating");
-    particleContainer.appendChild(particle);
-  }
+  categoryButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      // Remove active class from all buttons
+      categoryButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const category = btn.dataset.category;
+
+      if (category === "all") {
+        renderGames(games);
+      } else {
+        const filteredGames = games.filter(
+          (game) => game.category === category
+        );
+        renderGames(filteredGames);
+      }
+    });
+  });
 }
 
-// Initialize everything when DOM is loaded
+// Initialize everything
 document.addEventListener("DOMContentLoaded", () => {
+  renderGames();
+  setupThemeToggle();
+  setupEnhancedSearch();
+  setupCategoryFilter();
+
   // Load saved theme
   const savedTheme = localStorage.getItem("theme") || "dark";
   document.documentElement.setAttribute("data-theme", savedTheme);
-
-  // Update theme toggle icon
   const themeIcon = document.querySelector("#themeToggle i");
   if (themeIcon) {
     themeIcon.className = savedTheme === "dark" ? "fas fa-moon" : "fas fa-sun";
   }
-
-  renderGames();
-  setupEnhancedSearch();
-  setupThemeToggle();
-  createParticles();
-});
-
-// Updating footer year
-document.getElementById('footeryear').textContent = new Date().getFullYear();
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  });
 });
