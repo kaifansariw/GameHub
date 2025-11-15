@@ -1,0 +1,38 @@
+:root{
+  --bg:#081022; --panel:#0b1220; --accent:#60a5fa; --good:#34d399; --bad:#fb7185;
+  font-family:Inter, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#021021);color:#e6eef8}
+.wrap{max-width:1100px;margin:18px auto;padding:16px}
+.topbar{display:flex;align-items:baseline;justify-content:space-between}
+.topbar h1{margin:0;font-size:24px;color:var(--accent)}
+.subtitle{margin:0;color:#9fb4d9;font-size:13px}
+
+.game-row{display:flex;gap:18px;margin-top:14px;align-items:flex-start}
+.scene-area{position:relative;flex:1;max-width:720px}
+.scene-area img{display:block;width:100%;height:auto;border-radius:10px;border:6px solid rgba(255,255,255,0.02);box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+.hotspots{position:absolute;inset:0;pointer-events:none}
+.panel{width:300px;background:rgba(255,255,255,0.02);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+.meta{display:flex;justify-content:space-between;font-weight:700;color:#cfe6ff;margin-bottom:12px}
+.targets{list-style:none;padding:0;margin:0;display:grid;gap:8px;max-height:420px;overflow:auto}
+.targets li{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);font-size:14px}
+.targets li.found{opacity:0.5;text-decoration:line-through;color:#9fb4d9}
+.buttons{display:flex;gap:8px;margin-top:12px}
+.buttons button{flex:1;padding:10px;border-radius:8px;border:none;background:linear-gradient(90deg,#7dd3fc,#a78bfa);color:#062033;font-weight:700;cursor:pointer}
+.buttons button:disabled{opacity:0.5;cursor:not-allowed}
+
+.toast{position:absolute;left:50%;transform:translateX(-50%);top:12px;padding:8px 12px;border-radius:8px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.04)}
+.hidden{display:none}
+
+/* overlay end */
+.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(2,6,23,0.6),rgba(2,6,23,0.8));z-index:60}
+.panelBox{background:#071529;padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);text-align:center}
+.panelBox button{margin-top:10px;padding:10px 16px;border-radius:8px;border:none;background:linear-gradient(90deg,#7dd3fc,#a78bfa);color:#062033;font-weight:700}
+
+/* small screens */
+@media (max-width:880px){
+  .game-row{flex-direction:column}
+  .panel{width:100%}
+}
