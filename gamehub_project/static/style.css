@@ -1,99 +1,20 @@
-/* GameHub - Futuristic Gaming UI Styles with Dark Mode Support */
+/* GameHub - Futuristic Gaming UI Styles */
 
 /* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
-/* ============================================
-   CSS VARIABLES - LIGHT & DARK THEMES
-   ============================================ */
+/* CSS Variables */
 :root {
-    /* Brand Colors (unchanged) */
     --primary-purple: #8b5cf6;
     --primary-pink: #ec4899;
     --primary-blue: #3b82f6;
     --neon-purple: #a855f7;
     --neon-pink: #f472b6;
-    
-    /* Dark Theme (Default) */
-    --bg-primary: #0f0f23;
-    --bg-secondary: #1a1a2e;
-    --bg-gradient-start: #1e1b4b;
-    --bg-gradient-middle: #1e3a8a;
-    --bg-gradient-end: #312e81;
-    
-    --text-primary: #ffffff;
-    --text-secondary: #e5e7eb;
-    --text-muted: #9ca3af;
-    --text-dark: #1f2937;
-    
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-bg-hover: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-border-hover: rgba(255, 255, 255, 0.2);
-    
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --card-border: rgba(255, 255, 255, 0.1);
-    
-    --input-bg: rgba(255, 255, 255, 0.1);
-    --input-border: rgba(255, 255, 255, 0.2);
-    --input-focus-bg: rgba(255, 255, 255, 0.15);
-    
-    --nav-link-color: #e5e7eb;
-    --nav-link-hover-bg: rgba(139, 92, 246, 0.1);
-    
-    --scrollbar-track: rgba(255, 255, 255, 0.1);
-    
-    --feature-card-bg: rgba(255, 255, 255, 0.03);
-    --feature-card-hover-bg: rgba(255, 255, 255, 0.08);
-    
-    --social-link-bg: rgba(255, 255, 255, 0.1);
-    
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --overlay-gradient: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
 }
 
-/* Light Theme Variables */
-[data-theme="light"] {
-    --bg-primary: #f8fafc;
-    --bg-secondary: #ffffff;
-    --bg-gradient-start: #e0e7ff;
-    --bg-gradient-middle: #dbeafe;
-    --bg-gradient-end: #ede9fe;
-    
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --text-muted: #64748b;
-    --text-dark: #1f2937;
-    
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-bg-hover: rgba(255, 255, 255, 0.9);
-    --glass-border: rgba(139, 92, 246, 0.2);
-    --glass-border-hover: rgba(139, 92, 246, 0.3);
-    
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --card-border: rgba(139, 92, 246, 0.15);
-    
-    --input-bg: rgba(255, 255, 255, 0.9);
-    --input-border: rgba(139, 92, 246, 0.3);
-    --input-focus-bg: rgba(255, 255, 255, 1);
-    
-    --nav-link-color: #334155;
-    --nav-link-hover-bg: rgba(139, 92, 246, 0.15);
-    
-    --scrollbar-track: rgba(139, 92, 246, 0.1);
-    
-    --feature-card-bg: rgba(255, 255, 255, 0.6);
-    --feature-card-hover-bg: rgba(255, 255, 255, 0.9);
-    
-    --social-link-bg: rgba(139, 92, 246, 0.1);
-    
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --overlay-gradient: rgba(0, 0, 0, 0.1);
-}
-
-/* ============================================
-   BASE STYLES
-   ============================================ */
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -106,10 +27,9 @@ html {
 
 body {
     font-family: 'Rajdhani', sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background: #0f0f23;
+    color: #ffffff;
     overflow-x: hidden;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .font-orbitron {
@@ -120,9 +40,7 @@ body {
     font-family: 'Rajdhani', sans-serif;
 }
 
-/* ============================================
-   ANIMATED BACKGROUND
-   ============================================ */
+/* Animated Background */
 @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -134,39 +52,27 @@ body {
     animation: gradient 15s ease infinite;
 }
 
-/* Background gradient adjustment for light mode */
-[data-theme="light"] .animate-gradient {
-    opacity: 0.6;
-}
-
-/* ============================================
-   GLASS MORPHISM EFFECTS
-   ============================================ */
+/* Glass Morphism Effects */
 .glass-nav {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    background: var(--glass-bg);
-    border-bottom: 1px solid var(--glass-border);
-    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .glass-card {
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--card-border);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    box-shadow: 0 8px 32px var(--shadow-color);
-    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* ============================================
-   NAVIGATION STYLES
-   ============================================ */
+/* Navigation Styles */
 .nav-link {
     position: relative;
     padding: 8px 16px;
-    color: var(--nav-link-color);
+    color: #e5e7eb;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
@@ -175,7 +81,7 @@ body {
 
 .nav-link:hover {
     color: var(--neon-purple);
-    background: var(--nav-link-hover-bg);
+    background: rgba(139, 92, 246, 0.1);
 }
 
 .nav-link::after {
@@ -194,15 +100,13 @@ body {
     width: 100%;
 }
 
-/* ============================================
-   SEARCH INPUT
-   ============================================ */
+/* Search Input */
 .search-input {
-    background: var(--input-bg);
-    border: 1px solid var(--input-border);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     padding: 8px 40px 8px 16px;
-    color: var(--text-primary);
+    color: white;
     font-size: 14px;
     width: 250px;
     transition: all 0.3s ease;
@@ -213,57 +117,32 @@ body {
     outline: none;
     border-color: var(--neon-purple);
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
-    background: var(--input-focus-bg);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .search-input::placeholder {
-    color: var(--text-muted);
+    color: #9ca3af;
 }
 
-/* Search icon color adjustment */
-.search-input + i {
-    color: var(--text-muted);
-    transition: color 0.3s ease;
-}
-
-/* ============================================
-   THEME TOGGLE BUTTON
-   ============================================ */
+/* Theme Toggle */
 .theme-toggle {
-    background: var(--input-bg);
-    border: 1px solid var(--input-border);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
-    padding: 8px 12px;
-    color: var(--text-secondary);
+    padding: 8px;
+    color: #e5e7eb;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
 }
 
 .theme-toggle:hover {
-    background: var(--glass-bg-hover);
+    background: rgba(255, 255, 255, 0.2);
     color: var(--neon-purple);
     transform: scale(1.1);
-    border-color: var(--neon-purple);
 }
 
-.theme-toggle i {
-    font-size: 18px;
-    transition: transform 0.3s ease;
-}
-
-.theme-toggle:active i {
-    transform: rotate(360deg);
-}
-
-/* ============================================
-   NEON BUTTONS
-   ============================================ */
+/* Neon Buttons */
 .neon-button {
     position: relative;
     display: inline-flex;
@@ -290,39 +169,30 @@ body {
 }
 
 .neon-button.secondary {
-    background: var(--glass-bg);
-    color: var(--text-primary);
-    border: 1px solid var(--glass-border-hover);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
 }
 
 .neon-button.secondary:hover {
-    background: var(--glass-bg-hover);
+    background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px var(--shadow-color);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
 }
 
-/* ============================================
-   GLOW TEXT EFFECT
-   ============================================ */
+/* Glow Text Effect */
 .glow-text {
     text-shadow: 0 0 20px rgba(139, 92, 246, 0.5),
                  0 0 40px rgba(139, 92, 246, 0.3),
                  0 0 60px rgba(139, 92, 246, 0.2);
 }
 
-[data-theme="light"] .glow-text {
-    text-shadow: 0 0 30px rgba(139, 92, 246, 0.4),
-                 0 0 50px rgba(139, 92, 246, 0.2);
-}
-
-/* ============================================
-   GAME CARDS
-   ============================================ */
+/* Game Cards */
 .game-card {
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
-    border: 1px solid var(--card-border);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 20px;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -338,7 +208,7 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, var(--overlay-gradient), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transition: left 0.5s;
 }
 
@@ -378,44 +248,32 @@ body {
     box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
 }
 
-/* ============================================
-   FEATURE CARDS
-   ============================================ */
+/* Feature Cards */
 .feature-card {
     text-align: center;
     padding: 20px;
-    background: var(--feature-card-bg);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 15px;
-    border: 1px solid var(--card-border);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
-    background: var(--feature-card-hover-bg);
-    border-color: var(--glass-border-hover);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.feature-card i {
-    transition: transform 0.3s ease;
-}
-
-.feature-card:hover i {
-    transform: scale(1.1);
-}
-
-/* ============================================
-   SOCIAL LINKS
-   ============================================ */
+/* Social Links */
 .social-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
-    background: var(--social-link-bg);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    color: var(--text-secondary);
+    color: #e5e7eb;
     text-decoration: none;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
@@ -428,15 +286,13 @@ body {
     box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
 }
 
-/* ============================================
-   SCROLLBAR STYLING
-   ============================================ */
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--scrollbar-track);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -448,9 +304,7 @@ body {
     background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
 }
 
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
+/* Responsive Design */
 @media (max-width: 768px) {
     .search-input {
         width: 180px;
@@ -481,9 +335,7 @@ body {
     }
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
+/* Loading Animation */
 @keyframes pulse {
     0%, 100% {
         opacity: 1;
@@ -497,6 +349,7 @@ body {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Particle Effect */
 @keyframes float {
     0%, 100% {
         transform: translateY(0px);
@@ -509,10 +362,6 @@ body {
 .floating {
     animation: float 6s ease-in-out infinite;
 }
-
-/* ============================================
-   ADDITIONAL BUTTON STYLES
-   ============================================ */
 .gh-button {
     display: inline-flex;
     align-items: center;
@@ -523,6 +372,7 @@ body {
     letter-spacing: 0.5px;
     padding: 12px 32px; 
     font-size: 16px;
+    font-weight: 600;
     border-radius: 12px;
     width: auto;
     height: auto;
@@ -530,106 +380,77 @@ body {
 }
 
 .glow-on-hover {
-    font-family: 'Orbitron', sans-serif;
-    outline: none;
-    color: #ffffff;
-    background: linear-gradient(90deg, #ff007f, #5700ff);
-    border: none;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    transition: transform 0.3s, background 0.5s;
-    overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
+  outline: none;
+  color: #ffffff;
+  background: linear-gradient(90deg, #ff007f, #5700ff);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: transform 0.3s, background 0.5s;
+  overflow: hidden;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    ;
+  }
+  100% {
+    transform: scale(1.02);
+    ;
+  }
 }
 
 .glow-on-hover:hover {
-    transform: scale(1.08);
-    animation: pulse-btn 1.2s infinite alternate;
-}
-
-@keyframes pulse-btn {
-    0% {
-        transform: scale(1.08);
-    }
-    100% {
-        transform: scale(1.1);
-    }
+  transform: scale(1.08);
+  animation: pulse 1.2s infinite alternate;
 }
 
 .glow-on-hover::before {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    background: linear-gradient(90deg, #ff007f, #01d2d9, #6619ff, #ff007f);
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(13px);
-    animation: neon-glow 6s infinite linear;
-    border-radius: 30px;
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background: linear-gradient(90deg, #ff007f, #01d2d9, #6619ff, #ff007f);
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(13px);
+  animation: neon-glow 6s infinite linear;
+  border-radius: 30px;
 }
 
 @keyframes neon-glow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .glow-on-hover:active {
-    transform: scale(0.98);
-    background: #ff007f;
+  transform: scale(0.98);
+  background: #ff007f;
 }
 
 .pixel-btn {
-    font-family: 'Orbitron', sans-serif;
-    border: 2px solid var(--text-primary);
-    background: var(--glass-bg);
-    color: var(--text-primary);
-    padding: 12px 30px;
-    transition: 0.3s ease;
-    border-radius: 15px;
-    letter-spacing: 1px;
+  font-family: 'Orbitron', sans-serif;
+  border: 2px solid white;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  padding: 12px 30px;
+  transition: 0.3s ease;
+  border-radius: 15px;
+  letter-spacing: 1px;
 }
 
 .pixel-btn:hover {
-    background: var(--text-primary);
-    color: var(--bg-primary);
-    border-color: var(--text-primary);
-}
-
-/* Light mode adjustments for pixel button */
-[data-theme="light"] .pixel-btn {
-    border-color: var(--primary-purple);
-    color: var(--primary-purple);
-}
-
-[data-theme="light"] .pixel-btn:hover {
-    background: var(--primary-purple);
-    color: white;
-}
-
-/* ============================================
-   SMOOTH THEME TRANSITIONS
-   ============================================ */
-body, 
-.glass-nav,
-.glass-card,
-.game-card,
-.feature-card,
-.search-input,
-.theme-toggle,
-.neon-button,
-.social-link,
-.nav-link,
-.pixel-btn {
-    transition: background-color 0.3s ease, 
-                color 0.3s ease, 
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
+  background: white;
+  color: black;
+  border-color: black;
 }

@@ -1,4 +1,5 @@
 // Game data
+// Game data
 const games = [
   {
     id: "tic-tac-toe",
@@ -101,6 +102,7 @@ const games = [
     title: "Bubble Shooter",
     description: "Match and pop colorful bubbles",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/Bubble Shooter/index.html",
     category: "puzzle"
   },
@@ -125,6 +127,7 @@ const games = [
     title: "Color Grid",
     description: "Solve the color-matching puzzle",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/color grid/index.html",
     category: "puzzle"
   },
@@ -133,6 +136,7 @@ const games = [
     title: "Dodge Square",
     description: "Avoid obstacles and survive",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/Dodge Square/index.html",
     category: "action"
   },
@@ -205,6 +209,7 @@ const games = [
     title: "Hangman Hero",
     description: "Guess the hidden words",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/Hangman Hero/index.html",
     category: "word"
   },
@@ -221,6 +226,7 @@ const games = [
     title: "Jump Tag",
     description: "Tag the targets by jumping",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/jump-tag/index.html",
     category: "arcade"
   },
@@ -229,6 +235,7 @@ const games = [
     title: "Logic Path",
     description: "Guide the ball using logic",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/logic-path/index.html",
     category: "logic"
   },
@@ -245,6 +252,7 @@ const games = [
     title: "Pattern Memory",
     description: "Remember and repeat the patterns",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/pattern memory/index.html",
     category: "memory"
   },
@@ -253,6 +261,7 @@ const games = [
     title: "Pipe Twister",
     description: "Rotate pipes to connect the flow",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/pipe-twister/index.html",
     category: "puzzle"
   },
@@ -285,6 +294,7 @@ const games = [
     title: "Speed Tap Grid",
     description: "Tap targets quickly on a grid",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/speed-tap-grid/index.html",
     category: "reflex"
   },
@@ -293,6 +303,7 @@ const games = [
     title: "Symbol Swap",
     description: "Swap symbols to match rows",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/symbol-swap/index.html",
     category: "puzzle"
   },
@@ -301,6 +312,7 @@ const games = [
     title: "Tap Counter",
     description: "Tap repeatedly to score",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/tap-counter/index.html",
     category: "arcade"
   },
@@ -309,6 +321,7 @@ const games = [
     title: "Tetris",
     description: "Classic falling block puzzle",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/Tetris/index.html",
     category: "classic"
   },
@@ -317,6 +330,7 @@ const games = [
     title: "Tower of Hanoi",
     description: "Move disks using minimum moves",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/Tower of Hanoi/index.html",
     category: "logic"
   },
@@ -325,6 +339,7 @@ const games = [
     title: "Typing Sprint",
     description: "Type words quickly to score",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/Typing Sprint/index.html",
     category: "skill"
   },
@@ -341,6 +356,7 @@ const games = [
     title: "Word Chain",
     description: "Form a chain of related words",
     image: 'https://images.unsplash.com/photo-1614332287897-cdc485fa562d?w=400&h=250&fit=crop&crop=center&auto=format&q=80',
+
     file: "/static/games/word chain/index.html",
     category: "word"
   },
@@ -354,174 +370,7 @@ const games = [
   }
 ];
 
-// ============================================
-// DARK MODE FUNCTIONALITY
-// ============================================
 
-/**
- * Initialize theme on page load
- * Checks localStorage and system preference
- */
-function initializeTheme() {
-  const html = document.documentElement;
-  const themeToggle = document.getElementById("themeToggle");
-  const themeIcon = themeToggle?.querySelector("i");
-  
-  // Check for saved theme preference or default to system preference
-  let savedTheme = localStorage.getItem("theme");
-  
-  // If no saved theme, detect system preference
-  if (!savedTheme) {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    savedTheme = prefersDark ? "dark" : "light";
-  }
-  
-  // Apply theme
-  html.setAttribute("data-theme", savedTheme);
-  
-  // Update icon
-  if (themeIcon) {
-    themeIcon.className = savedTheme === "dark" ? "fas fa-moon" : "fas fa-sun";
-  }
-  
-  // Log for debugging
-  console.log(`🎨 Theme initialized: ${savedTheme}`);
-}
-
-/**
- * Toggle between light and dark themes
- */
-function toggleTheme() {
-  const html = document.documentElement;
-  const themeToggle = document.getElementById("themeToggle");
-  const themeIcon = themeToggle?.querySelector("i");
-  
-  // Get current theme
-  const currentTheme = html.getAttribute("data-theme");
-  const newTheme = currentTheme === "dark" ? "light" : "dark";
-  
-  // Apply new theme with smooth transition
-  html.style.transition = "background-color 0.3s ease, color 0.3s ease";
-  html.setAttribute("data-theme", newTheme);
-  
-  // Save to localStorage
-  localStorage.setItem("theme", newTheme);
-  
-  // Update icon with rotation animation
-  if (themeIcon) {
-    themeIcon.style.transform = "rotate(360deg)";
-    setTimeout(() => {
-      themeIcon.className = newTheme === "dark" ? "fas fa-moon" : "fas fa-sun";
-      themeIcon.style.transform = "rotate(0deg)";
-    }, 150);
-  }
-  
-  // Add scale animation to button
-  if (themeToggle) {
-    themeToggle.style.transform = "scale(0.8)";
-    setTimeout(() => {
-      themeToggle.style.transform = "scale(1)";
-    }, 150);
-  }
-  
-  // Show theme change notification (optional)
-  showThemeNotification(newTheme);
-  
-  console.log(`🎨 Theme changed to: ${newTheme}`);
-}
-
-/**
- * Show a subtle notification when theme changes (optional)
- */
-function showThemeNotification(theme) {
-  const notification = document.createElement("div");
-  notification.className = "theme-notification";
-  notification.textContent = `${theme === "dark" ? "🌙" : "☀️"} ${theme === "dark" ? "Dark" : "Light"} Mode`;
-  notification.style.cssText = `
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    padding: 12px 24px;
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-family: 'Orbitron', monospace;
-    font-weight: 600;
-    z-index: 1000;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
-  `;
-  
-  document.body.appendChild(notification);
-  
-  // Animate in
-  setTimeout(() => {
-    notification.style.opacity = "1";
-    notification.style.transform = "translateY(0)";
-  }, 10);
-  
-  // Remove after 2 seconds
-  setTimeout(() => {
-    notification.style.opacity = "0";
-    notification.style.transform = "translateY(20px)";
-    setTimeout(() => notification.remove(), 300);
-  }, 2000);
-}
-
-/**
- * Setup theme toggle button event listener
- */
-function setupThemeToggle() {
-  const themeToggle = document.getElementById("themeToggle");
-  
-  if (themeToggle) {
-    themeToggle.addEventListener("click", toggleTheme);
-    
-    // Add keyboard accessibility
-    themeToggle.addEventListener("keypress", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        toggleTheme();
-      }
-    });
-    
-    // Make it focusable
-    themeToggle.setAttribute("tabindex", "0");
-    themeToggle.setAttribute("role", "button");
-    themeToggle.setAttribute("aria-label", "Toggle dark mode");
-  }
-}
-
-/**
- * Listen for system theme changes
- */
-function setupSystemThemeListener() {
-  const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  
-  darkModeMediaQuery.addEventListener("change", (e) => {
-    // Only auto-update if user hasn't manually set a preference
-    const savedTheme = localStorage.getItem("theme");
-    if (!savedTheme) {
-      const html = document.documentElement;
-      const newTheme = e.matches ? "dark" : "light";
-      html.setAttribute("data-theme", newTheme);
-      
-      const themeIcon = document.querySelector("#themeToggle i");
-      if (themeIcon) {
-        themeIcon.className = newTheme === "dark" ? "fas fa-moon" : "fas fa-sun";
-      }
-      
-      console.log(`🎨 System theme changed to: ${newTheme}`);
-    }
-  });
-}
-
-// ============================================
-// GAME RENDERING AND SEARCH
-// ============================================
 
 // Initialize AOS
 AOS.init({
@@ -532,8 +381,6 @@ AOS.init({
 // Render games with futuristic styling
 function renderGames(gamesToRender = games) {
   const gamesGrid = document.getElementById("gamesGrid");
-  if (!gamesGrid) return;
-  
   gamesGrid.innerHTML = "";
 
   gamesToRender.forEach((game, index) => {
@@ -543,22 +390,22 @@ function renderGames(gamesToRender = games) {
     gameCard.setAttribute("data-aos-delay", index * 100);
 
     gameCard.innerHTML = `
-      <div class="relative overflow-hidden rounded-xl mb-4">
-        <img src="${game.image}" alt="${game.title}" class="w-full h-48 object-cover" loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-          <span class="text-white font-orbitron font-semibold">${game.category}</span>
-        </div>
-      </div>
-      <div class="text-center">
-        <h3 class="font-orbitron font-bold text-xl mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-          ${game.title}
-        </h3>
-        <p class="font-rajdhani text-gray-400 mb-4">${game.description}</p>
-        <button onclick="playGame('${game.file}')" class="pixel-btn glow-on-hover game-play-btn w-full">
-          <i class="fas fa-rocket mr-2"></i>Play Now
-        </button>
-      </div>
-    `;
+            <div class="relative overflow-hidden rounded-xl mb-4">
+                <img src="${game.image}" alt="${game.title}" class="w-full h-48 object-cover" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <span class="text-white font-orbitron font-semibold">${game.category}</span>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3 class="font-orbitron font-bold text-xl mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    ${game.title}
+                </h3>
+                <p class="font-rajdhani text-gray-400 mb-4">${game.description}</p>
+                <button onclick="playGame('${game.file}')" class="pixel-btn glow-on-hover game-play-btn w-full">
+                    <i class="fas fa-rocket mr-2"></i>Play Now
+                </button>
+            </div>
+        `;
 
     gamesGrid.appendChild(gameCard);
   });
@@ -585,12 +432,34 @@ function playGame(gameFile) {
   window.location.href = gameFile;
 }
 
+// Theme toggle functionality
+function setupThemeToggle() {
+  const themeToggle = document.getElementById("themeToggle");
+  const html = document.documentElement;
+
+  themeToggle.addEventListener("click", () => {
+    const currentTheme = html.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    html.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+
+    // Update icon
+    const icon = themeToggle.querySelector("i");
+    icon.className = newTheme === "dark" ? "fas fa-moon" : "fas fa-sun";
+
+    // Add animation
+    themeToggle.style.transform = "scale(0.8)";
+    setTimeout(() => {
+      themeToggle.style.transform = "scale(1)";
+    }, 150);
+  });
+}
+
 // Enhanced search with animations
 function setupEnhancedSearch() {
   const searchInput = document.getElementById("searchInput");
   const gamesGrid = document.getElementById("gamesGrid");
-  
-  if (!searchInput || !gamesGrid) return;
 
   searchInput.addEventListener("input", (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -611,19 +480,19 @@ function setupEnhancedSearch() {
 
       // scroll to "Featured Games" section
       const gamesSection = document.getElementById('games');
-      if (gamesSection && searchTerm) {
+      if (gamesSection) {
         gamesSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
       // Show no results message
       if (filteredGames.length === 0 && searchTerm) {
         gamesGrid.innerHTML = `
-          <div class="col-span-full text-center py-12">
-            <i class="fas fa-search text-6xl text-gray-600 mb-4"></i>
-            <h3 class="font-orbitron text-xl mb-2" style="color: var(--text-secondary)">No games found</h3>
-            <p class="font-rajdhani" style="color: var(--text-muted)">Try searching with different keywords</p>
-          </div>
-        `;
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-search text-6xl text-gray-600 mb-4"></i>
+                        <h3 class="font-orbitron text-xl text-gray-400 mb-2">No games found</h3>
+                        <p class="font-rajdhani text-gray-500">Try searching with different keywords</p>
+                    </div>
+                `;
       }
     }, 300);
   });
@@ -637,7 +506,8 @@ function createParticles() {
 
   for (let i = 0; i < 50; i++) {
     const particle = document.createElement("div");
-    particle.className = "absolute w-1 h-1 bg-purple-400 rounded-full opacity-30";
+    particle.className =
+      "absolute w-1 h-1 bg-purple-400 rounded-full opacity-30";
     particle.style.left = Math.random() * 100 + "%";
     particle.style.top = Math.random() * 100 + "%";
     particle.style.animationDelay = Math.random() * 6 + "s";
@@ -646,38 +516,26 @@ function createParticles() {
   }
 }
 
-// ============================================
-// INITIALIZATION
-// ============================================
-
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize theme FIRST (before anything else renders)
-  initializeTheme();
-  
-  // Setup theme toggle
-  setupThemeToggle();
-  
-  // Setup system theme listener
-  setupSystemThemeListener();
-  
-  // Render games
-  renderGames();
-  
-  // Setup search
-  setupEnhancedSearch();
-  
-  // Create particles
-  createParticles();
-  
-  // Update footer year if element exists
-  const footerYear = document.getElementById('footeryear');
-  if (footerYear) {
-    footerYear.textContent = new Date().getFullYear();
+  // Load saved theme
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+
+  // Update theme toggle icon
+  const themeIcon = document.querySelector("#themeToggle i");
+  if (themeIcon) {
+    themeIcon.className = savedTheme === "dark" ? "fas fa-moon" : "fas fa-sun";
   }
-  
-  console.log("✅ GameHub initialized successfully!");
+
+  renderGames();
+  setupEnhancedSearch();
+  setupThemeToggle();
+  createParticles();
 });
+
+// Updating footer year
+document.getElementById('footeryear').textContent = new Date().getFullYear();
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
