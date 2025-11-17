@@ -41,79 +41,74 @@
 
   <!-- Game Section -->
   <main class="flex-grow container mx-auto px-4 py-10">
-    <div class="max-w-3xl md:max-w-[80vw] mx-auto">
+    <div class="max-w-3xl mx-auto">
       
-      <div class="flex flex-col lg:flex-row justify-between items-center gap-3">
-        <div class="!w-1/2">
-        <!-- Stats -->
-        <div class="stats glass-card shadow mb-8 w-full text-white">
-          <div class="stat">
-            <div class="stat-title text-white/80">Level</div>
-            <div class="stat-value text-pink-300" id="level">1</div>
-          </div>
-          <div class="stat">
-            <div class="stat-title text-white/80">High Score</div>
-            <div class="stat-value text-blue-300" id="highScore">0</div>
-          </div>
-          <div class="stat">
-            <div class="stat-title text-white/80">Status</div>
-            <div class="stat-value text-yellow-300 text-sm" id="gameStatus">Ready</div>
-          </div>
+      <!-- Stats -->
+      <div class="stats glass-card shadow mb-8 w-full text-white">
+        <div class="stat">
+          <div class="stat-title text-white/80">Level</div>
+          <div class="stat-value text-pink-300" id="level">1</div>
         </div>
-
-        <!-- Simon Board -->
-        <div class="text-center mb-10">
-          <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
-            <button id="btn-0" class="simon-btn aspect-square rounded-2xl transition-all duration-200 bg-red-500 hover:brightness-110 active:scale-95 shadow-lg" onclick="playerInput(0)"></button>
-            <button id="btn-1" class="simon-btn aspect-square rounded-2xl transition-all duration-200 bg-blue-500 hover:brightness-110 active:scale-95 shadow-lg" onclick="playerInput(1)"></button>
-            <button id="btn-2" class="simon-btn aspect-square rounded-2xl transition-all duration-200 bg-green-500 hover:brightness-110 active:scale-95 shadow-lg" onclick="playerInput(2)"></button>
-            <button id="btn-3" class="simon-btn aspect-square rounded-2xl transition-all duration-200 bg-yellow-500 hover:brightness-110 active:scale-95 shadow-lg" onclick="playerInput(3)"></button>
-          </div>
+        <div class="stat">
+          <div class="stat-title text-white/80">High Score</div>
+          <div class="stat-value text-blue-300" id="highScore">0</div>
         </div>
-
-        <!-- Control Buttons -->
-        <div class="text-center mb-10">
-          <button id="startBtn" onclick="startGame()" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white btn-lg mr-4">
-            <i class="fas fa-play mr-2"></i>Start Game
-          </button>
-          <button onclick="resetGame()" class="btn btn-outline btn-lg border-white text-white hover:bg-white/20">
-            <i class="fas fa-redo mr-2"></i>Reset
-          </button>
-        </div>
-        </div>
-
-        <div class="!w-1/2">
-          <!-- Game Result -->
-          <div id="gameResult" class="text-center hidden mb-8">
-            <div class="alert bg-gradient-to-r from-pink-600/60 to-purple-700/60 text-white shadow-lg">
-              <i class="fas fa-trophy"></i>
-              <span id="resultText"></span>
-            </div>
-          </div>
-
-          <!-- Instructions -->
-          <div class="alert bg-gradient-to-r from-purple-700/60 to-blue-700/60 text-white shadow-lg mb-8">
-            <i class="fas fa-info-circle text-yellow-300"></i>
-            <div>
-              <h3 class="font-bold text-lg">How to Play:</h3>
-              <p>Watch the sequence of glowing colors and repeat it by clicking the tiles in the same order. Each level adds one more color — how far can you go?</p>
-            </div>
-          </div>
-
-          <!-- Game Rules -->
-          <section class="glass-card rounded-2xl p-6 shadow-xl border border-white/20 mb-10">
-            <h2 class="text-2xl font-bold text-center text-blue-200 mb-4">📜 Game Rules</h2>
-            <ul class="list-disc list-inside space-y-2 text-white/90">
-              <li>Click <strong>Start Game</strong> to begin the challenge.</li>
-              <li>Watch the color pattern carefully — it will flash in sequence.</li>
-              <li>Repeat the exact sequence by clicking the color buttons in order.</li>
-              <li>Each level adds one new color to the sequence.</li>
-              <li>If you click the wrong color, the game ends.</li>
-              <li>Try to reach the highest level possible to set a new high score!</li>
-            </ul>
-          </section>
+        <div class="stat">
+          <div class="stat-title text-white/80">Status</div>
+          <div class="stat-value text-yellow-300 text-sm" id="gameStatus">Ready</div>
         </div>
       </div>
+
+      <!-- Simon Board -->
+      <div class="text-center mb-10">
+        <div class="grid grid-cols-2 gap-4 max-w-md mx-auto">
+          <button id="btn-0" class="simon-btn aspect-square rounded-2xl transition-all duration-200 bg-red-500 hover:brightness-110 active:scale-95 shadow-lg" onclick="playerInput(0)"></button>
+          <button id="btn-1" class="simon-btn aspect-square rounded-2xl transition-all duration-200 bg-blue-500 hover:brightness-110 active:scale-95 shadow-lg" onclick="playerInput(1)"></button>
+          <button id="btn-2" class="simon-btn aspect-square rounded-2xl transition-all duration-200 bg-green-500 hover:brightness-110 active:scale-95 shadow-lg" onclick="playerInput(2)"></button>
+          <button id="btn-3" class="simon-btn aspect-square rounded-2xl transition-all duration-200 bg-yellow-500 hover:brightness-110 active:scale-95 shadow-lg" onclick="playerInput(3)"></button>
+        </div>
+      </div>
+
+      <!-- Control Buttons -->
+      <div class="text-center mb-10">
+        <button id="startBtn" onclick="startGame()" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white btn-lg mr-4">
+          <i class="fas fa-play mr-2"></i>Start Game
+        </button>
+        <button onclick="resetGame()" class="btn btn-outline btn-lg border-white text-white hover:bg-white/20">
+          <i class="fas fa-redo mr-2"></i>Reset
+        </button>
+      </div>
+
+      <!-- Game Result -->
+      <div id="gameResult" class="text-center hidden mb-8">
+        <div class="alert bg-gradient-to-r from-pink-600/60 to-purple-700/60 text-white shadow-lg">
+          <i class="fas fa-trophy"></i>
+          <span id="resultText"></span>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div class="alert bg-gradient-to-r from-purple-700/60 to-blue-700/60 text-white shadow-lg mb-8">
+        <i class="fas fa-info-circle text-yellow-300"></i>
+        <div>
+          <h3 class="font-bold text-lg">How to Play:</h3>
+          <p>Watch the sequence of glowing colors and repeat it by clicking the tiles in the same order. Each level adds one more color — how far can you go?</p>
+        </div>
+      </div>
+
+      <!-- Game Rules -->
+      <section class="glass-card rounded-2xl p-6 shadow-xl border border-white/20 mb-10">
+        <h2 class="text-2xl font-bold text-center text-blue-200 mb-4">📜 Game Rules</h2>
+        <ul class="list-disc list-inside space-y-2 text-white/90">
+          <li>Click <strong>Start Game</strong> to begin the challenge.</li>
+          <li>Watch the color pattern carefully — it will flash in sequence.</li>
+          <li>Repeat the exact sequence by clicking the color buttons in order.</li>
+          <li>Each level adds one new color to the sequence.</li>
+          <li>If you click the wrong color, the game ends.</li>
+          <li>Try to reach the highest level possible to set a new high score!</li>
+        </ul>
+      </section>
+
     </div>
   </main>
 

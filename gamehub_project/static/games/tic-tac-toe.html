@@ -19,10 +19,6 @@
       background: var(--bg-dark);
       color: #e2e8f0;
       font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
     }
 
     .navbar {
@@ -67,36 +63,37 @@
       border: none;
     }
     .rules-section {
-      margin-top: 40px;
-      padding: 25px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      color: #e5e7eb;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+  margin-top: 40px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #e5e7eb;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    .rules-section h2 {
-      font-size: 1.8rem;
-      text-align: center;
-      margin-bottom: 15px;
-    }
+.rules-section h2 {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 15px;
+}
 
-    .rules-list {
-      list-style: none;
-      line-height: 1.8;
-      padding-left: 0;
-    }
+.rules-list {
+  list-style: none;
+  line-height: 1.8;
+  padding-left: 0;
+}
 
-    .rules-list li::before {
-      content: "🎮 ";
-      margin-right: 6px;
-      color: var(--neon-purple);
-    }
+.rules-list li::before {
+  content: "🎮 ";
+  margin-right: 6px;
+  color: var(--neon-purple);
+}
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -119,9 +116,8 @@
   </div>
 
   <!-- Game Container -->
-  <div class="flex flex-col lg:flex-row justify-between items-center gap-3">
-    <div class="flex-grow flex justify-center items-center p-6">
-    <div class="game-container w-full max-w-md md:max-w-[80vw] animate__animated animate__fadeInUp">
+  <div class="flex-grow flex justify-center items-center p-6">
+    <div class="game-container w-full max-w-md animate__animated animate__fadeInUp">
       <!-- Game Status -->
       <div class="text-center mb-6">
         <div class="stats shadow w-full">
@@ -170,21 +166,19 @@
       </div>
     </div>
   </div>
-
-    <section class="glass-card rules-section animate__animated animate__fadeInUp">
-      <h2 class="font-orbitron glow-text">🎯 Game Rules</h2>
-      <ul class="font-rajdhani rules-list">
-        <li>Each player takes turns marking one empty cell with their symbol (X or O).</li>
-        <li>The first player to align 3 symbols horizontally, vertically, or diagonally wins.</li>
-        <li>If all 9 cells are filled and no one wins, it's a draw.</li>
-        <li>Click the "Reset" button to start a new round anytime.</li>
-        <li>Winning streaks and scores are tracked in real-time.</li>
-      </ul>
-    </section>
-  </div>
+  <section class="glass-card rules-section">
+  <h2 class="font-orbitron glow-text">🎯 Game Rules</h2>
+  <ul class="font-rajdhani rules-list">
+    <li>Each player takes turns marking one empty cell with their symbol (X or O).</li>
+    <li>The first player to align 3 symbols horizontally, vertically, or diagonally wins.</li>
+    <li>If all 9 cells are filled and no one wins, it’s a draw.</li>
+    <li>Click the “Reset” button to start a new round anytime.</li>
+    <li>Winning streaks and scores are tracked in real-time.</li>
+  </ul>
+</section>
 
     <!-- Footer -->
-    <footer class="w-full relative py-12 border-t border-white/10">
+    <footer class="relative py-12 border-t border-white/10">
         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center">
@@ -205,6 +199,7 @@
             </div>
         </div>
     </footer>
+
 
   <script src="../scripts/tic-tac-toe.js"></script>
 </body>
