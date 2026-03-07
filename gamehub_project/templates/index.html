@@ -39,6 +39,7 @@
 
     <script src="{% static 'scripts/audio-system.js' %}"></script>
     <script src="{% static 'scripts/audio-ui.js' %}"></script>
+    <script src="{% static 'scripts/gamehub-scores.js' %}"></script>
 </head>
 
 <body data-theme="dark" class="overflow-x-hidden home-page">
@@ -127,6 +128,7 @@
 
                     <div class="hidden md:flex space-x-6">
                         <a href="#hero" class="nav-link">Home</a>
+                        <a href="#progress" class="nav-link">Progress</a>
                         <a href="#games" class="nav-link">Games</a>
                         <a href="#reviews" class="nav-link">Reviews</a>
                         <a href="#about" class="nav-link">About</a>
@@ -183,6 +185,54 @@
         </div>
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
             <i class="fas fa-chevron-down text-2xl text-purple-400 opacity-70"></i>
+        </div>
+    </section>
+
+    <!-- Your Progress Section -->
+    <section id="progress" class="relative py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h2 class="font-orbitron font-bold text-4xl md:text-5xl mb-4">
+                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Your Progress</span>
+                </h2>
+                <p class="font-rajdhani text-xl text-gray-400">Track your high scores and compete with yourself</p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10" data-aos="fade-up" data-aos-delay="100">
+                <div class="progress-stat-card glass-card p-5 rounded-xl text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-gamepad text-purple-400"></i></div>
+                    <div class="font-orbitron text-2xl font-bold" id="progressGamesPlayed">0</div>
+                    <div class="font-rajdhani text-gray-400 text-sm">Games Played</div>
+                </div>
+                <div class="progress-stat-card glass-card p-5 rounded-xl text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-trophy text-yellow-400"></i></div>
+                    <div class="font-orbitron text-2xl font-bold" id="progressTotalScore">0</div>
+                    <div class="font-rajdhani text-gray-400 text-sm">Total Score</div>
+                </div>
+                <div class="progress-stat-card glass-card p-5 rounded-xl text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-star text-pink-400"></i></div>
+                    <div class="font-orbitron text-2xl font-bold" id="progressBestGame">—</div>
+                    <div class="font-rajdhani text-gray-400 text-sm">Best Game</div>
+                </div>
+                <div class="progress-stat-card glass-card p-5 rounded-xl text-center">
+                    <div class="text-3xl mb-2"><i class="fas fa-fire text-orange-400"></i></div>
+                    <div class="font-orbitron text-2xl font-bold" id="progressRecentCount">0</div>
+                    <div class="font-rajdhani text-gray-400 text-sm">Recently Played</div>
+                </div>
+            </div>
+
+            <!-- High Scores Table -->
+            <div class="glass-card p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="200" id="highScoresCard">
+                <h3 class="font-orbitron font-bold text-xl mb-4 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    <i class="fas fa-crown text-yellow-400 mr-2"></i>Your High Scores
+                </h3>
+                <div id="highScoresContainer" class="high-scores-grid">
+                    <p class="font-rajdhani text-gray-400 text-center py-8" id="noScoresMsg">
+                        No scores yet — play some games to see your high scores here!
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 

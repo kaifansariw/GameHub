@@ -448,6 +448,9 @@ function gameOver() {
   } else {
     showToast("Game Over");
   }
+  if (window.GameHubScores) {
+    window.GameHubScores.saveScore('snake', score);
+  }
   gameState = "gameOver";
 }
 

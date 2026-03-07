@@ -371,6 +371,14 @@ class Minesweeper {
             this.revealAllMines();
         }
 
+        // Save score (time in seconds, lower is better for wins)
+        if (won && window.GameHubScores) {
+            window.GameHubScores.saveScore('minesweeper', this.timer, {
+                scoreLabel: 'Best Time (s)',
+                lowerIsBetter: true
+            });
+        }
+
         // Show modal after a short delay
         setTimeout(() => {
             this.showGameOverModal(won);

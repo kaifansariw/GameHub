@@ -39,6 +39,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="{% static 'scripts/gamehub-scores.js' %}"></script>
 
 </head>
 
@@ -118,6 +119,18 @@
 
         </div>
 
+        <!-- Personal High Scores (Client-Side) -->
+        <div class="glass-card p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-lg shadow-purple-900/40 mt-12 animate__animated animate__fadeInUp" id="personalScoresCard">
+            <h2 class="text-center font-orbitron text-3xl md:text-4xl mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <i class="fas fa-user text-purple-400 mr-2"></i>Your Personal High Scores
+            </h2>
+            <div id="personalScoresContainer">
+                <p class="text-center text-gray-400 py-8 font-rajdhani text-xl" id="noPersonalScores">
+                    No scores saved yet — play some games and your high scores will appear here!
+                </p>
+            </div>
+        </div>
+
         <!-- Back Home Button -->
         <div class="text-center mt-10">
             <a href="{% url 'home' %}" class="neon-button">
@@ -177,6 +190,50 @@
       setTimeout(function(){ window.location.href = homeUrl; }, 3000);
     });
   })();
+</script>
+
+<script>
+  // Populate personal high scores on the leaderboard page
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!window.GameHubScores) return;
+    var allScores = window.GameHubScores.getAllScores();
+    var entries = Object.entries(allScores);
+    var container = document.getElementById('personalScoresContainer');
+    var noMsg = document.getElementById('noPersonalScores');
+    if (!container || entries.length === 0) return;
+
+    if (noMsg) noMsg.style.display = 'none';
+
+    entries.sort(function (a, b) {
+      if (a[1].lowerIsBetter && !b[1].lowerIsBetter) return 1;
+      if (!a[1].lowerIsBetter && b[1].lowerIsBetter) return -1;
+      return b[1].highScore - a[1].highScore;
+    });
+
+    var html = '<table class="min-w-full text-center">';
+    html += '<thead><tr class="text-purple-500 font-extrabold text-lg tracking-wide border-b-2 border-white/30">';
+    html += '<th class="py-3">Game</th><th class="py-3">High Score</th><th class="py-3">Last Played</th>';
+    html += '</tr></thead><tbody>';
+
+    entries.forEach(function (entry) {
+      var gameId = entry[0], data = entry[1];
+      var title = gameId.charAt(0).toUpperCase() + gameId.slice(1).replace(/-/g, ' ');
+      var label = data.scoreLabel || 'Points';
+      var scoreDisplay = data.lowerIsBetter
+        ? (function (s) { var m = Math.floor(s / 60), sec = s % 60; return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec; })(data.highScore)
+        : data.highScore.toLocaleString();
+      var lastPlayed = data.lastPlayed ? new Date(data.lastPlayed).toLocaleDateString() : '—';
+
+      html += '<tr class="border-b border-white/10 hover:bg-white/10 transition-all duration-300">';
+      html += '<td class="py-3 font-rajdhani text-xl font-bold">' + title + '</td>';
+      html += '<td class="py-3 font-orbitron text-purple-400 text-xl font-bold">' + scoreDisplay + '<div class="text-xs text-gray-500">' + label + '</div></td>';
+      html += '<td class="py-3 font-rajdhani text-gray-400">' + lastPlayed + '</td>';
+      html += '</tr>';
+    });
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  });
 </script>
 
 </body>

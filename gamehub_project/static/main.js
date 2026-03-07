@@ -688,6 +688,9 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Create particles
   createParticles();
+
+  // Render progress section
+  renderProgressSection();
   
   // Update footer year if element exists
   const footerYear = document.getElementById('footeryear');
@@ -751,6 +754,117 @@ main.js
 // ============================================
 // GAME STATISTICS AND ANALYTICS
 // ============================================
+
+// ============================================
+// PROGRESS SECTION RENDERING
+// ============================================
+
+function renderProgressSection() {
+  if (!window.GameHubScores) return;
+
+  var allScores = window.GameHubScores.getAllScores();
+  var scoreEntries = Object.entries(allScores);
+  var gamesPlayedCount = scoreEntries.length;
+  var totalScore = window.GameHubScores.getTotalScore();
+
+  // Update stats overview
+  var gamesPlayedEl = document.getElementById('progressGamesPlayed');
+  if (gamesPlayedEl) gamesPlayedEl.textContent = gamesPlayedCount;
+
+  var totalScoreEl = document.getElementById('progressTotalScore');
+  if (totalScoreEl) totalScoreEl.textContent = totalScore.toLocaleString();
+
+  // Best game (highest score, excluding lowerIsBetter)
+  var bestGameEl = document.getElementById('progressBestGame');
+  if (bestGameEl && scoreEntries.length > 0) {
+    var best = null;
+    var bestId = null;
+    scoreEntries.forEach(function (entry) {
+      var id = entry[0], data = entry[1];
+      if (!data.lowerIsBetter && (best === null || data.highScore > best.highScore)) {
+        best = data;
+        bestId = id;
+      }
+    });
+    if (bestId) {
+      var gameObj = games.find(function (g) { return g.id === bestId; });
+      bestGameEl.textContent = gameObj ? gameObj.title : bestId;
+      bestGameEl.style.fontSize = '0.9rem';
+    }
+  }
+
+  // Recently played count
+  var recentCountEl = document.getElementById('progressRecentCount');
+  if (recentCountEl) {
+    try {
+      var recent = JSON.parse(localStorage.getItem('recentlyPlayed') || '[]');
+      recentCountEl.textContent = recent.length;
+    } catch (e) {
+      recentCountEl.textContent = '0';
+    }
+  }
+
+  // Render high scores list
+  var container = document.getElementById('highScoresContainer');
+  var noScoresMsg = document.getElementById('noScoresMsg');
+  if (!container) return;
+
+  if (scoreEntries.length === 0) {
+    if (noScoresMsg) noScoresMsg.style.display = 'block';
+    return;
+  }
+
+  if (noScoresMsg) noScoresMsg.style.display = 'none';
+
+  // Sort by highScore descending (put lowerIsBetter games at end)
+  scoreEntries.sort(function (a, b) {
+    if (a[1].lowerIsBetter && !b[1].lowerIsBetter) return 1;
+    if (!a[1].lowerIsBetter && b[1].lowerIsBetter) return -1;
+    return b[1].highScore - a[1].highScore;
+  });
+
+  var html = '';
+  scoreEntries.forEach(function (entry) {
+    var gameId = entry[0], data = entry[1];
+    var gameObj = games.find(function (g) { return g.id === gameId; });
+    var title = gameObj ? gameObj.title : gameId;
+    var img = gameObj ? gameObj.image : '';
+    var label = data.scoreLabel || 'High Score';
+    var scoreDisplay = data.lowerIsBetter
+      ? formatTime(data.highScore)
+      : data.highScore.toLocaleString();
+    var lastPlayed = data.lastPlayed
+      ? new Date(data.lastPlayed).toLocaleDateString()
+      : '';
+
+    html += '<div class="high-score-item glass-card">';
+    if (img) {
+      html += '<img src="' + img + '" alt="' + title + '" class="high-score-img" loading="lazy" />';
+    }
+    html += '<div class="high-score-info">';
+    html += '<div class="font-orbitron font-bold text-sm">' + title + '</div>';
+    html += '<div class="font-rajdhani text-gray-400 text-xs">' + label + '</div>';
+    html += '</div>';
+    html += '<div class="high-score-value">';
+    html += '<div class="font-orbitron font-bold text-lg text-purple-400">' + scoreDisplay + '</div>';
+    if (lastPlayed) {
+      html += '<div class="font-rajdhani text-gray-500 text-xs">' + lastPlayed + '</div>';
+    }
+    html += '</div>';
+    html += '</div>';
+  });
+
+  // Keep noScoresMsg in DOM but hidden; insert new content before it
+  container.innerHTML = html + (noScoresMsg ? noScoresMsg.outerHTML : '');
+  var newNoMsg = container.querySelector('#noScoresMsg');
+  if (newNoMsg) newNoMsg.style.display = 'none';
+}
+
+function formatTime(seconds) {
+  var m = Math.floor(seconds / 60);
+  var s = seconds % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+}
 
 // Initialize game statistics
 function initializeGameStats() {
@@ -1207,6 +1321,9 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Add focus styles
   addFocusStyles();
+
+  // Render progress section
+  renderProgressSection();
   
   // Update footer year if element exists
   const footerYear = document.getElementById('footeryear');

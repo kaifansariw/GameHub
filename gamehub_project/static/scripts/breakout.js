@@ -521,6 +521,9 @@ class Breakout {
         
         document.getElementById('startBtn').style.display = 'inline-flex';
         document.getElementById('pauseBtn').style.display = 'none';
+        if (window.GameHubScores) {
+            window.GameHubScores.saveScore('breakout', this.score);
+        }
     }
     
     gameComplete() {
@@ -529,6 +532,9 @@ class Breakout {
         
         document.getElementById('startBtn').style.display = 'inline-flex';
         document.getElementById('pauseBtn').style.display = 'none';
+        if (window.GameHubScores) {
+            window.GameHubScores.saveScore('breakout', this.score);
+        }
     }
     
     showModal(icon, title, text) {

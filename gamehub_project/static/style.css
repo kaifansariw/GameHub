@@ -623,3 +623,71 @@ body,
   font-family: 'Rajdhani', sans-serif;
   margin-top: 8px;
 }
+
+/* =====================
+   PROGRESS / HIGH SCORES SECTION
+   ===================== */
+.progress-stat-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.progress-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+}
+
+.high-scores-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .high-scores-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .high-scores-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.high-score-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.high-score-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.15);
+}
+
+.high-score-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.high-score-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.high-score-info > div:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.high-score-value {
+  text-align: right;
+  flex-shrink: 0;
+}

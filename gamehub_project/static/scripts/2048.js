@@ -460,6 +460,9 @@ class Game2048 {
         text.style.color = '#776e65';
         overlay.classList.add('game-lost');
         overlay.style.display = 'flex';
+        if (window.GameHubScores) {
+            window.GameHubScores.saveScore('2048', this.score);
+        }
     }
 
     undoMove() {
