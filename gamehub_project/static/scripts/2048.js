@@ -9,7 +9,7 @@ class Game2048 {
         this.gameWon = false;
         this.gameOver = false;
         this.canUndo = false;
-        
+
         this.init();
         this.loadBestScore();
         this.setupEventListeners();
@@ -21,19 +21,19 @@ class Game2048 {
         for (let i = 0; i < 4; i++) {
             this.grid[i] = [0, 0, 0, 0];
         }
-        
+
         // Add two initial tiles
         this.addRandomTile();
         this.addRandomTile();
-        
+
         this.updateDisplay();
     }
 
     setupEventListeners() {
         document.addEventListener('keydown', (e) => {
             if (this.gameOver) return;
-            
-            switch(e.key) {
+
+            switch (e.key) {
                 case 'ArrowUp':
                 case 'w':
                 case 'W':
@@ -75,7 +75,7 @@ class Game2048 {
         // Touch support for mobile
         let startX, startY;
         const gameBoard = document.querySelector('.game-board');
-        
+
         gameBoard.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
@@ -83,13 +83,13 @@ class Game2048 {
 
         gameBoard.addEventListener('touchend', (e) => {
             if (!startX || !startY) return;
-            
+
             const endX = e.changedTouches[0].clientX;
             const endY = e.changedTouches[0].clientY;
-            
+
             const diffX = startX - endX;
             const diffY = startY - endY;
-            
+
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (diffX > 50) this.move('left');
                 else if (diffX < -50) this.move('right');
@@ -97,7 +97,7 @@ class Game2048 {
                 if (diffY > 50) this.move('up');
                 else if (diffY < -50) this.move('down');
             }
-            
+
             startX = null;
             startY = null;
         });
@@ -105,15 +105,15 @@ class Game2048 {
 
     addRandomTile() {
         const emptyCells = [];
-        
+
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 if (this.grid[i][j] === 0) {
-                    emptyCells.push({row: i, col: j});
+                    emptyCells.push({ row: i, col: j });
                 }
             }
         }
-        
+
         if (emptyCells.length > 0) {
             const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
             this.grid[randomCell.row][randomCell.col] = Math.random() < 0.9 ? 2 : 4;
@@ -124,7 +124,7 @@ class Game2048 {
         // Save state for undo
         this.previousGrid = this.grid.map(row => [...row]);
         this.previousScore = this.score;
-        
+
         let moved = false;
 
         if (direction === 'left') {
@@ -143,10 +143,10 @@ class Game2048 {
             this.addRandomTile();
             this.updateDisplay();
             this.updateUndoButton();
-            
+
             // Create particle effect for successful move
             this.createMoveEffect();
-            
+
             if (this.isGameWon() && !this.gameWon) {
                 this.gameWon = true;
                 this.showGameWon();
@@ -159,10 +159,10 @@ class Game2048 {
 
     moveLeft() {
         let moved = false;
-        
+
         for (let i = 0; i < 4; i++) {
             const row = this.grid[i].filter(val => val !== 0);
-            
+
             for (let j = 0; j < row.length - 1; j++) {
                 if (row[j] === row[j + 1]) {
                     row[j] *= 2;
@@ -170,11 +170,11 @@ class Game2048 {
                     row.splice(j + 1, 1);
                 }
             }
-            
+
             while (row.length < 4) {
                 row.push(0);
             }
-            
+
             for (let j = 0; j < 4; j++) {
                 if (this.grid[i][j] !== row[j]) {
                     moved = true;
@@ -182,16 +182,16 @@ class Game2048 {
                 this.grid[i][j] = row[j];
             }
         }
-        
+
         return moved;
     }
 
     moveRight() {
         let moved = false;
-        
+
         for (let i = 0; i < 4; i++) {
             const row = this.grid[i].filter(val => val !== 0);
-            
+
             for (let j = row.length - 1; j > 0; j--) {
                 if (row[j] === row[j - 1]) {
                     row[j] *= 2;
@@ -200,11 +200,11 @@ class Game2048 {
                     j--;
                 }
             }
-            
+
             while (row.length < 4) {
                 row.unshift(0);
             }
-            
+
             for (let j = 0; j < 4; j++) {
                 if (this.grid[i][j] !== row[j]) {
                     moved = true;
@@ -212,13 +212,13 @@ class Game2048 {
                 this.grid[i][j] = row[j];
             }
         }
-        
+
         return moved;
     }
 
     moveUp() {
         let moved = false;
-        
+
         for (let j = 0; j < 4; j++) {
             const column = [];
             for (let i = 0; i < 4; i++) {
@@ -226,7 +226,7 @@ class Game2048 {
                     column.push(this.grid[i][j]);
                 }
             }
-            
+
             for (let i = 0; i < column.length - 1; i++) {
                 if (column[i] === column[i + 1]) {
                     column[i] *= 2;
@@ -234,11 +234,11 @@ class Game2048 {
                     column.splice(i + 1, 1);
                 }
             }
-            
+
             while (column.length < 4) {
                 column.push(0);
             }
-            
+
             for (let i = 0; i < 4; i++) {
                 if (this.grid[i][j] !== column[i]) {
                     moved = true;
@@ -246,13 +246,13 @@ class Game2048 {
                 this.grid[i][j] = column[i];
             }
         }
-        
+
         return moved;
     }
 
     moveDown() {
         let moved = false;
-        
+
         for (let j = 0; j < 4; j++) {
             const column = [];
             for (let i = 0; i < 4; i++) {
@@ -260,7 +260,7 @@ class Game2048 {
                     column.push(this.grid[i][j]);
                 }
             }
-            
+
             for (let i = column.length - 1; i > 0; i--) {
                 if (column[i] === column[i - 1]) {
                     column[i] *= 2;
@@ -269,11 +269,11 @@ class Game2048 {
                     i--;
                 }
             }
-            
+
             while (column.length < 4) {
                 column.unshift(0);
             }
-            
+
             for (let i = 0; i < 4; i++) {
                 if (this.grid[i][j] !== column[i]) {
                     moved = true;
@@ -281,7 +281,7 @@ class Game2048 {
                 this.grid[i][j] = column[i];
             }
         }
-        
+
         return moved;
     }
 
@@ -305,7 +305,7 @@ class Game2048 {
                 }
             }
         }
-        
+
         // Check for possible merges
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
@@ -318,62 +318,62 @@ class Game2048 {
                 }
             }
         }
-        
+
         return true;
     }
 
     updateDisplay() {
         const tileContainer = document.getElementById('tile-container');
         tileContainer.innerHTML = '';
-        
+
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 if (this.grid[i][j] !== 0) {
                     const tile = document.createElement('div');
                     tile.className = `tile tile-${this.grid[i][j]} tile-new`;
                     tile.textContent = this.grid[i][j].toLocaleString();
-                    
+
                     // Enhanced positioning for larger board
                     const isMobile = window.innerWidth <= 768;
                     const tileSize = isMobile ? 70 : 90;
                     const gap = isMobile ? 15 : 20;
-                    
+
                     // Calculate exact position to center tiles in grid cells
                     tile.style.left = (j * (tileSize + gap)) + 'px';
                     tile.style.top = (i * (tileSize + gap)) + 'px';
                     tile.style.width = tileSize + 'px';
                     tile.style.height = tileSize + 'px';
                     tile.style.lineHeight = tileSize + 'px';
-                    
+
                     // Add special effects for high value tiles
                     if (this.grid[i][j] >= 1024) {
                         tile.classList.add('tile-legendary');
                     } else if (this.grid[i][j] >= 128) {
                         tile.classList.add('tile-gold');
                     }
-                    
+
                     tileContainer.appendChild(tile);
                 }
             }
         }
-        
+
         // Update score display with animations
         this.animateScoreChange('score', this.score);
         document.getElementById('moves').textContent = this.moves;
-        
+
         // Update game progress
         this.updateGameProgress();
-        
+
         // Update best score if necessary
         if (this.score > this.bestScore) {
             this.bestScore = this.score;
             localStorage.setItem('2048-best-score', this.bestScore);
             this.animateScoreChange('bestScore', this.bestScore);
-            
+
             // Show new best score notification
             this.showNewBestScore();
         }
-        
+
         // Remove animation class after animation completes
         setTimeout(() => {
             const tiles = document.querySelectorAll('.tile-new');
@@ -385,7 +385,7 @@ class Game2048 {
         const element = document.getElementById(elementId);
         element.style.transform = 'scale(1.1)';
         element.textContent = newValue.toLocaleString();
-        
+
         setTimeout(() => {
             element.style.transform = 'scale(1)';
         }, 200);
@@ -409,13 +409,13 @@ class Game2048 {
             animation: newBest 3s ease-out forwards;
             box-shadow: 0 8px 32px rgba(106, 17, 203, 0.4);
         `;
-        
+
         document.body.appendChild(notification);
-        
+
         setTimeout(() => {
             document.body.removeChild(notification);
         }, 3000);
-        
+
         // Add animation keyframes if not exists
         if (!document.getElementById('newbest-styles')) {
             const style = document.createElement('style');
@@ -439,12 +439,12 @@ class Game2048 {
     showGameWon() {
         const overlay = document.getElementById('game-over');
         const text = document.getElementById('game-over-text');
-        
+
         text.textContent = 'You Win!';
         text.style.color = '#f9f6f2';
         overlay.classList.add('game-won');
         overlay.style.display = 'flex';
-        
+
         // Auto-hide after 3 seconds and continue playing
         setTimeout(() => {
             overlay.style.display = 'none';
@@ -455,7 +455,7 @@ class Game2048 {
     showGameOver() {
         const overlay = document.getElementById('game-over');
         const text = document.getElementById('game-over-text');
-        
+
         text.textContent = 'Game Over!';
         text.style.color = '#776e65';
         overlay.classList.add('game-lost');
@@ -464,12 +464,12 @@ class Game2048 {
 
     undoMove() {
         if (!this.canUndo || this.gameOver) return;
-        
+
         this.grid = this.previousGrid.map(row => [...row]);
         this.score = this.previousScore;
         this.moves = Math.max(0, this.moves - 1);
         this.canUndo = false;
-        
+
         this.updateDisplay();
         this.updateUndoButton();
     }
@@ -481,7 +481,7 @@ class Game2048 {
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 if (this.grid[i][j] === 0) {
-                    empty.push({row: i, col: j});
+                    empty.push({ row: i, col: j });
                 }
             }
         }
@@ -507,33 +507,45 @@ class Game2048 {
         const overlay = document.getElementById('game-over');
         const text = document.getElementById('game-over-text');
         const finalScore = document.getElementById('final-score-text');
-        
+
         text.textContent = '🎉 You Win! 🎉';
         text.style.color = '#f9f6f2';
         finalScore.textContent = `Final Score: ${this.score.toLocaleString()}`;
         overlay.classList.add('game-won');
         overlay.style.display = 'flex';
-        
+
         // Create celebration particles
         this.createCelebrationEffect();
-        
+
         // Auto-hide after 4 seconds and continue playing
         setTimeout(() => {
             overlay.style.display = 'none';
             overlay.classList.remove('game-won');
         }, 4000);
+
+        // Save to server
+        if (typeof saveScoreToServer === 'function') {
+            saveScoreToServer('2048', this.score);
+        }
+
     }
 
     showGameOver() {
         const overlay = document.getElementById('game-over');
         const text = document.getElementById('game-over-text');
         const finalScore = document.getElementById('final-score-text');
-        
+
         text.textContent = '💀 Game Over! 💀';
         text.style.color = '#776e65';
         finalScore.textContent = `Final Score: ${this.score.toLocaleString()}`;
         overlay.classList.add('game-lost');
         overlay.style.display = 'flex';
+
+        // Save to server
+        if (typeof saveScoreToServer === 'function') {
+            saveScoreToServer('2048', this.score);
+        }
+
     }
 
     createCelebrationEffect() {
@@ -553,12 +565,12 @@ class Game2048 {
                 animation: celebrate 3s ease-out forwards;
             `;
             document.body.appendChild(particle);
-            
+
             setTimeout(() => {
                 document.body.removeChild(particle);
             }, 3000);
         }
-        
+
         // Add celebration keyframes
         if (!document.getElementById('celebration-styles')) {
             const style = document.createElement('style');
@@ -585,19 +597,19 @@ class Game2048 {
                 }
             }
         }
-        
+
         // Update highest tile display
         document.getElementById('highestTile').textContent = highest;
-        
+
         // Calculate progress percentage (logarithmic scale to 2048)
         let progress = 0;
         if (highest >= 2) {
             progress = Math.min((Math.log2(highest) / Math.log2(2048)) * 100, 100);
         }
-        
+
         // Update progress bar
         document.getElementById('progressBar').style.width = progress + '%';
-        
+
         // Update objective text
         const objectiveElement = document.getElementById('currentObjective');
         if (highest >= 2048) {
@@ -619,15 +631,15 @@ class Game2048 {
         this.gameWon = false;
         this.gameOver = false;
         this.canUndo = false;
-        
+
         // Hide game over overlay
         const overlay = document.getElementById('game-over');
         overlay.style.display = 'none';
         overlay.classList.remove('game-won', 'game-lost');
-        
+
         // Reset buttons
         this.updateUndoButton();
-        
+
         this.init();
     }
 }

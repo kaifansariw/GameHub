@@ -47,7 +47,7 @@ function trackVisit() {
     },
     credentials: "include",
     body: JSON.stringify({ game: "whack-a-mole" })
-  }).catch(() => {});
+  }).catch(() => { });
 }
 
 function trackPlay() {
@@ -59,8 +59,16 @@ function trackPlay() {
     },
     credentials: "include",
     body: JSON.stringify({})
-  }).catch(() => {});
+  }).catch(() => { });
 }
+
+function saveScore(gameId, score) {
+  if (typeof saveScoreToServer === 'function') {
+    saveScoreToServer(gameId, score);
+  }
+}
+
+
 
 function beep(freq, duration, type = "sine") {
   if (!audioCtx) {
@@ -156,7 +164,7 @@ function generateMoleGrid() {
 
     const mole = document.createElement("div");
     mole.className = "mole";
-    
+
     // Create image element for mole
     const moleImg = document.createElement("img");
     moleImg.src = "/static/assets/mole.png";
@@ -165,13 +173,13 @@ function generateMoleGrid() {
     moleImg.style.height = "100%";
     moleImg.style.objectFit = "contain";
     mole.appendChild(moleImg);
-    
+
     hole.appendChild(mole);
     grid.appendChild(hole);
-    
+
     // Add click handler
     hole.addEventListener("click", () => handleMoleClick(i));
-    
+
     moleHoles.push({ element: hole, moleElement: mole, active: false });
   }
 }
@@ -287,10 +295,10 @@ function handleMoleClick(index) {
   score += 10;
   updateDisplay();
 
-  
+
   hole.moleElement.classList.add("hit");
-  
- 
+
+
   beep(800, 0.05, "square");
 
   // Hide mole
@@ -304,10 +312,10 @@ function handleMoleClick(index) {
 
 function increaseDifficulty() {
   difficulty++;
-  
+
   // Decrease mole display time (minimum 300ms)
   moleSpeed = Math.max(300, moleSpeed - 100);
-  
+
   // Decrease spawn rate (minimum 400ms)
   spawnRate = Math.max(400, spawnRate - 100);
 
@@ -323,15 +331,15 @@ function increaseDifficulty() {
 
 function endGame() {
   gameRunning = false;
-  
-  
+
+
   clearInterval(gameTimer);
   clearInterval(moleTimer);
 
   // Hide all moles
   moleHoles.forEach(hole => hideMole(hole));
 
-  
+
   let isNewHighScore = false;
   if (score > highScore) {
     highScore = score;
@@ -352,7 +360,11 @@ function endGame() {
 
   gameOverModal.classList.remove("hidden");
   startBtn.disabled = false;
+
+  // Save to server
+  saveScore("whack-a-mole", score);
 }
+
 
 function resetGame() {
   // Stop any running game

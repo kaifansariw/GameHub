@@ -1,0 +1,118 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen pt-24 pb-12 px-4">
+    <div class="max-w-6xl mx-auto">
+        <!-- Dashboard Header -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6" data-aos="fade-down">
+            <div>
+                <h1 class="font-orbitron font-bold text-4xl md:text-5xl mb-2">
+                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Message
+                        Search</span>
+                </h1>
+                <p class="font-rajdhani text-xl text-gray-400">Manage and search through user feedback</p>
+            </div>
+
+            <div class="stat-group flex gap-4">
+                <div class="glass-card px-6 py-3 flex flex-col items-center">
+                    <span class="text-xs text-gray-400 font-orbitron uppercase tracking-widest">Total Messages</span>
+                    <span class="text-3xl font-bold text-purple-400">{{ total_messages }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="glass-card p-6 mb-12" data-aos="fade-up">
+            <form method="GET" action="{% url 'message_search' %}" class="flex gap-4">
+                <div class="relative flex-1">
+                    <input type="text" name="q" value="{{ query }}" placeholder="Search by content or username..."
+                        class="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-4 font-rajdhani text-xl focus:border-purple-500 transition-all outline-none text-white">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-purple-400"></i>
+                </div>
+                <button type="submit" class="pixel-btn primary px-8">Filter</button>
+                {% if query %}
+                <a href="{% url 'message_search' %}"
+                    class="pixel-btn secondary px-8 flex items-center justify-center">Clear</a>
+                {% endif %}
+            </form>
+        </div>
+
+        <!-- Messages Grid -->
+        <div class="grid grid-cols-1 gap-6">
+            {% for msg in messages %}
+            <div class="glass-card p-6 border-l-4 {% if msg.is_read %}border-white/10{% else %}border-purple-500{% endif %} hover:bg-white/[0.07] transition-all"
+                data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white font-orbitron">
+                            {{ msg.user.username|first|default:"A"|upper }}
+                        </div>
+                        <div>
+                            <h4 class="font-orbitron font-bold text-lg">
+                                {% if msg.user %}
+                                <span class="text-purple-400">{{ msg.user.username }}</span>
+                                {% else %}
+                                <span class="text-gray-400 italic">Anonymous</span>
+                                {% endif %}
+                            </h4>
+                            <span class="text-xs text-gray-500 font-rajdhani">{{ msg.created_at|date:"M d, Y • H:i"
+                                }}</span>
+                        </div>
+                    </div>
+                    {% if not msg.is_read %}
+                    <span
+                        class="bg-purple-500/20 text-purple-400 text-[10px] font-orbitron px-2 py-1 rounded-full border border-purple-500/30 uppercase tracking-tighter">New</span>
+                    {% endif %}
+                </div>
+
+                <div class="bg-black/20 rounded-xl p-4 border border-white/5">
+                    <p class="font-rajdhani text-gray-200 text-lg leading-relaxed">
+                        {{ msg.content }}
+                    </p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-20" data-aos="zoom-in">
+                <div
+                    class="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 border border-white/10">
+                    <i class="fas fa-comment-slash text-4xl text-gray-600"></i>
+                </div>
+                <h3 class="font-orbitron text-2xl font-bold text-gray-400">No messages found</h3>
+                <p class="font-rajdhani text-gray-500">Try adjusting your search query or check back later.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .pixel-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 8px;
+    }
+
+    .pixel-btn.primary {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        border: none;
+        box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
+    }
+
+    .pixel-btn.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(106, 17, 203, 0.5);
+    }
+
+    .pixel-btn.secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}

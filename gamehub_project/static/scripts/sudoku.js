@@ -23,37 +23,37 @@ const difficulties = {
 
 // Achievements system
 const achievements = [
-    { 
-        id: 'firstMove', 
-        name: 'First Move', 
-        description: 'Make your first input', 
-        condition: () => totalMoves >= 1, 
-        icon: 'fas fa-play', 
-        color: 'text-green-500' 
+    {
+        id: 'firstMove',
+        name: 'First Move',
+        description: 'Make your first input',
+        condition: () => totalMoves >= 1,
+        icon: 'fas fa-play',
+        color: 'text-green-500'
     },
-    { 
-        id: 'speedDemon', 
-        name: 'Speed Demon', 
-        description: 'Complete puzzle under 10 min', 
-        condition: () => gameState === 'completed' && getElapsedTime() < 600, 
-        icon: 'fas fa-clock', 
-        color: 'text-blue-500' 
+    {
+        id: 'speedDemon',
+        name: 'Speed Demon',
+        description: 'Complete puzzle under 10 min',
+        condition: () => gameState === 'completed' && getElapsedTime() < 600,
+        icon: 'fas fa-clock',
+        color: 'text-blue-500'
     },
-    { 
-        id: 'perfectGame', 
-        name: 'Perfect Game', 
-        description: 'No mistakes', 
-        condition: () => gameState === 'completed' && mistakes === 0, 
-        icon: 'fas fa-bullseye', 
-        color: 'text-purple-500' 
+    {
+        id: 'perfectGame',
+        name: 'Perfect Game',
+        description: 'No mistakes',
+        condition: () => gameState === 'completed' && mistakes === 0,
+        icon: 'fas fa-bullseye',
+        color: 'text-purple-500'
     },
-    { 
-        id: 'noHelpNeeded', 
-        name: 'No Help Needed', 
-        description: 'Win without hints', 
-        condition: () => gameState === 'completed' && hintsUsed === 0, 
-        icon: 'fas fa-brain', 
-        color: 'text-yellow-500' 
+    {
+        id: 'noHelpNeeded',
+        name: 'No Help Needed',
+        description: 'Win without hints',
+        condition: () => gameState === 'completed' && hintsUsed === 0,
+        icon: 'fas fa-brain',
+        color: 'text-yellow-500'
     }
 ];
 
@@ -73,7 +73,7 @@ function initGame() {
 function createGridHTML() {
     const gridContainer = document.getElementById('sudokuGrid');
     gridContainer.innerHTML = '';
-    
+
     for (let i = 0; i < 81; i++) {
         const cell = document.createElement('div');
         cell.className = 'sudoku-cell';
@@ -87,7 +87,7 @@ function createGridHTML() {
 function setupEventListeners() {
     // Keyboard input
     document.addEventListener('keydown', handleKeyPress);
-    
+
     // Difficulty buttons
     document.querySelectorAll('.difficulty-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -101,7 +101,7 @@ function setupEventListeners() {
 // Handle keyboard input
 function handleKeyPress(e) {
     if (selectedCell === null || gameState !== 'playing') return;
-    
+
     const key = e.key;
     if (key >= '1' && key <= '9') {
         inputNumber(parseInt(key));
@@ -118,7 +118,7 @@ function generateSolution() {
             solutionGrid[i][j] = 0;
         }
     }
-    
+
     // Fill the grid using backtracking
     fillGrid(solutionGrid);
 }
@@ -151,12 +151,12 @@ function isValidMove(grid, row, col, num) {
     for (let x = 0; x < 9; x++) {
         if (x !== col && grid[row][x] === num) return false;
     }
-    
+
     // Check column (exclude current position)
     for (let x = 0; x < 9; x++) {
         if (x !== row && grid[x][col] === num) return false;
     }
-    
+
     // Check 3x3 box (exclude current position)
     const boxRow = Math.floor(row / 3) * 3;
     const boxCol = Math.floor(col / 3) * 3;
@@ -169,7 +169,7 @@ function isValidMove(grid, row, col, num) {
             }
         }
     }
-    
+
     return true;
 }
 
@@ -187,27 +187,27 @@ function shuffleArray(array) {
 function generateNewPuzzle() {
     resetGame();
     generateSolution();
-    
+
     // Copy solution to current grid
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
             sudokuGrid[i][j] = solutionGrid[i][j];
         }
     }
-    
+
     // Remove numbers based on difficulty
     const clues = difficulties[currentDifficulty].clues;
     const cellsToRemove = 81 - clues;
     const positions = [];
-    
+
     // Create array of all positions
     for (let i = 0; i < 81; i++) {
         positions.push(i);
     }
-    
+
     // Shuffle positions
     shuffleArray(positions);
-    
+
     // Remove numbers from random positions
     for (let i = 0; i < cellsToRemove; i++) {
         const pos = positions[i];
@@ -215,14 +215,14 @@ function generateNewPuzzle() {
         const col = pos % 9;
         sudokuGrid[row][col] = 0;
     }
-    
+
     // Store initial grid for reference
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
             initialGrid[i][j] = sudokuGrid[i][j];
         }
     }
-    
+
     updateGridDisplay();
     updateStats();
     startTimer();
@@ -244,13 +244,13 @@ function resetGame() {
 // Select a cell
 function selectCell(index) {
     if (gameState !== 'playing') return;
-    
+
     const row = Math.floor(index / 9);
     const col = index % 9;
-    
+
     // Don't allow selection of given cells
     if (initialGrid[row][col] !== 0) return;
-    
+
     selectedCell = index;
     updateCellHighlights();
 }
@@ -258,21 +258,21 @@ function selectCell(index) {
 // Input a number
 function inputNumber(num) {
     if (selectedCell === null || gameState !== 'playing') return;
-    
+
     const row = Math.floor(selectedCell / 9);
     const col = selectedCell % 9;
-    
+
     // Don't allow input in given cells
     if (initialGrid[row][col] !== 0) return;
-    
+
     totalMoves++;
-    
+
     // Always place the number first
     sudokuGrid[row][col] = num;
-    
+
     // Check if the move creates any conflicts
     const hasConflicts = !isValidMove(sudokuGrid, row, col, num);
-    
+
     if (hasConflicts) {
         mistakes++;
         showMistake(selectedCell);
@@ -285,7 +285,7 @@ function inputNumber(num) {
     } else {
         correctMoves++;
         clearCellHighlight(selectedCell);
-        
+
         // Check if puzzle is completed
         if (isPuzzleComplete()) {
             gameState = 'completed';
@@ -294,7 +294,7 @@ function inputNumber(num) {
             checkAchievements();
         }
     }
-    
+
     updateGridDisplay();
     updateStats();
     checkAchievements();
@@ -303,13 +303,13 @@ function inputNumber(num) {
 // Clear selected cell
 function clearCell() {
     if (selectedCell === null || gameState !== 'playing') return;
-    
+
     const row = Math.floor(selectedCell / 9);
     const col = selectedCell % 9;
-    
+
     // Don't allow clearing given cells
     if (initialGrid[row][col] !== 0) return;
-    
+
     sudokuGrid[row][col] = 0;
     clearCellHighlight(selectedCell);
     updateGridDisplay();
@@ -319,26 +319,26 @@ function clearCell() {
 // Get hint
 function getHint() {
     if (selectedCell === null || gameState !== 'playing' || hintsUsed >= maxHints) return;
-    
+
     const row = Math.floor(selectedCell / 9);
     const col = selectedCell % 9;
-    
+
     // Don't give hints for given cells
     if (initialGrid[row][col] !== 0) return;
-    
+
     hintsUsed++;
     const correctNumber = solutionGrid[row][col];
     sudokuGrid[row][col] = correctNumber;
-    
+
     showHint(selectedCell);
-    
+
     if (isPuzzleComplete()) {
         gameState = 'completed';
         stopTimer();
         showCompletionMessage();
         checkAchievements();
     }
-    
+
     updateGridDisplay();
     updateStats();
 }
@@ -346,15 +346,15 @@ function getHint() {
 // Validate current solution
 function validateSolution() {
     if (gameState !== 'playing') return;
-    
+
     console.log('Checking solution...');
     console.log('Current grid:', sudokuGrid);
-    
+
     clearHighlights();
     const conflicts = findConflicts();
-    
+
     console.log('Found conflicts:', conflicts);
-    
+
     if (conflicts.length > 0) {
         conflicts.forEach(index => {
             console.log('Highlighting conflict at index:', index);
@@ -377,7 +377,7 @@ function validateSolution() {
         }
         showCheckMessage(`No conflicts found! ${filledCells}/81 cells filled. Keep going!`);
     }
-    
+
     updateStats();
 }
 
@@ -387,9 +387,9 @@ function showCheckMessage(message) {
     const messageEl = document.createElement('div');
     messageEl.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce';
     messageEl.textContent = message;
-    
+
     document.body.appendChild(messageEl);
-    
+
     setTimeout(() => {
         messageEl.remove();
     }, 2500);
@@ -398,7 +398,7 @@ function showCheckMessage(message) {
 // Find conflicts in current grid
 function findConflicts() {
     const conflicts = [];
-    
+
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
             const num = sudokuGrid[row][col];
@@ -410,7 +410,7 @@ function findConflicts() {
                         conflicts.push(row * 9 + c);
                     }
                 }
-                
+
                 // Check if this number appears elsewhere in the same column
                 for (let r = 0; r < 9; r++) {
                     if (r !== row && sudokuGrid[r][col] === num) {
@@ -418,7 +418,7 @@ function findConflicts() {
                         conflicts.push(r * 9 + col);
                     }
                 }
-                
+
                 // Check if this number appears elsewhere in the same 3x3 box
                 const boxRow = Math.floor(row / 3) * 3;
                 const boxCol = Math.floor(col / 3) * 3;
@@ -435,7 +435,7 @@ function findConflicts() {
             }
         }
     }
-    
+
     // Remove duplicates
     return [...new Set(conflicts)];
 }
@@ -453,21 +453,21 @@ function isPuzzleComplete() {
 // Update grid display
 function updateGridDisplay() {
     const cells = document.querySelectorAll('.sudoku-cell');
-    
+
     cells.forEach((cell, index) => {
         const row = Math.floor(index / 9);
         const col = index % 9;
         const value = sudokuGrid[row][col];
-        
+
         cell.textContent = value === 0 ? '' : value;
-        
+
         // Set cell type classes
         cell.classList.remove('given', 'selected');
-        
+
         if (initialGrid[row][col] !== 0) {
             cell.classList.add('given');
         }
-        
+
         if (index === selectedCell) {
             cell.classList.add('selected');
         }
@@ -537,7 +537,7 @@ function updateTimer() {
         const elapsed = getElapsedTime();
         const minutes = Math.floor(elapsed / 60);
         const seconds = elapsed % 60;
-        document.getElementById('timer').textContent = 
+        document.getElementById('timer').textContent =
             `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 }
@@ -550,7 +550,7 @@ function getElapsedTime() {
 function updateStats() {
     document.getElementById('mistakes').textContent = mistakes;
     document.getElementById('hintsUsed').textContent = hintsUsed;
-    
+
     // Calculate completion percentage
     let filledCells = 0;
     for (let row = 0; row < 9; row++) {
@@ -558,16 +558,16 @@ function updateStats() {
             if (sudokuGrid[row][col] !== 0) filledCells++;
         }
     }
-    
+
     const completionPercent = Math.round((filledCells / 81) * 100);
     document.getElementById('completionPercent').textContent = `${completionPercent}%`;
     document.getElementById('completionProgress').style.width = `${completionPercent}%`;
-    
+
     // Calculate accuracy
     const accuracy = totalMoves === 0 ? 100 : Math.round((correctMoves / totalMoves) * 100);
     document.getElementById('accuracy').textContent = `${accuracy}%`;
     document.getElementById('accuracyProgress').style.width = `${accuracy}%`;
-    
+
     // Update cell counts
     document.getElementById('filledCells').textContent = filledCells;
     document.getElementById('emptyCells').textContent = 81 - filledCells;
@@ -596,23 +596,23 @@ function checkAchievements() {
 function unlockAchievement(achievementId) {
     unlockedAchievements.push(achievementId);
     localStorage.setItem('sudokuAchievements', JSON.stringify(unlockedAchievements));
-    
+
     const achievementElements = document.querySelectorAll('.achievement');
     const achievement = achievements.find(a => a.id === achievementId);
     const index = achievements.findIndex(a => a.id === achievementId);
-    
+
     if (achievementElements[index]) {
         achievementElements[index].classList.remove('locked');
         achievementElements[index].classList.add('unlocked');
     }
-    
+
     console.log(`Achievement unlocked: ${achievement.name}`);
 }
 
 function initAchievements() {
     const achievementsList = document.getElementById('achievementsList');
     achievementsList.innerHTML = '';
-    
+
     achievements.forEach((achievement, index) => {
         const isUnlocked = unlockedAchievements.includes(achievement.id);
         const achievementEl = document.createElement('div');
@@ -631,9 +631,30 @@ function showCompletionMessage() {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    
+
+    // Save to server
+    if (typeof saveScoreToServer === 'function') {
+        let score = 0;
+        const baseScores = {
+            easy: 500,
+            medium: 1000,
+            hard: 2000,
+            expert: 5000
+        };
+        score = baseScores[currentDifficulty] || 500;
+        // Bonus for time (less time = more points, e.g. 3600s max)
+        score += Math.max(0, 3600 - time);
+        // Bonus for mistakes
+        score += Math.max(0, 500 - (mistakes * 50));
+        // Penalty for hints
+        score -= (hintsUsed * 100);
+
+        saveScoreToServer('sudoku', Math.max(0, score));
+    }
+
     alert(`🎉 Congratulations! Puzzle completed!\n\nTime: ${timeStr}\nMistakes: ${mistakes}\nHints used: ${hintsUsed}\nDifficulty: ${difficulties[currentDifficulty].name}`);
 }
+
 
 function showFailureMessage() {
     // No longer used since we have unlimited tries

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from .models import Profile
+from .models import Profile, GameScore, UserMessage
 import json
 
 
@@ -147,3 +147,100 @@ def add_play(request):
     except Exception as e:
         print(f"DEBUG: Error in add_play: {e}")
         return JsonResponse({"status": "error", "message": "Internal server error"}, status=500)
+
+@csrf_exempt
+def save_score(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({"status": "error", "message": "User not authenticated"}, status=401)
+    
+    try:
+        data = json.loads(request.body)
+        game_id = data.get("game_id")
+        score = data.get("score")
+        
+        if not game_id or score is None:
+            return JsonResponse({"status": "error", "message": "Missing game_id or score"}, status=400)
+        
+        # Get or create score entry
+        game_score, created = GameScore.objects.get_or_create(user=request.user, game_id=game_id)
+        
+        # Update if it's a new high score
+        if score > game_score.score:
+            game_score.score = score
+            game_score.save()
+            return JsonResponse({"status": "success", "message": "New high score!", "high_score": game_score.score})
+        
+        return JsonResponse({"status": "success", "message": "Score saved", "high_score": game_score.score})
+        
+    except Exception as e:
+        print(f"DEBUG: Error in save_score: {e}")
+        return JsonResponse({"status": "error", "message": "Internal server error"}, status=500)
+
+
+@login_required
+def profile_dashboard(request):
+    profile = get_user_profile(request.user)
+    scores = GameScore.objects.filter(user=request.user).order_by('-updated_at')
+    
+    context = {
+        'profile': profile,
+        'scores': scores,
+        'total_scores': scores.count(),
+        'best_game': scores.order_by('-score').first()
+    }
+    return render(request, 'profile.html', context)
+
+
+@csrf_exempt
+def send_feedback(request):
+    """API endpoint to receive feedback from the floating form."""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            content = data.get('content', '').strip()
+            
+            if not content:
+                return JsonResponse({"status": "error", "message": "Content is required"}, status=400)
+            
+            # Create message
+            msg = UserMessage.objects.create(
+                user=request.user if request.user.is_authenticated else None,
+                content=content
+            )
+            
+            return JsonResponse({
+                "status": "success", 
+                "message": "Feedback sent! We appreciate your support.",
+                "id": msg.id
+            })
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+    
+    return JsonResponse({"status": "error", "message": "Only POST allowed"}, status=405)
+
+
+@login_required
+def message_search(request):
+    """Page to search and view user messages (Admin only)."""
+    if not request.user.is_staff:
+        return redirect('home')
+        
+    query = request.GET.get('q', '').strip()
+    messages_list = UserMessage.objects.all().order_by('-created_at')
+    
+    if query:
+        # Search in content or username
+        from django.db.models import Q
+        messages_list = messages_list.filter(
+            Q(content__icontains=query) | 
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query)
+        )
+        
+    context = {
+        'messages': messages_list,
+        'query': query,
+        'total_messages': messages_list.count()
+    }
+    return render(request, 'accounts/message_list.html', context)
+

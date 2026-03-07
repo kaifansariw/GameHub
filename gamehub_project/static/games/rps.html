@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body class="bg-base-100 min-h-screen">
     <!-- Header -->
     <div class="navbar bg-primary text-primary-content shadow-lg">
         <div class="navbar-start">
-      <!-- Changed the routing to home page -->
+            <!-- Changed the routing to home page -->
             <a href="/" class="btn btn-ghost">
                 <i class="fas fa-arrow-left mr-2"></i>Back to Home
             </a>
@@ -81,13 +83,16 @@
             <div class="text-center mb-8">
                 <h3 class="text-xl font-bold mb-4">Make Your Choice:</h3>
                 <div class="flex justify-center gap-4 flex-wrap">
-                    <button onclick="playGame('rock')" class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
+                    <button onclick="playGame('rock')"
+                        class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
                         <span class="text-4xl mr-2">🪨</span>Rock
                     </button>
-                    <button onclick="playGame('paper')" class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
+                    <button onclick="playGame('paper')"
+                        class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
                         <span class="text-4xl mr-2">📄</span>Paper
                     </button>
-                    <button onclick="playGame('scissors')" class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
+                    <button onclick="playGame('scissors')"
+                        class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
                         <span class="text-4xl mr-2">✂️</span>Scissors
                     </button>
                 </div>
@@ -104,6 +109,9 @@
         </div>
     </div>
 
+    <script src="../scripts/score-saver.js"></script>
     <script src="../scripts/rps.js"></script>
+
 </body>
+
 </html>

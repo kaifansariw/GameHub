@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
@@ -42,8 +44,15 @@
         }
 
         @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .navbar {
@@ -55,7 +64,7 @@
         .game-container {
             background: linear-gradient(145deg, var(--card-bg), #2a3441);
             border-radius: 24px;
-            box-shadow: 
+            box-shadow:
                 0 0 40px rgba(102, 51, 255, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             padding: 2.5rem;
@@ -89,7 +98,7 @@
             margin: 0 auto;
             width: 450px;
             height: 450px;
-            box-shadow: 
+            box-shadow:
                 0 0 50px rgba(102, 51, 255, 0.3),
                 inset 0 2px 4px rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(147, 51, 234, 0.3);
@@ -135,65 +144,75 @@
         }
 
         /* Enhanced tile colors with gradients and glows */
-        .tile-2 { 
+        .tile-2 {
             background: linear-gradient(145deg, #f4f3f0, #e6e4e1);
             color: #776e65;
             box-shadow: 0 4px 15px rgba(118, 110, 101, 0.2);
         }
-        .tile-4 { 
+
+        .tile-4 {
             background: linear-gradient(145deg, #ede0c8, #e8d5b7);
             color: #776e65;
             box-shadow: 0 4px 15px rgba(118, 110, 101, 0.2);
         }
-        .tile-8 { 
+
+        .tile-8 {
             background: linear-gradient(145deg, #f2b179, #f5a25d);
             color: #f9f6f2;
             box-shadow: 0 4px 20px rgba(242, 177, 121, 0.4);
         }
-        .tile-16 { 
+
+        .tile-16 {
             background: linear-gradient(145deg, #f59563, #f7824e);
             color: #f9f6f2;
             box-shadow: 0 4px 20px rgba(245, 149, 99, 0.4);
         }
-        .tile-32 { 
+
+        .tile-32 {
             background: linear-gradient(145deg, #f67c5f, #f8654a);
             color: #f9f6f2;
             box-shadow: 0 4px 25px rgba(246, 124, 95, 0.5);
         }
-        .tile-64 { 
+
+        .tile-64 {
             background: linear-gradient(145deg, #f65e3b, #f84c2a);
             color: #f9f6f2;
             box-shadow: 0 6px 25px rgba(246, 94, 59, 0.5);
         }
-        .tile-128 { 
+
+        .tile-128 {
             background: linear-gradient(145deg, #edcf72, #f0d95a);
             color: #f9f6f2;
             font-size: 36px;
             box-shadow: 0 6px 30px rgba(237, 207, 114, 0.6);
             animation: pulse-gold 2s ease-in-out infinite;
         }
-        .tile-256 { 
+
+        .tile-256 {
             background: linear-gradient(145deg, #edcc61, #f1d449);
             color: #f9f6f2;
             font-size: 36px;
             box-shadow: 0 8px 30px rgba(237, 204, 97, 0.6);
             animation: pulse-gold 2s ease-in-out infinite;
         }
-        .tile-512 { 
+
+        .tile-512 {
             background: linear-gradient(145deg, #edc850, #f2cf37);
             color: #f9f6f2;
             font-size: 36px;
             box-shadow: 0 8px 35px rgba(237, 200, 80, 0.7);
             animation: pulse-gold 2s ease-in-out infinite;
         }
-        .tile-1024 { 
+
+        .tile-1024 {
             background: linear-gradient(145deg, #edc53f, #f3ca25);
             color: #f9f6f2;
             font-size: 30px;
             box-shadow: 0 10px 40px rgba(237, 197, 63, 0.8);
             animation: pulse-legendary 1.5s ease-in-out infinite;
         }
-        .tile-2048 { 
+
+        .tile-2048 {
             background: linear-gradient(145deg, #edc22e, #f4c714);
             color: #f9f6f2;
             font-size: 30px;
@@ -202,16 +221,26 @@
         }
 
         @keyframes pulse-gold {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         @keyframes pulse-legendary {
-            0%, 100% { 
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 12px 50px rgba(237, 194, 46, 0.9);
             }
-            50% { 
+
+            50% {
                 transform: scale(1.08);
                 box-shadow: 0 15px 60px rgba(237, 194, 46, 1);
             }
@@ -261,7 +290,7 @@
                 max-height: 300px;
                 padding: 1rem;
             }
-            
+
             .game-container {
                 padding: 1.5rem;
             }
@@ -331,23 +360,33 @@
         }
 
         @keyframes tile-appear {
-            0% { 
-                opacity: 0; 
+            0% {
+                opacity: 0;
                 transform: scale(0) rotate(180deg);
             }
+
             70% {
                 transform: scale(1.1) rotate(0deg);
             }
-            100% { 
-                opacity: 1; 
+
+            100% {
+                opacity: 1;
                 transform: scale(1) rotate(0deg);
             }
         }
 
         @keyframes tile-merge {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .tile-new {
@@ -365,27 +404,31 @@
                 height: 350px;
                 padding: 15px;
             }
-            
+
             .grid-row {
                 margin-bottom: 15px;
                 gap: 15px;
             }
-            
-            .grid-cell, .tile {
+
+            .grid-cell,
+            .tile {
                 width: 70px;
                 height: 70px;
             }
-            
+
             .tile {
                 line-height: 70px;
                 font-size: 32px;
             }
-            
-            .tile-128, .tile-256, .tile-512 {
+
+            .tile-128,
+            .tile-256,
+            .tile-512 {
                 font-size: 28px;
             }
-            
-            .tile-1024, .tile-2048 {
+
+            .tile-1024,
+            .tile-2048 {
                 font-size: 24px;
             }
         }
@@ -415,12 +458,15 @@
                 transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
             }
+
             10% {
                 opacity: 1;
             }
+
             90% {
                 opacity: 1;
             }
+
             100% {
                 transform: translateY(-10vh) rotate(360deg);
                 opacity: 0;
@@ -428,6 +474,7 @@
         }
     </style>
 </head>
+
 <body class="min-h-screen">
     <!-- Header -->
     <div class="navbar shadow-lg">
@@ -479,7 +526,7 @@
                                 <i class="fas fa-question-circle mr-2"></i>Quick Guide
                             </span>
                         </h3>
-                        
+
                         <div class="space-y-2">
                             <div class="rule-item">
                                 <h4 class="font-semibold mb-1 flex items-center text-sm">
@@ -588,7 +635,9 @@
                             <div></div>
                         </div>
                         <div class="flex justify-center gap-3 mb-3">
-                            <button onclick="undoMove()" class="btn btn-outline btn-sm text-white border-purple-400 hover:bg-purple-500" id="undoBtn" disabled>
+                            <button onclick="undoMove()"
+                                class="btn btn-outline btn-sm text-white border-purple-400 hover:bg-purple-500"
+                                id="undoBtn" disabled>
                                 <i class="fas fa-undo mr-1"></i>Undo
                             </button>
                         </div>
@@ -607,30 +656,34 @@
                                 <i class="fas fa-trophy mr-2"></i>Game Status
                             </span>
                         </h3>
-                        
+
                         <div class="space-y-3">
-                            <div class="bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-3 rounded-lg border border-purple-400/30">
+                            <div
+                                class="bg-gradient-to-r from-purple-500/20 to-blue-500/20 p-3 rounded-lg border border-purple-400/30">
                                 <h4 class="font-semibold text-sm mb-2 text-purple-300">
                                     <i class="fas fa-bullseye mr-2"></i>Current Objective
                                 </h4>
                                 <p class="text-xs text-gray-300" id="currentObjective">Merge tiles to reach 2048!</p>
                             </div>
 
-                            <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 p-3 rounded-lg border border-green-400/30">
+                            <div
+                                class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 p-3 rounded-lg border border-green-400/30">
                                 <h4 class="font-semibold text-sm mb-2 text-green-300">
                                     <i class="fas fa-chart-line mr-2"></i>Progress
                                 </h4>
                                 <div class="text-xs text-gray-300">
                                     <div>Highest Tile: <span id="highestTile" class="font-bold">2</span></div>
                                     <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
-                                        <div class="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full" style="width: 0%" id="progressBar"></div>
+                                        <div class="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full"
+                                            style="width: 0%" id="progressBar"></div>
                                     </div>
                                 </div>
                             </div>
 
 
 
-                            <div class="bg-gradient-to-r from-pink-500/20 to-purple-500/20 p-3 rounded-lg border border-pink-400/30">
+                            <div
+                                class="bg-gradient-to-r from-pink-500/20 to-purple-500/20 p-3 rounded-lg border border-pink-400/30">
                                 <h4 class="font-semibold text-sm mb-2 text-pink-300">
                                     <i class="fas fa-keyboard mr-2"></i>Shortcuts
                                 </h4>
@@ -646,20 +699,22 @@
         </div>
     </div>
 
+    <script src="../scripts/score-saver.js"></script>
     <script src="../scripts/2048.js"></script>
+
     <script>
         // Create floating particles effect
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = 15;
-            
+
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.animationDelay = Math.random() * 8 + 's';
                 particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
-                
+
                 // Random colors
                 const colors = [
                     'rgba(147, 51, 234, 0.6)',
@@ -668,7 +723,7 @@
                     'rgba(139, 92, 246, 0.6)'
                 ];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
+
                 particlesContainer.appendChild(particle);
             }
         }
@@ -679,4 +734,5 @@
         });
     </script>
 </body>
+
 </html>

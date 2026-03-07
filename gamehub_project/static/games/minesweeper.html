@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="../assets/ps4.ico">
-    
+
     <!-- Audio System -->
     <script src="../scripts/audio-system.js"></script>
     <script src="../scripts/audio-ui.js"></script>
@@ -165,19 +167,51 @@
         }
 
         @keyframes explosion {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); background: #fbbf24; }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+                background: #fbbf24;
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
-        .cell.number-1 { color: #3b82f6; }
-        .cell.number-2 { color: #10b981; }
-        .cell.number-3 { color: #ef4444; }
-        .cell.number-4 { color: #8b5cf6; }
-        .cell.number-5 { color: #f59e0b; }
-        .cell.number-6 { color: #06b6d4; }
-        .cell.number-7 { color: #84cc16; }
-        .cell.number-8 { color: #f97316; }
+        .cell.number-1 {
+            color: #3b82f6;
+        }
+
+        .cell.number-2 {
+            color: #10b981;
+        }
+
+        .cell.number-3 {
+            color: #ef4444;
+        }
+
+        .cell.number-4 {
+            color: #8b5cf6;
+        }
+
+        .cell.number-5 {
+            color: #f59e0b;
+        }
+
+        .cell.number-6 {
+            color: #06b6d4;
+        }
+
+        .cell.number-7 {
+            color: #84cc16;
+        }
+
+        .cell.number-8 {
+            color: #f97316;
+        }
 
         .game-controls {
             display: flex;
@@ -274,22 +308,22 @@
                 margin: 1rem;
                 padding: 1rem;
             }
-            
+
             .cell {
                 width: 30px;
                 height: 30px;
                 font-size: 12px;
             }
-            
+
             .stats-panel {
                 flex-direction: column;
                 gap: 1rem;
             }
-            
+
             .difficulty-selector {
                 flex-wrap: wrap;
             }
-            
+
             .difficulty-btn {
                 padding: 0.5rem 1rem;
                 font-size: 0.875rem;
@@ -297,6 +331,7 @@
         }
     </style>
 </head>
+
 <body>
     <button class="back-btn" onclick="window.location.href='../index.html'">
         <i class="fas fa-arrow-left"></i>
@@ -369,6 +404,9 @@
         </div>
     </div>
 
+    <script src="../scripts/score-saver.js"></script>
     <script src="../scripts/minesweeper.js"></script>
+
 </body>
+
 </html>
