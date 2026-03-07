@@ -181,6 +181,43 @@
                     <a href="#games"><button class="gh-button glow-on-hover pixel-btn" type="button"><i class="fas fa-rocket mr-2"></i> Start Playing</button></a>
                     <a href="#about" class="neon-button secondary"><i class="fas fa-info-circle mr-2"></i> Learn More</a>
                 </div>
+
+                <!-- Real-Time View Counter -->
+                <div class="mt-12 animate__animated animate__fadeInUp animate__delay-3s" id="viewCounterSection">
+                    <div class="inline-flex flex-wrap justify-center gap-4 md:gap-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-4">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-eye text-purple-400 text-lg"></i>
+                            <div class="text-left">
+                                <div class="font-orbitron text-xl font-bold text-white" id="totalVisits">—</div>
+                                <div class="font-rajdhani text-xs text-gray-400 uppercase tracking-wider">Total Visits</div>
+                            </div>
+                        </div>
+                        <div class="w-px bg-white/10 hidden sm:block"></div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-calendar-day text-pink-400 text-lg"></i>
+                            <div class="text-left">
+                                <div class="font-orbitron text-xl font-bold text-white" id="todayVisits">—</div>
+                                <div class="font-rajdhani text-xs text-gray-400 uppercase tracking-wider">Today</div>
+                            </div>
+                        </div>
+                        <div class="w-px bg-white/10 hidden sm:block"></div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-calendar-week text-blue-400 text-lg"></i>
+                            <div class="text-left">
+                                <div class="font-orbitron text-xl font-bold text-white" id="weeklyVisits">—</div>
+                                <div class="font-rajdhani text-xs text-gray-400 uppercase tracking-wider">This Week</div>
+                            </div>
+                        </div>
+                        <div class="w-px bg-white/10 hidden sm:block"></div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-calendar-alt text-green-400 text-lg"></i>
+                            <div class="text-left">
+                                <div class="font-orbitron text-xl font-bold text-white" id="monthlyVisits">—</div>
+                                <div class="font-rajdhani text-xs text-gray-400 uppercase tracking-wider">This Month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -429,6 +466,58 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{% static 'main.js' %}"></script>
+
+<!-- Real-Time View Counter Script -->
+<script>
+(function() {
+    function animateCounter(el, target) {
+        var start = 0;
+        var duration = 1200;
+        var startTime = null;
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var value = Math.floor(progress * target);
+            el.textContent = value.toLocaleString();
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                el.textContent = target.toLocaleString();
+            }
+        }
+        if (target > 0) requestAnimationFrame(step);
+        else el.textContent = '0';
+    }
+
+    function updateCounters(data) {
+        animateCounter(document.getElementById('totalVisits'), data.total);
+        animateCounter(document.getElementById('todayVisits'), data.today);
+        animateCounter(document.getElementById('weeklyVisits'), data.weekly);
+        animateCounter(document.getElementById('monthlyVisits'), data.monthly);
+    }
+
+    // Record a visit on page load
+    fetch('/accounts/site-visit/')
+        .then(function(r) { return r.json(); })
+        .then(updateCounters)
+        .catch(function() {
+            document.getElementById('totalVisits').textContent = '—';
+        });
+
+    // Refresh stats every 30 seconds without recording a new visit
+    setInterval(function() {
+        fetch('/accounts/site-stats/')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                document.getElementById('totalVisits').textContent = data.total.toLocaleString();
+                document.getElementById('todayVisits').textContent = data.today.toLocaleString();
+                document.getElementById('weeklyVisits').textContent = data.weekly.toLocaleString();
+                document.getElementById('monthlyVisits').textContent = data.monthly.toLocaleString();
+            })
+            .catch(function() {});
+    }, 30000);
+})();
+</script>
 
 <script>
   if ("serviceWorker" in navigator) {

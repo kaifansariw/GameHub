@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from .models import Profile
+from .models import Profile, SiteVisit
 import json
 
 
@@ -147,3 +147,28 @@ def add_play(request):
     except Exception as e:
         print(f"DEBUG: Error in add_play: {e}")
         return JsonResponse({"status": "error", "message": "Internal server error"}, status=500)
+
+
+def site_visit_counter(request):
+    """Record a site visit and return current stats."""
+    SiteVisit.record_visit()
+    stats = SiteVisit.get_stats()
+    return JsonResponse({
+        "status": "success",
+        "today": stats['today'],
+        "weekly": stats['weekly'],
+        "monthly": stats['monthly'],
+        "total": stats['total'],
+    })
+
+
+def site_visit_stats(request):
+    """Return current visit stats without recording a new visit."""
+    stats = SiteVisit.get_stats()
+    return JsonResponse({
+        "status": "success",
+        "today": stats['today'],
+        "weekly": stats['weekly'],
+        "monthly": stats['monthly'],
+        "total": stats['total'],
+    })
