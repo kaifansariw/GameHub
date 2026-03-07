@@ -121,7 +121,6 @@ In an era of complex game engines and heavy frameworks, GameHub proves that amaz
 
 - **Frontend:** HTML5, CSS3, JavaScript
 - **Styling:** Tailwind CSS, DaisyUI
-- **Animations:**
 - **Icons:** Font Awesome
 - **Storage:** LocalStorage API
 
@@ -130,6 +129,8 @@ In an era of complex game engines and heavy frameworks, GameHub proves that amaz
 ## 💡 Prerequisites
 
 - Modern web browser: Chrome, Firefox, Safari, or Edge
+- Python 3.x
+- pip (Python package manager)
 
 ***
 
@@ -140,8 +141,8 @@ Follow these steps to run the GameHub Django project locally:
 **1️⃣ Clone the Repository**
 
 ```bash
-git clone <YOUR_FORK_URL>
-cd <DIRECTORY_NAME>
+git clone https://github.com/kaifansariw/GameHub.git
+cd GameHub
 ```
 
 **2️⃣ Install Django**
@@ -158,7 +159,7 @@ cd gamehub_project
 **4️⃣ Run the Development Server**
 
 ```bash
-python 
+python manage.py runserver
 ```
 
 **5️⃣ Open in Browser**
@@ -180,65 +181,57 @@ GameHub/
 ├── gamehub_project/
 │   ├── accounts/                   # Authentication app
 │   │   ├── migrations/
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   └── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── urls.py
+│   │   └── views.py
 │   │
 │   ├── gamehub_project/            # Core Django settings
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   └── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
+│   │   ├── __init__.py
+│   │   ├── asgi.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
 │   │
 │   ├── static/                     # Static files (CSS, JS, Images)
 │   │   ├── assets/                 # Game thumbnails & icons
 │   │   ├── games/                  # HTML files for games
 │   │   ├── scripts/                # All game logic JS files
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   │   └── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-│   │   └── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
+│   │   │   ├── rock-paper-scissors.js
+│   │   │   ├── 2048.js
+│   │   │   ├── sudoku.js
+│   │   │   ├── minesweeper.js
+│   │   │   ├── tetris.js
+│   │   │   ├── snake.js
+│   │   │   ├── hangman.js
+│   │   │   ├── memory-flip.js
+│   │   │   ├── typing-speed.js
+│   │   │   └── simon-says.js
+│   │   ├── style.css
+│   │   ├── main.js
+│   │   └── games.js
 │   │
 │   ├── staticfiles/                # Auto-generated (ignored in git)
 │   │
 │   ├── templates/                  # Django HTML templates
-│   │   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip              # Homepage
-│   │   └── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip              # Authentication page
+│   │   ├── index.html              # Homepage
+│   │   └── auth.html               # Authentication page
 │   │
-│   ├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip                  # Local database
-│   └── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
+│   ├── db.sqlite3                  # Local database
+│   └── manage.py
 │
 ├── .gitignore
 ├── LICENSE
-├── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
-└── https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip
+├── requirements.txt
+└── README.md
 ```
 
 ***
 
 ## 📸 Screenshots
 
-<details>
-  <summary>Homepage</summary>
-  <img width="1920" height="872" alt="image" src="https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip" />
-</details>
-
-<details>
-  <summary>Games Collection</summary>
-  <img width="1331" height="870" alt="image" src="https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip" />
-</details>
+> Screenshots coming soon. Contributions welcome!
 
 ***
 
@@ -246,7 +239,7 @@ GameHub/
 
 1. Add a new HTML file in `static/games/`
 2. Write the game's JS in `static/scripts/`
-3. Register your game in the games array in `https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip`:
+3. Register your game in the games array in `static/main.js`:
 
 ```javascript
 {
@@ -254,7 +247,7 @@ GameHub/
     title: 'Your Game',
     description: 'Game description',
     image: 'path/to/image',
-    file: 'https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip',
+    file: 'games/your-game.html',
     category: 'arcade'
 }
 ```
@@ -276,7 +269,7 @@ We welcome contributions from developers of all skill levels! Whether you're fix
   ```
 - Open a Pull Request
 
-Check out our [Contributing Guidelines](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip) for more details!
+Check out our [Contributing Guidelines](https://github.com/kaifansariw/GameHub/blob/main/CONTRIBUTING.md) for more details!
 
 ***
 
@@ -294,16 +287,15 @@ Check out our [Contributing Guidelines](https://raw.githubusercontent.com/kaifan
 
 ## 📄 License
 
-Licensed under the [MIT License](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip).
+Licensed under the [MIT License](https://github.com/kaifansariw/GameHub/blob/main/LICENSE).
 
 ***
 
 ## 🙏 Acknowledgments
 
-- [Tailwind CSS](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip)
-- [DaisyUI](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip)
-- [https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip)
-- [Font Awesome](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip)
+- [Tailwind CSS](https://tailwindcss.com)
+- [DaisyUI](https://daisyui.com)
+- [Font Awesome](https://fontawesome.com)
 
 ***
 
@@ -311,31 +303,20 @@ Licensed under the [MIT License](https://raw.githubusercontent.com/kaifansariw/G
 
 Thanks to all the wonderful contributors 💖
 
-<a href="https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip">
-  <img src="https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip" />
+<a href="https://github.com/kaifansariw/GameHub/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=kaifansariw/GameHub" />
 </a>
 
-See full list of contributor contributions: [Contribution Graph](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip)
+See full list of contributor contributions: [Contribution Graph](https://github.com/kaifansariw/GameHub/graphs/contributors)
 
 ***
- 
-
 
 <div align="center">
 
-<div align="center">
+[⭐ Star this repo](https://github.com/kaifansariw/GameHub) • 
+[🐛 Report Bug](https://github.com/kaifansariw/GameHub/issues) • 
+[✨ Request Feature](https://github.com/kaifansariw/GameHub/issues)
 
-
-
-
-<div align="center">
-
-
-
-[⭐ Star this repo](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip) • 
-[🐛 Report Bug](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip) • 
-[✨ Request Feature](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip)
-
-Made with ❤️ by [Kaif Ansari](https://raw.githubusercontent.com/kaifansariw/GameHub/main/gamehub_project/accounts/Game_Hub_v1.4.zip)
+Made with ❤️ by [Kaif Ansari](https://github.com/kaifansariw)
 
 </div>
