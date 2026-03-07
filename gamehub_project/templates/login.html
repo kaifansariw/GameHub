@@ -6,6 +6,24 @@
     <link rel="stylesheet" href="{% static 'cursor-trail.css' %}">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sign in or create an account to access GameHub. Track your scores, compete on leaderboards, and enjoy free browser games.">
+    <meta name="keywords" content="GameHub login, GameHub sign in, gaming account, free browser games">
+    <meta name="author" content="GameHub">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GameHub - Sign In">
+    <meta property="og:description" content="Sign in or create an account to access GameHub. Track your scores and compete on leaderboards.">
+    <meta property="og:image" content="{% static 'assets/game-controller.png' %}">
+    <meta property="og:site_name" content="GameHub">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="GameHub - Sign In">
+    <meta name="twitter:description" content="Sign in or create an account to access GameHub. Track your scores and compete on leaderboards.">
+    <meta name="twitter:image" content="{% static 'assets/game-controller.png' %}">
+
     <script>
         const savedTheme = localStorage.getItem("theme") || "dark";
         document.documentElement.setAttribute("data-theme", savedTheme);
