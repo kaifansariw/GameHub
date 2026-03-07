@@ -1,7 +1,5 @@
-
-{% load static %}
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
     <link rel="stylesheet" href="{% static 'cursor-trail.css' %}">
@@ -41,68 +39,112 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="{% static 'scripts/gamehub-scores.js' %}"></script>
 
+<meta charset="UTF-8">
+<title>Leaderboard - GameHub</title>
+<style>
+    .Leaderboard-title{
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 1000;
+    font-size: 4rem; /* adjust as needed */
+    text-align: center;
+    background-image: url("../../gamehub_project/static/assets/TextBg.png");
+    background-size: 800% 800%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 10s ease infinite;
+    text-size-adjust: larger;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+</style>
+<!-- CSS Files -->
+<link rel="stylesheet" href="../static/style.css">
+<link rel="stylesheet" href="../static/cursor-trail.css">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 
+
 <body class="bg-gray-900 text-white min-h-screen relative overflow-hidden">
+
+
+<!-- Network Status -->
 <div id="network-status" class="network-status hidden">
-  <span id="network-text">You are offline</span>
+<span id="network-text">You are offline</span>
 </div>
 
-    <!-- Background Gradient & Dots -->
-    <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 animate-gradient"></div>
-        <div
-            class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;2&quot; fill=&quot;%239C92AC&quot; fill-opacity=&quot;0.1&quot; /%3E%3C/svg%3E')] opacity-20">
-        </div>
-    </div>
-
-    <div class="relative z-10 container mx-auto py-16 px-4">
-        
-        <!-- Title -->
-        <h1 class="text-center font-orbitron text-5xl md:text-6xl mb-12 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent animate__animated animate__fadeInDown">
-            Leaderboard
-        </h1>
-
-        <!-- Glassmorphic Card -->
-        <div
-            class="glass-card p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-lg shadow-purple-900/40 animate__animated animate__fadeInUp">
-
-            <table class="min-w-full text-center">
-               <thead>
-                    <tr class="text-purple-500 font-extrabold text-lg tracking-wide border-b-2 border-white/30">
-                        <th class="py-4">Rank</th>
-                        <th class="py-4">Player</th>
-                        <th class="py-4">Engagement Score</th>
-                    </tr>
-                </thead>
 
 
-                <tbody>
-                {% for profile in users %}
-                    <tr class="border-b border-white/10 hover:bg-white/10 transition-all duration-300">
+<!-- Background -->
+<div class="absolute inset-0 z-0">
 
-                        <!-- Rank with Badge -->
-                        <td class="py-4 text-xl font-orbitron font-bold">
-                            {% if forloop.counter == 1 %}
-                                🥇
-                            {% elif forloop.counter == 2 %}
-                                🥈
-                            {% elif forloop.counter == 3 %}
-                                🥉
-                            {% else %}
-                                {{ forloop.counter }}
-                            {% endif %}
-                        </td>
+<div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900"></div>
 
-                        <!-- Username -->
-                        <td class="py-4 font-rajdhani text-xl text-black-200 font-bold">
-                            {{ profile.user.username }}
-                        </td>
+<div class="absolute inset-0 opacity-20"></div>
 
-                        <!-- Engagement Score -->
-                        <td class="py-4 font-orbitron text-purple-400 text-2xl font-extrabold">
-    {{ profile.score|default:"0" }}
-    <div class="text-xs text-black-500 mt-1">({{ profile.visits }} visits + {{ profile.plays }} plays)</div>
+</div>
+
+
+
+<!-- Main Container -->
+<div class="relative z-10 container mx-auto py-16 px-4">
+
+
+<!-- Page Title -->
+<h1 class="text-center text-5xl mb-12 font-bold">
+Leaderboard
+</h1>
+
+
+
+<!-- Leaderboard Card -->
+<div class="p-8 rounded-xl bg-white/10 backdrop-blur border border-white/10">
+
+
+<table class="min-w-full text-center">
+
+<thead>
+
+<tr class="text-purple-400 text-lg border-b border-white/30">
+<th class="py-4">Rank</th>
+<th class="py-4">Player</th>
+<th class="py-4">Engagement Score</th>
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+<tr class="border-b border-white/10">
+<td class="py-4 text-xl">🥇</td>
+<td class="py-4 text-xl">PlayerOne</td>
+<td class="py-4 text-purple-400 text-xl">
+1200
+<div class="text-xs">(50 visits + 40 plays)</div>
+</td>
+</tr>
+
+
+<tr class="border-b border-white/10">
+<td class="py-4 text-xl">🥈</td>
+<td class="py-4 text-xl">GamerX</td>
+<td class="py-4 text-purple-400 text-xl">
+950
+<div class="text-xs">(40 visits + 35 plays)</div>
 </td>
                     </tr>
 
@@ -156,40 +198,101 @@
       <div class="feedback-message" id="feedbackMessage" style="display:none">Thank you for your feedback!</div>
     </form>
   </div>
+</tr>
+
+
+<tr class="border-b border-white/10">
+<td class="py-4 text-xl">🥉</td>
+<td class="py-4 text-xl">NoobMaster</td>
+<td class="py-4 text-purple-400 text-xl">
+800
+<div class="text-xs">(30 visits + 30 plays)</div>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
 </div>
+
+
+
+<!-- Back Button -->
+<div class="text-center mt-10">
+
+<a href="index.html" class="px-6 py-3 bg-purple-600 rounded-lg">
+<i class="fas fa-arrow-left"></i>
+Back to Home
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- Feedback Button -->
+<button id="feedbackButton" class="feedback-fab">
+Feedback
+</button>
+
+
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="feedback-modal">
+
+<div class="feedback-card">
+
+<h2>Send Feedback</h2>
+
+<form id="feedbackForm">
+
+<textarea id="feedbackText" class="feedback-textarea"></textarea>
+
+<div id="feedbackError" style="display:none">
+Please enter your feedback
+</div>
+
+<div>
+
+<button type="submit" id="feedbackSubmit">
+Submit
+</button>
+
+<button type="button" id="feedbackClose">
+Close
+</button>
+
+</div>
+
+<div id="feedbackMessage" style="display:none">
+Thank you for your feedback!
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+
+
+<!-- Cursor Script -->
+<script src="../static/scripts/cursor-trail.js"></script>
+
+
+
+<!-- Feedback Script -->
 <script>
-  (function(){
-    var feedbackBtn = document.getElementById('feedbackButton');
-    var modal = document.getElementById('feedbackModal');
-    var form = document.getElementById('feedbackForm');
-    var textarea = document.getElementById('feedbackText');
-    var error = document.getElementById('feedbackError');
-    var message = document.getElementById('feedbackMessage');
-    var submitBtn = document.getElementById('feedbackSubmit');
-    var closeBtn = document.getElementById('feedbackClose');
-    var homeUrl = "{% url 'home' %}";
-    function openModal(){ modal.classList.add('open'); textarea.focus(); }
-    function closeModal(){ modal.classList.remove('open'); }
-    feedbackBtn.addEventListener('click', openModal);
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
-    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var value = textarea.value.trim();
-      if(!value){
-        error.style.display='block';
-        textarea.focus();
-        return;
-      }
-      error.style.display='none';
-      textarea.disabled = true;
-      submitBtn.disabled = true;
-      closeBtn.disabled = true;
-      message.style.display='block';
-      setTimeout(function(){ window.location.href = homeUrl; }, 3000);
-    });
-  })();
+
+const feedbackBtn = document.getElementById("feedbackButton");
+const modal = document.getElementById("feedbackModal");
+const closeBtn = document.getElementById("feedbackClose");
+
+feedbackBtn.onclick = () => modal.style.display = "block";
+closeBtn.onclick = () => modal.style.display = "none";
+
 </script>
 
 <script>
@@ -238,4 +341,5 @@
 
 </body>
 
+</body>
 </html>

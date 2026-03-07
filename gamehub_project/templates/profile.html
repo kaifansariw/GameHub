@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile - GameHub</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script>
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+    </script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        .profile-stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .profile-stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+
+        .pixel-btn {
+            background: #a855f7;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px 0 rgba(168, 85, 247, 0.39);
+        }
+
+        .pixel-btn:hover {
+            background: #9333ea;
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.43);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen relative overflow-x-hidden">
+
+    <!-- Background Gradient & Dots -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 animate-gradient">
+        </div>
+        <div
+            class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;2&quot; fill=&quot;%239C92AC&quot; fill-opacity=&quot;0.1&quot; /%3E%3C/svg%3E')] opacity-20">
+        </div>
+    </div>
+
+    <div class="relative z-10 container mx-auto py-16 px-4">
+
+        <!-- Profile Header -->
+        <div class="text-center mb-12 animate__animated animate__fadeInDown">
+            <h1
+                class="font-orbitron text-5xl md:text-6xl mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Player Profile
+            </h1>
+            <p class="font-rajdhani text-2xl text-gray-300">Welcome back, <span
+                    class="text-purple-400 font-bold text-3xl">{{ user.username }}!</span></p>
+        </div>
+
+        <!-- Quick Stats Row -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 animate__animated animate__fadeInUp">
+            <div class="profile-stat-card p-6 rounded-2xl text-center">
+                <i class="fas fa-eye text-blue-400 text-3xl mb-3"></i>
+                <div class="text-gray-400 font-rajdhani uppercase tracking-wider text-sm">Total Visits</div>
+                <div class="text-3xl font-orbitron font-bold">{{ profile.visits }}</div>
+            </div>
+            <div class="profile-stat-card p-6 rounded-2xl text-center">
+                <i class="fas fa-gamepad text-green-400 text-3xl mb-3"></i>
+                <div class="text-gray-400 font-rajdhani uppercase tracking-wider text-sm">Games Played</div>
+                <div class="text-3xl font-orbitron font-bold">{{ profile.plays }}</div>
+            </div>
+            <div class="profile-stat-card p-6 rounded-2xl text-center">
+                <i class="fas fa-trophy text-yellow-400 text-3xl mb-3"></i>
+                <div class="text-gray-400 font-rajdhani uppercase tracking-wider text-sm">Best Game</div>
+                <div class="text-2xl font-orbitron font-bold">
+                    {% if best_game %}
+                    {{ best_game.game_id|title }}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- High Scores Table -->
+        <div
+            class="glass-card p-8 rounded-2xl bg-black/20 backdrop-blur-xl border border-white/10 shadow-lg shadow-purple-900/40 animate__animated animate__fadeInUp">
+            <h2 class="font-orbitron text-2xl mb-8 border-b border-white/20 pb-4 flex items-center">
+                <i class="fas fa-star text-yellow-400 mr-3"></i> Your High Scores
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-left">
+                    <thead>
+                        <tr class="text-purple-400 font-rajdhani text-lg tracking-wide border-b border-white/20">
+                            <th class="py-4 px-4">Game</th>
+                            <th class="py-4 px-4">High Score</th>
+                            <th class="py-4 px-4">Achieved On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in scores %}
+                        <tr class="border-b border-white/5 hover:bg-white/5 transition-all duration-300">
+                            <td class="py-4 px-4 font-rajdhani text-xl font-semibold">
+                                {{ score.game_id|title }}
+                            </td>
+                            <td class="py-4 px-4 font-orbitron text-2xl text-pink-400 font-bold">
+                                {{ score.score|default:"0" }}
+                            </td>
+                            <td class="py-4 px-4 font-rajdhani text-gray-400">
+                                {{ score.updated_at|date:"M d, Y" }}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-gray-400 py-12 text-xl font-rajdhani">
+                                No scores saved yet. Go play some games!
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex flex-wrap justify-center gap-6 mt-12 animate__animated animate__fadeInUp">
+            <a href="{% url 'home' %}"
+                class="pixel-btn flex items-center px-8 py-3 rounded-lg font-orbitron font-bold transition-all">
+                <i class="fas fa-play mr-2"></i> Play Games
+            </a>
+            <a href="{% url 'leaderboard' %}"
+                class="bg-white/10 hover:bg-white/20 flex items-center px-8 py-3 rounded-lg font-orbitron font-bold transition-all border border-white/20">
+                <i class="fas fa-list-ol mr-2"></i> Leaderboard
+            </a>
+            <a href="{% url 'logout' %}"
+                class="bg-red-500/20 hover:bg-red-500/40 flex items-center px-8 py-3 rounded-lg font-orbitron font-bold transition-all border border-red-500/50 text-red-400">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Cursor Trail -->
+    <script src="{% static 'scripts/cursor-trail.js' %}"></script>
+
+</body>
+
+</html>

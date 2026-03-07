@@ -23,6 +23,12 @@
 </div>
 
 ---
+## Rules For ECWoC26
+- It is important to star the repo , otherwise your  contribution will not count.
+- You need to make a proper docs for the feature you are trying to implement and share it with me using docs in mail.
+- Only the meaningful issue which are important will only be considered , other will be close.
+- More priority will be given to the contributors who have lower rank in leaderboard.
+***
 
 ## 🧭 Table of Contents
 
@@ -173,6 +179,76 @@ The view counter is displayed on the homepage hero section and updates in real-t
 | **Icons**      | Font Awesome 6                                 |
 | **Storage**    | LocalStorage API, SQLite (Django)              |
 | **Analytics**  | Built-in SiteVisit model (daily view tracking) |
+- **[Play Now]()**
+***
+
+## ✨ Features
+
+- 5 Classic Games: Tic Tac Toe, Snake, Simon Says, Memory Flip, Rock Paper Scissors
+- Fully Responsive: Optimized for desktop, tablet, and mobile
+- Modern Glassmorphism UI: Built using Tailwind CSS and DaisyUI 
+- Fast & Lightweight: Pure vanilla JS, zero frameworks
+- Score Persistence: Progress saved in LocalStorage
+- Real-time Search: Instantly filter and find games
+- Smooth Animations
+***
+
+## 🎮 Games
+
+| Game                     | Description                              | Features                                         |
+|--------------------------|------------------------------------------|--------------------------------------------------|
+| **Rock Paper Scissors**  | Classic hand game                        | Win/loss stats, animations                       |
+| **2048 Game**            | Tile sliding number puzzle               | Score tracking, smooth animations                |
+| **Sudoku Puzzle**        | Number placement puzzle                  | Multiple difficulties, hints                     |
+| **Minesweeper**          | Mine avoidance logic game                | Flagging cells, timer                            |
+| **Breakout**             | Brick-breaking arcade game               | Paddle control, increasing difficulty            |
+| **Balloon Popper**       | Pop balloons before time runs out        | Timer-based gameplay, score system               |
+| **Boom Runner**          | Dodge bombs and survive                  | Reflex-based controls, speed increase            |
+| **Brick Breaker**        | Break bricks using a paddle              | Power-ups, levels                                |
+| **Bubble Shooter**       | Match and pop colored bubbles            | Aim mechanics, combo scoring                     |
+| **Candy Match Mania**    | Match candies to score points            | Chain reactions, colorful UI                     |
+| **Code Unlock**          | Crack codes using logic                  | Pattern recognition, increasing difficulty       |
+| **Color Grid**           | Color-matching puzzle                    | Visual logic, timed challenges                   |
+| **Dodge Square**         | Avoid obstacles and survive              | Fast-paced movement, reflex testing              |
+| **Firefly Flow**         | Guide fireflies through patterns         | Precision control, calming visuals               |
+| **Flappy Block**         | Navigate obstacles by flapping           | Score tracking, increasing difficulty            |
+| **Freeze Frame**         | Stop motion at the right moment          | Timing-based gameplay                            |
+| **Fruit Slice**          | Slice fruits with precision              | Swipe controls, combo points                     |
+| **Glow Chain**           | Trigger glowing chain reactions          | Visual effects, chain mechanics                  |
+| **Glow Drops**           | Tap glowing drops before disappearing    | Speed-based taps, score counter                  |
+| **Glow Tap**             | Tap glowing circles in time              | Timing accuracy, reflex training                 |
+| **Gravity Flip Ball**    | Flip gravity to move the ball            | Physics-based gameplay, level progression        |
+| **Hangman Hero**         | Guess the hidden words                   | Vocabulary building, hint system                 |
+| **Jump Counter**         | Jump to increase your score              | Score tracking, timing precision                 |
+| **Jump Tag**             | Tag targets by jumping                   | Movement accuracy, reflex-based                  |
+| **Logic Path**           | Guide the ball using logic               | Puzzle-solving, progressive levels               |
+| **Memory Blink**         | Remember blinking patterns               | Memory training, increasing speed                |
+| **Pattern Memory**       | Remember and repeat patterns             | Sequence memory, difficulty scaling              |
+| **Pipe Twister**         | Rotate pipes to connect flows            | Logic rotation puzzles                           |
+| **Reaction Speed Test**  | Test your reaction speed                 | Tap-time measurement, instant feedback           |
+| **Sand Draw**            | Draw freely in virtual sand              | Relaxing UI, creative drawing                    |
+| **Sliding Puzzle**       | Slide blocks to complete image           | Logical movement, image puzzles                  |
+| **Speed Tap Grid**       | Tap targets quickly on a grid            | Reflex speed, time challenge                     |
+| **Symbol Swap**          | Swap symbols to match rows               | Pattern logic, strategic thinking                |
+| **Tap Counter**          | Tap repeatedly to score                  | Speed tracking, real-time counter                |
+| **Tetris**               | Classic falling block puzzle             | Line clearing, increasing speed                  |
+| **Tower of Hanoi**       | Solve disk puzzle in minimum moves       | Algorithmic thinking, step counter               |
+| **Typing Sprint**        | Type words quickly to score              | Speed tracking, accuracy scoring                 |
+| **Vortex Jump**          | Jump through twisting vortex paths       | Precision jumps, reaction timing                 |
+| **Word Chain**           | Form chains of related words             | Vocabulary skills, word logic                    |
+| **Word Scramble**        | Unscramble letters to form words         | Time-based challenges, hints                     |
+| **Typing Speed Test**    | Measure typing speed and accuracy        | WPM tracking, clean UI                           |
+
+
+***
+
+## 🛠️ Tech Stack
+
+- **Frontend:** HTML5, CSS3, JavaScript
+- **Styling:** Tailwind CSS, DaisyUI
+- **Animations:**
+- **Icons:** Font Awesome
+- **Storage:** LocalStorage API
 
 ---
 
@@ -194,6 +270,8 @@ Follow these steps to run the GameHub Django project locally:
 ```bash
 git clone https://github.com/kaifansariw/GameHub.git
 cd GameHub
+git clone <YOUR_FORK_URL>
+cd <DIRECTORY_NAME>
 ```
 
 **2️⃣ Create a Virtual Environment (Recommended)**
@@ -216,6 +294,7 @@ pip install django
 
 **4️⃣ Navigate to the Project Folder**
 
+**3️⃣ Navigate to the Project Folder**
 ```bash
 cd gamehub_project
 ```
@@ -225,6 +304,7 @@ cd gamehub_project
 ```bash
 python manage.py makemigrations
 python manage.py migrate
+python 
 ```
 
 **6️⃣ Create a Superuser (Optional — for admin access)**
