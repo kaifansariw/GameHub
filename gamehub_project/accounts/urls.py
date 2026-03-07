@@ -1,4 +1,5 @@
 from django.urls import path
+from django.shortcuts import render
 from . import views
 from .views import leaderboard, add_visit, add_play, save_score, profile_dashboard
 urlpatterns = [
@@ -12,6 +13,7 @@ urlpatterns = [
     path('profile/', profile_dashboard, name='profile'),
     path('send-feedback/', views.send_feedback, name='send_feedback'),
     path('messages/', views.message_search, name='message_search'),
+    path("feedback/", lambda request: render(request, "feedback.html"), name="feedback_page"),
 ]
 
 

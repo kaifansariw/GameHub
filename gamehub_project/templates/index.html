@@ -388,14 +388,24 @@
                 <div>
                     <h3 class="font-orbitron font-semibold text-lg mb-3 text-purple-300">Quick Links</h3>
                     <ul class="space-y-2 font-rajdhani">
-                        <li><a href="#hero" class="hover:text-pink-400 transition">Home</a></li>
-                        <li><a href="#games" class="hover:text-pink-400 transition">Games</a></li>
-                        <li><a href="#reviews" class="hover:text-pink-400 transition">Reviews</a></li>
-                        <li><a href="#about" class="hover:text-pink-400 transition">About</a></li>
-                        <li><a href="#leaderboard" class="hover:text-pink-400 transition">Leaderboard</a></li>
-                        <li><a href="https://github.com/kaifansariw/GameHub" target="_blank"
-                                class="hover:text-pink-400 transition">GitHub</a></li>
-                    </ul>
+    <li><a href="#hero" class="hover:text-pink-400 transition">Home</a></li>
+    <li><a href="#games" class="hover:text-pink-400 transition">Games</a></li>
+    <li><a href="#reviews" class="hover:text-pink-400 transition">Reviews</a></li>
+    <li><a href="#about" class="hover:text-pink-400 transition">About</a></li>
+    <li><a href="#leaderboard" class="hover:text-pink-400 transition">Leaderboard</a></li>
+
+    <!-- NEW -->
+    <li>
+        <a href="{% url 'feedback_page' %}" class="hover:text-pink-400 transition">
+            Feedback
+        </a>
+    </li>
+
+    <li>
+        <a href="https://github.com/kaifansariw/GameHub" target="_blank"
+        class="hover:text-pink-400 transition">GitHub</a>
+    </li>
+</ul>
                 </div>
                 <div>
                     <h3 class="font-orbitron font-semibold text-lg mb-3 text-purple-300">Social Links</h3>
