@@ -37,7 +37,12 @@ function playGame(playerChoice) {
   if (roundCount >= maxRounds) {
     updateResult("final", playerChoice, computerChoice);
     disableGameButtons();
+    // Save score to server
+    if (typeof saveScoreToServer === 'function') {
+      saveScoreToServer('rps', scores.player);
+    }
   } else {
+
     updateResult(result, playerChoice, computerChoice, roundCount);
   }
 }

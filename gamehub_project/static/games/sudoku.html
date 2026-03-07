@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
@@ -42,8 +44,15 @@
         }
 
         @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .navbar {
@@ -193,22 +202,42 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-4px);
+            }
+
+            75% {
+                transform: translateX(4px);
+            }
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
         }
 
         @keyframes conflictPulse {
-            0%, 100% { 
+
+            0%,
+            100% {
                 box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
                 transform: scale(1);
             }
-            50% { 
+
+            50% {
                 box-shadow: 0 0 25px rgba(239, 68, 68, 0.9);
                 transform: scale(1.02);
             }
@@ -336,12 +365,15 @@
                 transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
             }
+
             10% {
                 opacity: 1;
             }
+
             90% {
                 opacity: 1;
             }
+
             100% {
                 transform: translateY(-10vh) rotate(360deg);
                 opacity: 0;
@@ -378,9 +410,19 @@
         }
 
         @keyframes achievementUnlock {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .timer {
@@ -390,11 +432,12 @@
         }
     </style>
 </head>
+
 <body class="min-h-screen">
     <!-- Header -->
     <div class="navbar shadow-lg">
         <div class="navbar-start">
-      <!-- Changed the routing to home page -->
+            <!-- Changed the routing to home page -->
 
             <a href="/" class="btn btn-ghost text-white">
                 <i class="fas fa-arrow-left mr-2"></i>Back to Home
@@ -457,7 +500,7 @@
                                 <i class="fas fa-question-circle mr-2"></i>Quick Guide
                             </span>
                         </h3>
-                        
+
                         <div class="space-y-2">
                             <div class="rule-item">
                                 <h4 class="font-semibold mb-1 flex items-center text-sm">
@@ -512,7 +555,8 @@
                     <!-- Controls -->
                     <div class="text-center">
                         <div class="flex justify-center gap-4 mb-4">
-                            <button class="control-btn px-4 py-3" onclick="validateSolution()" title="Find and highlight any conflicts in your current solution - helps you spot mistakes!">
+                            <button class="control-btn px-4 py-3" onclick="validateSolution()"
+                                title="Find and highlight any conflicts in your current solution - helps you spot mistakes!">
                                 <i class="fas fa-search mr-2"></i> Check Solution
                             </button>
                             <button class="control-btn px-4 py-3" onclick="getHint()">
@@ -546,40 +590,45 @@
                                 <i class="fas fa-chart-line mr-2"></i>Progress
                             </span>
                         </h3>
-                        
+
                         <div class="space-y-3">
-                            <div class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-lg p-3 border border-purple-400/20">
+                            <div
+                                class="bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-lg p-3 border border-purple-400/20">
                                 <div class="flex justify-between items-center mb-1">
                                     <span class="text-sm font-medium">Completion</span>
                                     <span class="text-sm text-purple-400" id="completionPercent">0%</span>
                                 </div>
                                 <div class="w-full bg-gray-700 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300" 
-                                         style="width: 0%" id="completionProgress"></div>
+                                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300"
+                                        style="width: 0%" id="completionProgress"></div>
                                 </div>
                             </div>
 
-                            <div class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-lg p-3 border border-blue-400/20">
+                            <div
+                                class="bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-lg p-3 border border-blue-400/20">
                                 <div class="flex justify-between items-center mb-1">
                                     <span class="text-sm font-medium">Accuracy</span>
                                     <span class="text-sm text-blue-400" id="accuracy">100%</span>
                                 </div>
                                 <div class="w-full bg-gray-700 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-300" 
-                                         style="width: 100%" id="accuracyProgress"></div>
+                                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-300"
+                                        style="width: 100%" id="accuracyProgress"></div>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-3 gap-2 text-center">
-                                <div class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-lg p-2 border border-green-400/20">
+                                <div
+                                    class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-lg p-2 border border-green-400/20">
                                     <div class="text-xs font-medium text-green-400">Filled</div>
                                     <div class="text-lg font-bold" id="filledCells">0</div>
                                 </div>
-                                <div class="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-2 border border-yellow-400/20">
+                                <div
+                                    class="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 rounded-lg p-2 border border-yellow-400/20">
                                     <div class="text-xs font-medium text-yellow-400">Empty</div>
                                     <div class="text-lg font-bold" id="emptyCells">81</div>
                                 </div>
-                                <div class="bg-gradient-to-r from-red-900/30 to-pink-900/30 rounded-lg p-2 border border-red-400/20">
+                                <div
+                                    class="bg-gradient-to-r from-red-900/30 to-pink-900/30 rounded-lg p-2 border border-red-400/20">
                                     <div class="text-xs font-medium text-red-400">Conflicts</div>
                                     <div class="text-lg font-bold" id="conflicts">0</div>
                                 </div>
@@ -594,7 +643,7 @@
                                 <i class="fas fa-trophy mr-2"></i>Achievements
                             </span>
                         </h3>
-                        
+
                         <div class="space-y-2" id="achievementsList">
                             <div class="achievement locked">
                                 <i class="fas fa-play text-green-500"></i>
@@ -627,12 +676,12 @@
             particle.style.left = Math.random() * 100 + 'vw';
             particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
             particle.style.animationDelay = Math.random() * 2 + 's';
-            
+
             const colors = ['rgba(147, 51, 234, 0.6)', 'rgba(59, 130, 246, 0.6)', 'rgba(16, 185, 129, 0.6)'];
             particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-            
+
             document.getElementById('particles').appendChild(particle);
-            
+
             setTimeout(() => {
                 particle.remove();
             }, 8000);
@@ -646,6 +695,9 @@
             setTimeout(createParticle, i * 100);
         }
     </script>
+    <script src="../scripts/score-saver.js"></script>
     <script src="../scripts/sudoku.js"></script>
+
 </body>
+
 </html>
