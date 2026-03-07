@@ -419,7 +419,7 @@ function initializeTheme() {
 function toggleTheme() {
   const themeToggle = document.getElementById("themeToggle");
   const themeIcon = themeToggle?.querySelector("i");
-  const currentTheme = document.body.getAttribute("data-theme") || "dark";
+  const currentTheme = document.body.getAttribute("data-theme") || "light";
   const newTheme = currentTheme === "dark" ? "light" : "dark";
 
   document.body.style.transition = "background-color 0.3s ease, color 0.3s ease";
@@ -482,18 +482,24 @@ function showThemeNotification(theme) {
 
 function setupThemeToggle() {
   const themeToggle = document.getElementById("themeToggle");
-  if (themeToggle) {
-    themeToggle.addEventListener("click", toggleTheme);
-    themeToggle.addEventListener("keypress", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        toggleTheme();
-      }
-    });
-    themeToggle.setAttribute("tabindex", "0");
-    themeToggle.setAttribute("role", "button");
-    themeToggle.setAttribute("aria-label", "Toggle dark mode");
+
+  if (!themeToggle) {
+    console.warn("Theme toggle button not found.");
+    return;
   }
+
+  themeToggle.addEventListener("click", toggleTheme);
+
+  themeToggle.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+
+  themeToggle.setAttribute("tabindex", "0");
+  themeToggle.setAttribute("role", "button");
+  themeToggle.setAttribute("aria-label", "Toggle dark mode");
 }
 
 function setupSystemThemeListener() {
