@@ -54,12 +54,12 @@ In an era of complex game engines and heavy frameworks, GameHub proves that amaz
 
 ## 🚀 Demo
 
-- **[Play Now]()**
+- **Play Now** *(Coming Soon)*
 ***
 
 ## ✨ Features
 
-- 5 Classic Games: Tic Tac Toe, Snake, Simon Says, Memory Flip, Rock Paper Scissors
+- 40+ Classic Games: Tic Tac Toe, Snake, Simon Says, Memory Flip, Rock Paper Scissors, and many more
 - Fully Responsive: Optimized for desktop, tablet, and mobile
 - Modern Glassmorphism UI: Built using Tailwind CSS and DaisyUI 
 - Fast & Lightweight: Pure vanilla JS, zero frameworks
