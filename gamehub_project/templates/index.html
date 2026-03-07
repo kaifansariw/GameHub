@@ -132,6 +132,7 @@
                         <a href="#games" class="nav-link">Games</a>
                         <a href="#reviews" class="nav-link">Reviews</a>
                         <a href="#about" class="nav-link">About</a>
+                        <a href="#contact" class="nav-link">Contact</a>
                         <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
                     </div>
                 </div>
@@ -283,6 +284,11 @@
                 <p class="font-rajdhani text-xl text-gray-400">Choose your adventure and start playing instantly</p>
             </div>
 
+            <!-- Category Filters -->
+            <div id="categories" class="mb-10">
+                <div id="categoryFilters" class="flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="100"></div>
+            </div>
+
             <div id="noResults" class="hidden text-center py-20 animate__animated animate__fadeIn">
             <div class="flex flex-col items-center">
                 <div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10">
@@ -422,6 +428,34 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="relative py-20">
+        <div class="container mx-auto px-4 max-w-2xl">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="font-orbitron font-bold text-4xl md:text-5xl mb-4">
+                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Contact Us</span>
+                </h2>
+                <p class="font-rajdhani text-xl text-gray-400">Have questions or feedback? We'd love to hear from you!</p>
+            </div>
+            <form id="contactForm" class="glass-card p-8 rounded-2xl space-y-6" data-aos="fade-up" data-aos-delay="100" onsubmit="event.preventDefault(); document.getElementById('contactSuccess').classList.remove('hidden'); this.reset();">
+                <div>
+                    <label for="contactName" class="block font-rajdhani font-semibold text-sm mb-1 text-gray-300">Name</label>
+                    <input type="text" id="contactName" required placeholder="Your name" class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white font-rajdhani focus:outline-none focus:border-purple-500 transition" />
+                </div>
+                <div>
+                    <label for="contactEmail" class="block font-rajdhani font-semibold text-sm mb-1 text-gray-300">Email</label>
+                    <input type="email" id="contactEmail" required placeholder="you@example.com" class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white font-rajdhani focus:outline-none focus:border-purple-500 transition" />
+                </div>
+                <div>
+                    <label for="contactMessage" class="block font-rajdhani font-semibold text-sm mb-1 text-gray-300">Message</label>
+                    <textarea id="contactMessage" required rows="4" placeholder="Your message..." class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white font-rajdhani focus:outline-none focus:border-purple-500 transition resize-none"></textarea>
+                </div>
+                <button type="submit" class="neon-button w-full py-3 font-orbitron font-bold tracking-wide">Send Message</button>
+                <p id="contactSuccess" class="hidden text-center text-green-400 font-rajdhani font-semibold mt-2">Thanks! Your message has been sent.</p>
+            </form>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="relative py-16 border-t border-white/10 bg-gradient-to-t from-black/70 to-transparent">
         <div class="absolute inset-0 pointer-events-none"></div>
@@ -441,10 +475,9 @@
                     <ul class="space-y-2 font-rajdhani">
                         <li><a href="#hero" class="hover:text-pink-400 transition">Home</a></li>
                         <li><a href="#games" class="hover:text-pink-400 transition">Games</a></li>
-                        <li><a href="#reviews" class="hover:text-pink-400 transition">Reviews</a></li>
+                        <li><a href="#categories" class="hover:text-pink-400 transition">Categories</a></li>
                         <li><a href="#about" class="hover:text-pink-400 transition">About</a></li>
-                        <li><a href="#leaderboard" class="hover:text-pink-400 transition">Leaderboard</a></li>
-                        <li><a href="https://github.com/kaifansariw/GameHub" target="_blank" class="hover:text-pink-400 transition">GitHub</a></li>
+                        <li><a href="#contact" class="hover:text-pink-400 transition">Contact</a></li>
                     </ul>
                 </div>
                 <div>
