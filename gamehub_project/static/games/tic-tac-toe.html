@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,6 +67,7 @@
       color: white;
       border: none;
     }
+
     .rules-section {
       margin-top: 40px;
       padding: 25px;
@@ -99,6 +101,7 @@
     }
   </style>
 </head>
+
 <body class="min-h-screen flex flex-col">
 
   <!-- Header -->
@@ -123,55 +126,56 @@
   <!-- Game Container -->
   <div class="flex flex-col lg:flex-row justify-between items-center gap-3">
     <div class="flex-grow flex justify-center items-center p-6">
-    <div class="game-container w-full max-w-md md:max-w-[80vw] animate__animated animate__fadeInUp">
-      <!-- Game Status -->
-      <div class="text-center mb-6">
-        <div class="stats shadow w-full">
+      <div class="game-container w-full max-w-md md:max-w-[80vw] animate__animated animate__fadeInUp">
+        <!-- Game Status -->
+        <div class="text-center mb-6">
+          <div class="stats shadow w-full">
+            <div class="stat">
+              <div class="stat-title text-gray-300">Current Player</div>
+              <div class="stat-value text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500"
+                id="currentPlayer">X</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="grid grid-cols-3 gap-3 mb-6">
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(0)"></button>
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(1)"></button>
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(2)"></button>
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(3)"></button>
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(4)"></button>
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(5)"></button>
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(6)"></button>
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(7)"></button>
+          <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(8)"></button>
+        </div>
+
+        <!-- Game Result -->
+        <div id="gameResult" class="text-center hidden">
+          <div class="alert shadow-lg">
+            <i class="fas fa-trophy"></i>
+            <span id="resultText"></span>
+          </div>
+        </div>
+
+        <!-- Score Board -->
+        <div class="stats stats-vertical lg:stats-horizontal shadow w-full mt-6">
           <div class="stat">
-            <div class="stat-title text-gray-300">Current Player</div>
-            <div class="stat-value text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500" id="currentPlayer">X</div>
+            <div class="stat-title text-gray-300">Player X Wins</div>
+            <div class="stat-value text-purple-400" id="xWins">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-title text-gray-300">Player O Wins</div>
+            <div class="stat-value text-blue-400" id="oWins">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-title text-gray-300">Draws</div>
+            <div class="stat-value text-pink-400" id="draws">0</div>
           </div>
         </div>
       </div>
-
-      <!-- Game Board -->
-      <div class="grid grid-cols-3 gap-3 mb-6">
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(0)"></button>
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(1)"></button>
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(2)"></button>
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(3)"></button>
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(4)"></button>
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(5)"></button>
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(6)"></button>
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(7)"></button>
-        <button class="cell btn h-20 text-3xl font-bold text-purple-400" onclick="makeMove(8)"></button>
-      </div>
-
-      <!-- Game Result -->
-      <div id="gameResult" class="text-center hidden">
-        <div class="alert shadow-lg">
-          <i class="fas fa-trophy"></i>
-          <span id="resultText"></span>
-        </div>
-      </div>
-
-      <!-- Score Board -->
-      <div class="stats stats-vertical lg:stats-horizontal shadow w-full mt-6">
-        <div class="stat">
-          <div class="stat-title text-gray-300">Player X Wins</div>
-          <div class="stat-value text-purple-400" id="xWins">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-title text-gray-300">Player O Wins</div>
-          <div class="stat-value text-blue-400" id="oWins">0</div>
-        </div>
-        <div class="stat">
-          <div class="stat-title text-gray-300">Draws</div>
-          <div class="stat-value text-pink-400" id="draws">0</div>
-        </div>
-      </div>
     </div>
-  </div>
 
     <section class="glass-card rules-section animate__animated animate__fadeInUp">
       <h2 class="font-orbitron glow-text">🎯 Game Rules</h2>
@@ -185,29 +189,33 @@
     </section>
   </div>
 
-    <!-- Footer -->
-    <footer class="w-full relative py-12 border-t border-white/10">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center">
-                <div class="flex items-center justify-center space-x-2 mb-4">
-                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-gamepad text-white text-sm"></i>
-                    </div>
-                    <span class="font-orbitron font-bold text-xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
-                </div>
-                <p class="font-rajdhani text-gray-400 mb-6">Made with ❤️ for gamers worldwide</p>
-                <div class="flex justify-center space-x-6 mb-6">
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                </div>
-                <p class="font-rajdhani text-sm text-gray-500">© 2024 GameHub. All rights reserved.</p>
-            </div>
+  <!-- Footer -->
+  <footer class="w-full relative py-12 border-t border-white/10">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center">
+        <div class="flex items-center justify-center space-x-2 mb-4">
+          <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+            <i class="fas fa-gamepad text-white text-sm"></i>
+          </div>
+          <span
+            class="font-orbitron font-bold text-xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
         </div>
-    </footer>
+        <p class="font-rajdhani text-gray-400 mb-6">Made with ❤️ for gamers worldwide</p>
+        <div class="flex justify-center space-x-6 mb-6">
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="font-rajdhani text-sm text-gray-500">© 2024 GameHub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
+  <script src="../scripts/score-saver.js"></script>
   <script src="../scripts/tic-tac-toe.js"></script>
+
 </body>
+
 </html>

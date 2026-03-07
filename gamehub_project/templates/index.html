@@ -43,77 +43,79 @@
 </head>
 
 <body data-theme="dark" class="overflow-x-hidden home-page">
-<!-- Network Status Banner -->
-<div id="network-status-banner">You are offline</div>
+    <!-- Network Status Banner -->
+    <div id="network-status-banner">You are offline</div>
 
-<style>
-  #network-status-banner {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 22px;
-    border-radius: 24px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: Arial, sans-serif;
-    color: white;
-    background-color: #dc2626;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-    z-index: 10000;
-    display: none;
-    transition: all 0.3s ease;
-  }
+    <style>
+        #network-status-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 22px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: Arial, sans-serif;
+            color: white;
+            background-color: #dc2626;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+            z-index: 10000;
+            display: none;
+            transition: all 0.3s ease;
+        }
 
-  #network-status-banner.online {
-    background-color: #16a34a;
-  }
-</style>
+        #network-status-banner.online {
+            background-color: #16a34a;
+        }
+    </style>
 
-<script>
-  (function () {
-    const banner = document.getElementById("network-status-banner");
+    <script>
+        (function () {
+            const banner = document.getElementById("network-status-banner");
 
-    function showOffline() {
-      banner.textContent = "You are offline";
-      banner.classList.remove("online");
-      banner.style.display = "block";
-    }
+            function showOffline() {
+                banner.textContent = "You are offline";
+                banner.classList.remove("online");
+                banner.style.display = "block";
+            }
 
-    function showOnline() {
-      banner.textContent = "You are back online";
-      banner.classList.add("online");
-      banner.style.display = "block";
+            function showOnline() {
+                banner.textContent = "You are back online";
+                banner.classList.add("online");
+                banner.style.display = "block";
 
-      setTimeout(() => {
-        banner.style.display = "none";
-      }, 3000);
-    }
+                setTimeout(() => {
+                    banner.style.display = "none";
+                }, 3000);
+            }
 
-    if (!navigator.onLine) {
-      showOffline();
-    }
+            if (!navigator.onLine) {
+                showOffline();
+            }
 
-    window.addEventListener("offline", showOffline);
-    window.addEventListener("online", showOnline);
-  })();
-</script>
+            window.addEventListener("offline", showOffline);
+            window.addEventListener("online", showOnline);
+        })();
+    </script>
 
-<div id="network-status" class="network-status hidden">
-  <span id="network-text">You are offline</span>
-</div>
+    <div id="network-status" class="network-status hidden">
+        <span id="network-text">You are offline</span>
+    </div>
 
     <!-- Animated Background -->
     <div class="fixed inset-0 z-0">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 animate-gradient"></div>
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%239C92AC&quot; fill-opacity=&quot;0.1&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;2&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 animate-gradient">
+        </div>
+        <div
+            class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%239C92AC&quot; fill-opacity=&quot;0.1&quot;%3E%3Ccircle cx=&quot;30&quot; cy=&quot;30&quot; r=&quot;2&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20">
+        </div>
     </div>
 
     <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 glass-nav backdrop-blur-lg bg-black/20 border-b border-white/10 animate__animated animate__fadeInDown">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-8">
+  <nav class="fixed top-0 w-full z-50 glass-nav backdrop-blur-lg bg-black/20 border-b border-white/10 animate__animated animate__fadeInDown">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
 
                     <!-- ⭐ UPDATED CLICKABLE LOGO + TEXT ⭐ -->
                     <a href="{% url 'home' %}" class="flex items-center space-x-2 cursor-pointer">
@@ -133,53 +135,99 @@
                         <a href="#reviews" class="nav-link">Reviews</a>
                         <a href="#about" class="nav-link">About</a>
                         <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
-                    </div>
-                </div>
+            <!-- Left: Logo + Links -->
+            <div class="flex items-center space-x-8">
 
-                <div class="flex items-center space-x-2 md:space-x-4">
-                    <div class="relative hidden sm:block">
-                        <input type="text" id="searchInput" placeholder="Search games..." class="search-input" />
-                        <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <!-- Logo + Animated Text -->
+                <a href="#" class="flex items-center space-x-2 cursor-pointer">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gamepad text-white text-sm"></i>
                     </div>
-
-                    {% if user.is_authenticated %}
-                    <span class="hidden md:inline text-purple-500 font-bold font-rajdhani">👋</span>
-                    <span class="hidden md:inline font-orbitron font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent text-sm lg:text-base">
-                        Hello, {{ user.first_name|default:user.username }}
+                    <span class="font-orbitron font-bold text-xl bg-text animate-textBg">
+                        GameHub
                     </span>
-                    <a href="{% url 'logout' %}" class="neon-button secondary text-xs md:text-sm px-2 md:px-4">Logout</a>
-                    {% else %}
-                    <a href="{% url 'login' %}" class="neon-button secondary text-xs md:text-sm px-2 md:px-4">Login</a>
-                    {% endif %}
+                </a>
 
-                    <button id="themeToggle" class="theme-toggle">
-                        <i class="
-                        "></i>
-                    </button>
+                <!-- Desktop Links -->
+              <!-- Desktop Links -->
+<div class="hidden md:flex space-x-6">
+    <a href="#hero" class="nav-link font-orbitron font-bold text-gray-300 relative group">
+        Home
+        <span class="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+    </a>
+    <a href="#games" class="nav-link font-orbitron font-bold text-gray-300 relative group">
+        Games
+        <span class="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+    </a>
+    <a href="#reviews" class="nav-link font-orbitron font-bold text-gray-300 relative group">
+        Reviews
+        <span class="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+    </a>
+    <a href="#about" class="nav-link font-orbitron font-bold text-gray-300 relative group">
+        About
+        <span class="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+    </a>
+    <a href="leaderboard.html" class="nav-link font-orbitron font-bold text-gray-300 relative group">
+        Leaderboard
+        <span class="absolute left-0 bottom-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+    </a>
+</div>
+            <!-- Right: Search + User Actions -->
+            <div class="flex items-center space-x-2 md:space-x-4">
+
+                <!-- Search -->
+                <div class="relative hidden sm:block">
+                    <input type="text" placeholder="Search games..." class="search-input pl-3 pr-10 py-1 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                    <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 </div>
+
+                <!-- User Actions -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <a href="#" class="flex items-center space-x-2 group transition-all">
+                        <span class="hidden md:inline text-purple-500 font-bold font-rajdhani group-hover:scale-110 transition-transform">👋</span>
+                        <span class="hidden md:inline font-orbitron font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent text-sm lg:text-base">
+                            JohnDoe
+                        </span>
+                    </a>
+
+                 
+                    <a href="logout.html" class="neon-button secondary text-xs md:text-sm px-2 md:px-4">Logout</a>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="theme-toggle ml-2">
+                    <i class="fas fa-moon text-gray-200"></i>
+                </button>
 
             </div>
-        </div>
-    </nav>
 
+        </div>
+    </div>
+</nav>
     <!-- Hero Section -->
     <section id="hero" class="relative min-h-screen flex items-center justify-center">
         <div class="container mx-auto px-4 text-center relative z-10">
             <div class="max-w-4xl mx-auto">
                 <h1 class="font-orbitron font-black text-6xl md:text-8xl mb-6 animate__animated animate__fadeInDown">
-                    <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent glow-text">
+                    <span
+                        class="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent glow-text">
                         GameHub
                     </span>
                 </h1>
-                <p class="font-rajdhani text-xl md:text-2xl mb-8 text-gray-300 animate__animated animate__fadeInUp animate__delay-1s">
+                <p
+                    class="font-rajdhani text-xl md:text-2xl mb-8 text-gray-300 animate__animated animate__fadeInUp animate__delay-1s">
                     Play. Compete. <span class="text-purple-400 font-semibold">Have Fun.</span>
                 </p>
-                <p class="font-rajdhani text-lg mb-12 text-gray-400 animate__animated animate__fadeInUp animate__delay-2s">
+                <p
+                    class="font-rajdhani text-lg mb-12 text-gray-400 animate__animated animate__fadeInUp animate__delay-2s">
                     Experience premium browser games with stunning visuals and smooth gameplay
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center animate__animated animate__fadeInUp animate__delay-3s">
-                    <a href="#games"><button class="gh-button glow-on-hover pixel-btn" type="button"><i class="fas fa-rocket mr-2"></i> Start Playing</button></a>
-                    <a href="#about" class="neon-button secondary"><i class="fas fa-info-circle mr-2"></i> Learn More</a>
+                <div
+                    class="flex flex-col sm:flex-row gap-4 justify-center animate__animated animate__fadeInUp animate__delay-3s">
+                    <a href="#games"><button class="gh-button glow-on-hover pixel-btn" type="button"><i
+                                class="fas fa-rocket mr-2"></i> Start Playing</button></a>
+                    <a href="#about" class="neon-button secondary"><i class="fas fa-info-circle mr-2"></i> Learn
+                        More</a>
                 </div>
             </div>
         </div>
@@ -241,23 +289,33 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-16" data-aos="fade-up">
                 <h2 class="font-orbitron font-bold text-4xl md:text-5xl mb-4">
-                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Featured Games</span>
+                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Featured
+                        Games</span>
                 </h2>
                 <p class="font-rajdhani text-xl text-gray-400">Choose your adventure and start playing instantly</p>
             </div>
 
             <div id="noResults" class="hidden text-center py-20 animate__animated animate__fadeIn">
-            <div class="flex flex-col items-center">
-                <div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10">
-                    <i class="fas fa-search-minus text-4xl text-purple-400 opacity-50"></i>
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10">
+                        <i class="fas fa-search-minus text-4xl text-purple-400 opacity-50"></i>
+                    </div>
+                    <h3 class="font-orbitron text-3xl font-bold text-white mb-2">No matching games</h3>
+                    <p class="font-rajdhani text-xl text-gray-400 max-w-md">
+                        We couldn't find anything for that search. Try <span
+                            class="text-pink-400 cursor-pointer hover:underline"
+                            onclick="document.getElementById('searchInput').value='Snake'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Snake</span>
+                        or <span class="text-pink-400 cursor-pointer hover:underline"
+                            onclick="document.getElementById('searchInput').value='Tic Tac Toe'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Tic
+                            Tac Toe</span>.
+                    </p>
                 </div>
-                <h3 class="font-orbitron text-3xl font-bold text-white mb-2">No matching games</h3>
-                <p class="font-rajdhani text-xl text-gray-400 max-w-md">
-                    We couldn't find anything for that search. Try <span class="text-pink-400 cursor-pointer hover:underline" onclick="document.getElementById('searchInput').value='Snake'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Snake</span> or <span class="text-pink-400 cursor-pointer hover:underline" onclick="document.getElementById('searchInput').value='Tic Tac Toe'; document.getElementById('searchInput').dispatchEvent(new Event('input'))">Tic Tac Toe</span>.
-                </p>
             </div>
-        </div>
-        
+
+            <!-- Category Filters -->
+            <div id="categoryFilters" class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up"></div>
+
             <div id="gamesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
         </div>
     </section>
@@ -267,16 +325,18 @@
         <div class="container mx-auto px-4">
             <div class="text-center mb-16" data-aos="fade-up">
                 <h2 class="font-orbitron font-bold text-4xl md:text-5xl mb-4">
-                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">What Players Say</span>
+                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">What
+                        Players Say</span>
                 </h2>
                 <p class="font-rajdhani text-xl text-gray-400">Join thousands of happy gamers enjoying our platform</p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Review 1 -->
                 <div class="review-card glass-card p-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Reviewer" class="w-12 h-12 rounded-full mr-4 border-2 border-purple-500">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Reviewer"
+                            class="w-12 h-12 rounded-full mr-4 border-2 border-purple-500">
                         <div>
                             <h4 class="font-orbitron font-bold text-lg">Alex Johnson</h4>
                             <div class="flex text-yellow-400">
@@ -288,13 +348,15 @@
                             </div>
                         </div>
                     </div>
-                    <p class="font-rajdhani text-gray-300">"GameHub has completely changed how I enjoy browser games. The collection is diverse and the interface is so smooth!"</p>
+                    <p class="font-rajdhani text-gray-300">"GameHub has completely changed how I enjoy browser games.
+                        The collection is diverse and the interface is so smooth!"</p>
                 </div>
-                
+
                 <!-- Review 2 -->
                 <div class="review-card glass-card p-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Reviewer" class="w-12 h-12 rounded-full mr-4 border-2 border-purple-500">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Reviewer"
+                            class="w-12 h-12 rounded-full mr-4 border-2 border-purple-500">
                         <div>
                             <h4 class="font-orbitron font-bold text-lg">Sarah Williams</h4>
                             <div class="flex text-yellow-400">
@@ -306,13 +368,15 @@
                             </div>
                         </div>
                     </div>
-                    <p class="font-rajdhani text-gray-300">"The variety of games is amazing! I spend hours playing different games without getting bored. Love the leaderboard feature!"</p>
+                    <p class="font-rajdhani text-gray-300">"The variety of games is amazing! I spend hours playing
+                        different games without getting bored. Love the leaderboard feature!"</p>
                 </div>
-                
+
                 <!-- Review 3 -->
                 <div class="review-card glass-card p-6" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex items-center mb-4">
-                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Reviewer" class="w-12 h-12 rounded-full mr-4 border-2 border-purple-500">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Reviewer"
+                            class="w-12 h-12 rounded-full mr-4 border-2 border-purple-500">
                         <div>
                             <h4 class="font-orbitron font-bold text-lg">Michael Chen</h4>
                             <div class="flex text-yellow-400">
@@ -324,7 +388,8 @@
                             </div>
                         </div>
                     </div>
-                    <p class="font-rajdhani text-gray-300">"As a developer, I appreciate the clean UI and smooth performance. The games load instantly and work perfectly on all devices."</p>
+                    <p class="font-rajdhani text-gray-300">"As a developer, I appreciate the clean UI and smooth
+                        performance. The games load instantly and work perfectly on all devices."</p>
                 </div>
             </div>
         </div>
@@ -333,7 +398,7 @@
     <!-- About Section -->
     <section id="about" class="about-section">
         <div class="container">
-            
+
             <!-- Main Glass Card -->
             <div class="glass-card about-card" data-aos="fade-up">
                 <div class="about-content">
@@ -341,11 +406,14 @@
                     <div class="about-text">
                         <h2>About GameHub</h2>
                         <p>
-                            GameHub is a next-generation browser gaming platform designed to bring premium gaming experiences directly to the web. 
-                            Built as an open-source initiative, it aims to eliminate the barrier between players and fun—no downloads, no installations, just instant play.
+                            GameHub is a next-generation browser gaming platform designed to bring premium gaming
+                            experiences directly to the web.
+                            Built as an open-source initiative, it aims to eliminate the barrier between players and
+                            fun—no downloads, no installations, just instant play.
                         </p>
                         <p>
-                            Whether you are a casual gamer looking for a quick break or a competitive player climbing the leaderboards, GameHub offers a seamless experience across all devices.
+                            Whether you are a casual gamer looking for a quick break or a competitive player climbing
+                            the leaderboards, GameHub offers a seamless experience across all devices.
                         </p>
                     </div>
 
@@ -392,12 +460,15 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
                 <div>
                     <div class="flex items-center justify-center md:justify-start space-x-2 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
                             <i class="fas fa-gamepad text-white text-lg"></i>
                         </div>
-                        <span class="font-orbitron font-bold text-2xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
+                        <span
+                            class="font-orbitron font-bold text-2xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">GameHub</span>
                     </div>
-                    <p class="font-rajdhani text-gray-400 mb-4">Made with <span class="text-pink-400">❤️</span> for gamers worldwide</p>
+                    <p class="font-rajdhani text-gray-400 mb-4">Made with <span class="text-pink-400">❤️</span> for
+                        gamers worldwide</p>
                 </div>
                 <div>
                     <h3 class="font-orbitron font-semibold text-lg mb-3 text-purple-300">Quick Links</h3>
@@ -407,17 +478,23 @@
                         <li><a href="#reviews" class="hover:text-pink-400 transition">Reviews</a></li>
                         <li><a href="#about" class="hover:text-pink-400 transition">About</a></li>
                         <li><a href="#leaderboard" class="hover:text-pink-400 transition">Leaderboard</a></li>
-                        <li><a href="https://github.com/kaifansariw/GameHub" target="_blank" class="hover:text-pink-400 transition">GitHub</a></li>
+                        <li><a href="https://github.com/kaifansariw/GameHub" target="_blank"
+                                class="hover:text-pink-400 transition">GitHub</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="font-orbitron font-semibold text-lg mb-3 text-purple-300">Social Links</h3>
                     <div class="flex justify-center md:justify-start space-x-4 mb-4 text-lg md:text-2xl">
-                        <a href="#" class="social-link" title="Twitter" class="hover:scale-105 transition duration-200"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link" title="Discord" class="hover:scale-105 transition duration-200"><i class="fab fa-discord"></i></a>
-                        <a href="https://github.com/kaifansariw/GameHub" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-link" title="YouTube" class="hover:scale-105 transition duration-200"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-link" title="Instagram" class="hover:scale-105 transition duration-200"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" title="Twitter"
+                            class="hover:scale-105 transition duration-200"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" title="Discord"
+                            class="hover:scale-105 transition duration-200"><i class="fab fa-discord"></i></a>
+                        <a href="https://github.com/kaifansariw/GameHub" class="social-link" title="GitHub"><i
+                                class="fab fa-github"></i></a>
+                        <a href="#" class="social-link" title="YouTube"
+                            class="hover:scale-105 transition duration-200"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link" title="Instagram"
+                            class="hover:scale-105 transition duration-200"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -430,72 +507,127 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="{% static 'main.js' %}"></script>
 
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("{% static 'service-worker.js' %}")
-        .then(() => console.log("Service Worker Registered"))
-        .catch((err) =>
-          console.error("Service Worker registration failed:", err)
-        );
-    });
-  }
-</script>
-<link rel="stylesheet" href="{% static 'cursor-trail.css' %}">
-<script src="{% static 'scripts/cursor-trail.js' %}"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker
+                    .register("{% static 'service-worker.js' %}")
+                    .then(() => console.log("Service Worker Registered"))
+                    .catch((err) =>
+                        console.error("Service Worker registration failed:", err)
+                    );
+            });
+        }
+    </script>
+    <link rel="stylesheet" href="{% static 'cursor-trail.css' %}">
+    <script src="{% static 'scripts/cursor-trail.js' %}"></script>
 
-<button id="feedbackButton" class="feedback-fab" type="button" aria-label="Open feedback form" title="Feedback">
-  <i class="fas fa-comment-dots" aria-hidden="true"></i>
-</button>
-<div id="feedbackModal" class="feedback-modal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
-  <div class="feedback-card">
-    <div class="feedback-title" id="feedbackTitle">Send Feedback</div>
-    <form id="feedbackForm" novalidate>
-      <textarea id="feedbackText" class="feedback-textarea" required aria-required="true" aria-label="Your feedback"></textarea>
-      <div class="feedback-error" id="feedbackError" style="display:none">Please enter your feedback.</div>
-      <div class="feedback-actions">
-        <button type="submit" class="feedback-submit" id="feedbackSubmit">Submit</button>
-        <button type="button" class="feedback-close" id="feedbackClose">Close</button>
-      </div>
-      <div class="feedback-message" id="feedbackMessage" style="display:none">Thank you for your feedback!</div>
-    </form>
-  </div>
- </div>
-<script>
-  (function(){
-    var feedbackBtn = document.getElementById('feedbackButton');
-    var modal = document.getElementById('feedbackModal');
-    var form = document.getElementById('feedbackForm');
-    var textarea = document.getElementById('feedbackText');
-    var error = document.getElementById('feedbackError');
-    var message = document.getElementById('feedbackMessage');
-    var submitBtn = document.getElementById('feedbackSubmit');
-    var closeBtn = document.getElementById('feedbackClose');
-    var homeUrl = "{% url 'home' %}";
-    function openModal(){ modal.classList.add('open'); textarea.focus(); }
-    function closeModal(){ modal.classList.remove('open'); }
-    feedbackBtn.addEventListener('click', openModal);
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
-    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var value = textarea.value.trim();
-      if(!value){
-        error.style.display='block';
-        textarea.focus();
-        return;
-      }
-      error.style.display='none';
-      textarea.disabled = true;
-      submitBtn.disabled = true;
-      closeBtn.disabled = true;
-      message.style.display='block';
-      setTimeout(function(){ window.location.href = homeUrl; }, 3000);
-    });
-  })();
-</script>
+    <button id="feedbackButton" class="feedback-fab" type="button" aria-label="Open feedback form" title="Feedback">
+        <i class="fas fa-comment-dots" aria-hidden="true"></i>
+    </button>
+    <div id="feedbackModal" class="feedback-modal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
+        <div class="feedback-card">
+            <div class="feedback-title" id="feedbackTitle">Send Feedback</div>
+            <form id="feedbackForm" novalidate>
+                <textarea id="feedbackText" class="feedback-textarea" required aria-required="true"
+                    aria-label="Your feedback"></textarea>
+                <div class="feedback-error" id="feedbackError" style="display:none">Please enter your feedback.</div>
+                <div class="feedback-actions">
+                    <button type="submit" class="feedback-submit" id="feedbackSubmit">Submit</button>
+                    <button type="button" class="feedback-close" id="feedbackClose">Close</button>
+                </div>
+                <div class="feedback-message" id="feedbackMessage" style="display:none">Thank you for your feedback!
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var feedbackBtn = document.getElementById('feedbackButton');
+            var modal = document.getElementById('feedbackModal');
+            var form = document.getElementById('feedbackForm');
+            var textarea = document.getElementById('feedbackText');
+            var error = document.getElementById('feedbackError');
+            var message = document.getElementById('feedbackMessage');
+            var submitBtn = document.getElementById('feedbackSubmit');
+            var closeBtn = document.getElementById('feedbackClose');
+            var homeUrl = "{% url 'home' %}";
+            function openModal() { modal.classList.add('open'); textarea.focus(); }
+            function closeModal() { modal.classList.remove('open'); }
+            feedbackBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var value = textarea.value.trim();
+                if (!value) {
+                    error.style.display = 'block';
+                    textarea.focus();
+                    return;
+                }
+                error.style.display = 'none';
+                textarea.disabled = true;
+                submitBtn.disabled = true;
+
+                // --- NEW INTEGRATION ---
+                fetch("{% url 'send_feedback' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    body: JSON.stringify({ content: value })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            message.textContent = data.message;
+                            message.style.display = 'block';
+                            setTimeout(function () { closeModal(); location.reload(); }, 2000);
+                        } else {
+                            error.textContent = data.message;
+                            error.style.display = 'block';
+                            textarea.disabled = false;
+                            submitBtn.disabled = false;
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Feedback error:", err);
+                        error.textContent = "Something went wrong. Please try again.";
+                        error.style.display = 'block';
+                        textarea.disabled = false;
+                        submitBtn.disabled = false;
+                    });
+            });
+
+        })();
+    </script>
+
+    <button id="scrollTopBtn" class="scroll-top-btn" title="Go to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        (function () {
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        })();
+    </script>
 
 </body>
 

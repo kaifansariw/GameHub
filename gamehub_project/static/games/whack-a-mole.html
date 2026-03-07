@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,13 @@
     <script>
         window.GAME_CATEGORY = "arcade";
     </script>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
@@ -46,8 +48,15 @@
         }
 
         @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .navbar {
@@ -74,6 +83,7 @@
         .stat-value {
             background: var(--primary-gradient);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 700;
@@ -136,8 +146,15 @@
         }
 
         @keyframes moleHit {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(0.8); }
+
+            0%,
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                transform: translateX(-50%) scale(0.8);
+            }
         }
 
         .btn-game {
@@ -179,6 +196,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <div class="navbar text-white shadow-lg">
@@ -234,12 +252,15 @@
             <!-- Game Over Modal -->
             <div id="gameOverModal" class="hidden">
                 <div class="game-over-modal text-center animate__animated animate__zoomIn">
-                    <h2 class="text-3xl font-bold mb-4" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <h2 class="text-3xl font-bold mb-4"
+                        style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
                         Game Over!
                     </h2>
                     <div class="mb-6">
                         <p class="text-xl text-gray-300 mb-2">Final Score</p>
-                        <p class="text-5xl font-bold" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" id="finalScore">0</p>
+                        <p class="text-5xl font-bold"
+                            style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;"
+                            id="finalScore">0</p>
                     </div>
                     <div class="mb-6" id="newHighScoreMsg" style="display: none;">
                         <div class="alert alert-success">
@@ -258,12 +279,16 @@
                 <i class="fas fa-info-circle text-2xl"></i>
                 <div>
                     <h3 class="font-bold text-lg">How to Play:</h3>
-                    <p>Click on the moles as they pop up from the holes! Score points before time runs out. The game gets faster as you progress!</p>
+                    <p>Click on the moles as they pop up from the holes! Score points before time runs out. The game
+                        gets faster as you progress!</p>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="../scripts/score-saver.js"></script>
     <script src="../scripts/whack-a-mole.js"></script>
+
 </body>
+
 </html>

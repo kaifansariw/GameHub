@@ -377,12 +377,21 @@ const games = [
     category: 'arcade'
   },
   {
-  id: "whack-a-mole",
-  title: "Whack-A-Mole",
-  description: "Whack the moles before time runs out",
-  image: "/static/assets/Whake-a-mole.png",
-  file: "/static/games/whack-a-mole.html",
-  category: "arcade"
+    id: "whack-a-mole",
+    title: "Whack-A-Mole",
+    description: "Whack the moles before time runs out",
+    image: "/static/assets/Whake-a-mole.png",
+    file: "/static/games/whack-a-mole.html",
+    category: "arcade"
+  },
+
+  {
+    id: "mario-forever",
+    title: "Mario Forever",
+    description: "Run, jump, and collect coins in this fun platform adventure",
+    image: "/static/assets/Mario.png",   // Make sure the image exists in this path
+    file: "/static/games/Mario-Forever/index.html",   // Path to your HTML game file
+    category: "arcade"
 }
 ];
 
@@ -390,55 +399,33 @@ const games = [
 // DARK MODE FUNCTIONALITY
 // ============================================
 
-/**
- * Initialize theme on page load
- * Checks localStorage and system preference
- */
 function initializeTheme() {
   const themeToggle = document.getElementById("themeToggle");
   const themeIcon = themeToggle?.querySelector("i");
-  
-  // Check for saved theme preference or default to system preference
   let savedTheme = localStorage.getItem("theme");
-  
-  // If no saved theme, detect system preference
+
   if (!savedTheme) {
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     savedTheme = prefersDark ? "dark" : "light";
   }
-  
-  // Apply theme
-document.body.setAttribute("data-theme", savedTheme);
-  
-  // Update icon
+
+  document.body.setAttribute("data-theme", savedTheme);
   if (themeIcon) {
     themeIcon.className = savedTheme === "dark" ? "fas fa-moon" : "fas fa-sun";
   }
-  
-  // Log for debugging
   console.log(`🎨 Theme initialized: ${savedTheme}`);
 }
 
-/**
- * Toggle between light and dark themes
- */
 function toggleTheme() {
   const themeToggle = document.getElementById("themeToggle");
   const themeIcon = themeToggle?.querySelector("i");
-  
-  // Get current theme
   const currentTheme = document.body.getAttribute("data-theme") || "dark";
   const newTheme = currentTheme === "dark" ? "light" : "dark";
-  
-  // Apply new theme with smooth transition
+
   document.body.style.transition = "background-color 0.3s ease, color 0.3s ease";
   document.body.setAttribute("data-theme", newTheme);
-
-  
-  // Save to localStorage
   localStorage.setItem("theme", newTheme);
-  
-  // Update icon with rotation animation
+
   if (themeIcon) {
     themeIcon.style.transform = "rotate(360deg)";
     setTimeout(() => {
@@ -446,24 +433,18 @@ function toggleTheme() {
       themeIcon.style.transform = "rotate(0deg)";
     }, 150);
   }
-  
-  // Add scale animation to button
+
   if (themeToggle) {
     themeToggle.style.transform = "scale(0.8)";
     setTimeout(() => {
       themeToggle.style.transform = "scale(1)";
     }, 150);
   }
-  
-  // Show theme change notification (optional)
+
   showThemeNotification(newTheme);
-  
   console.log(`🎨 Theme changed to: ${newTheme}`);
 }
 
-/**
- * Show a subtle notification when theme changes (optional)
- */
 function showThemeNotification(theme) {
   const notification = document.createElement("div");
   notification.className = "theme-notification";
@@ -485,16 +466,13 @@ function showThemeNotification(theme) {
     transform: translateY(20px);
     transition: all 0.3s ease;
   `;
-  
+
   document.body.appendChild(notification);
-  
-  // Animate in
   setTimeout(() => {
     notification.style.opacity = "1";
     notification.style.transform = "translateY(0)";
   }, 10);
-  
-  // Remove after 2 seconds
+
   setTimeout(() => {
     notification.style.opacity = "0";
     notification.style.transform = "translateY(20px)";
@@ -502,63 +480,45 @@ function showThemeNotification(theme) {
   }, 2000);
 }
 
-/**
- * Setup theme toggle button event listener
- */
 function setupThemeToggle() {
   const themeToggle = document.getElementById("themeToggle");
-  
   if (themeToggle) {
     themeToggle.addEventListener("click", toggleTheme);
-    
-    // Add keyboard accessibility
     themeToggle.addEventListener("keypress", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         toggleTheme();
       }
     });
-    
-    // Make it focusable
     themeToggle.setAttribute("tabindex", "0");
     themeToggle.setAttribute("role", "button");
     themeToggle.setAttribute("aria-label", "Toggle dark mode");
   }
 }
 
-/**
- * Listen for system theme changes
- */
 function setupSystemThemeListener() {
   const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  
   darkModeMediaQuery.addEventListener("change", (e) => {
-    // Only auto-update if user hasn't manually set a preference
     const savedTheme = localStorage.getItem("theme");
     if (!savedTheme) {
       const newTheme = e.matches ? "dark" : "light";
       document.body.setAttribute("data-theme", newTheme);
-      
       const themeIcon = document.querySelector("#themeToggle i");
       if (themeIcon) {
         themeIcon.className = newTheme === "dark" ? "fas fa-moon" : "fas fa-sun";
       }
-
-      
-      console.log(`🎨 System theme changed to: ${newTheme}`);
     }
   });
 }
 
 // ============================================
-// GAME RENDERING AND SEARCH
+// GAME RENDERING AND FILTERS
 // ============================================
 
-// Render games with futuristic styling
-function renderGames(gamesToRender = games) {
+function renderGamesWithRatings(gamesToRender = games) {
   const gamesGrid = document.getElementById("gamesGrid");
   if (!gamesGrid) return;
-  
+
   gamesGrid.innerHTML = "";
 
   gamesToRender.forEach((game, index) => {
@@ -578,7 +538,8 @@ function renderGames(gamesToRender = games) {
         <h3 class="font-orbitron font-bold text-xl mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
           ${game.title}
         </h3>
-        <p class="font-rajdhani text-gray-400 mb-4">${game.description}</p>
+        <p class="font-rajdhani text-gray-400 mb-2">${game.description}</p>
+        <div class="rating-container mb-2" id="rating-${game.id}"></div>
         <button onclick="playGame('${game.file}')" class="pixel-btn glow-on-hover game-play-btn w-full">
           <i class="fas fa-rocket mr-2"></i>Play Now
         </button>
@@ -586,27 +547,6 @@ function renderGames(gamesToRender = games) {
     `;
 
     gamesGrid.appendChild(gameCard);
-  });
-
-  // Refresh AOS if available
-  if (typeof AOS !== 'undefined') {
-    AOS.refresh();
-  }
-}
-
-// Enhanced search with animations
-function setupEnhancedSearch() {
-  const searchInput = document.getElementById("searchInput");
-  const gamesGrid = document.getElementById("gamesGrid");
-  const noResults = document.getElementById("noResults"); // Reference the new ID from index.html
-  
-  if (!searchInput || !gamesGrid) return;
-
-  searchInput.addEventListener("input", (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-
-    // Add loading state effect
-    gamesGrid.style.opacity = "0.5";
 
     setTimeout(() => {
       const filteredGames = games.filter(
@@ -712,44 +652,12 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         behavior: "smooth",
         block: "start",
       });
+    const ratingContainer = gameCard.querySelector(`#rating-${game.id}`);
+    if (ratingContainer) {
+      const starRating = createStarRating(game.id, "small");
+      ratingContainer.appendChild(starRating);
     }
   });
-});
-
-
-function getCSRFToken() {
-  return document.cookie
-    .split(";")
-    .map(c => c.trim())
-    .find(c => c.startsWith("csrftoken="))
-    ?.split("=")[1] || "";
-}
-
-function playGame(gameFile) {
-
-  // ❗ 1) Block iframe scoring and redirect
-  if (window !== window.parent) return;
-
-  const game = games.find(g => g.file === gameFile);
-
-  if (game) {
-    // ❗ 2) Recently played
-    let recent = JSON.parse(localStorage.getItem("recentlyPlayed") || "[]");
-
-    recent = recent.filter(g => g.id !== game.id);
-    recent.unshift(game);
-    recent = recent.slice(0, 5);
-
-    localStorage.setItem("recentlyPlayed", JSON.stringify(recent));
-
-    // NOTE: Visit will be tracked by the individual game page on load to avoid duplicate counts.
-  }
-
-  // ❗ 4) Redirect to game
-  window.location.href = gameFile;
-}
-
-main.js
 
 // ============================================
 // GAME STATISTICS AND ANALYTICS
@@ -879,118 +787,67 @@ function initializeGameStats() {
       };
     });
     localStorage.setItem("gameStats", JSON.stringify(initialStats));
+  if (typeof AOS !== 'undefined') {
+    AOS.refresh();
   }
 }
 
-// Track game play
-function trackGamePlay(gameId) {
-  const stats = JSON.parse(localStorage.getItem("gameStats") || "{}");
-  const gameStat = stats[gameId] || { plays: 0, lastPlayed: null, totalTime: 0 };
-  
-  gameStat.plays += 1;
-  gameStat.lastPlayed = new Date().toISOString();
-  
-  stats[gameId] = gameStat;
-  localStorage.setItem("gameStats", JSON.stringify(stats));
-}
-
-// Get game statistics
-function getGameStats(gameId) {
-  const stats = JSON.parse(localStorage.getItem("gameStats") || "{}");
-  return stats[gameId] || { plays: 0, lastPlayed: null, totalTime: 0 };
-}
-
-// Get top played games
-function getTopPlayedGames(limit = 5) {
-  const stats = JSON.parse(localStorage.getItem("gameStats") || "{}");
-  return Object.entries(stats)
-    .sort((a, b) => b[1].plays - a[1].plays)
-    .slice(0, limit)
-    .map(([gameId, stat]) => {
-      const game = games.find(g => g.id === gameId);
-      return { ...game, ...stat };
-    })
-    .filter(game => game !== undefined);
-}
-
-// Update game card with play count
-function updateGameCardWithStats() {
-  // This function can be called to update game cards with play statistics
-  // Implementation depends on UI design
-}
-
-// ============================================
-// ENHANCED GAME CATEGORIES
-// ============================================
-
-// Get all unique categories
 function getAllCategories() {
   const categories = [...new Set(games.map(game => game.category))];
   return categories.sort();
 }
 
-// Filter games by category
 function filterGamesByCategory(category) {
   if (category === "all") {
-    renderGames(games);
+    renderGamesWithRatings(games);
     return;
   }
-  
+
   const filteredGames = games.filter(game => game.category === category);
-  renderGames(filteredGames);
+  renderGamesWithRatings(filteredGames);
 }
 
-// Create category filter UI
 function createCategoryFilters() {
   const categories = getAllCategories();
   const categoryContainer = document.getElementById("categoryFilters");
-  
   if (!categoryContainer) return;
-  
-  // Add "All" category
+
+  categoryContainer.innerHTML = "";
+
   const allButton = document.createElement("button");
   allButton.className = "category-btn active";
   allButton.textContent = "All Games";
   allButton.onclick = () => {
     filterGamesByCategory("all");
-    // Update active state
-    document.querySelectorAll(".category-btn").forEach(btn => {
-      btn.classList.remove("active");
-    });
+    document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("active"));
     allButton.classList.add("active");
   };
-  
   categoryContainer.appendChild(allButton);
-  
+
   categories.forEach(category => {
     const button = document.createElement("button");
     button.className = "category-btn";
     button.textContent = category.charAt(0).toUpperCase() + category.slice(1);
     button.onclick = () => {
       filterGamesByCategory(category);
-      // Update active state
-      document.querySelectorAll(".category-btn").forEach(btn => {
-        btn.classList.remove("active");
-      });
+      document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
     };
-    
     categoryContainer.appendChild(button);
   });
 }
 
 // ============================================
-// IMPROVED GAME SEARCH WITH SUGGESTIONS
+// SEARCH AND SUGGESTIONS
 // ============================================
 
-// Enhanced search with suggestions
 function setupImprovedSearch() {
   const searchInput = document.getElementById("searchInput");
   const gamesGrid = document.getElementById("gamesGrid");
-  
+  const noResults = document.getElementById("noResults");
+
   if (!searchInput || !gamesGrid) return;
 
-  // Create search suggestions container
   const suggestionsContainer = document.createElement("div");
   suggestionsContainer.id = "searchSuggestions";
   suggestionsContainer.className = "search-suggestions";
@@ -998,19 +855,16 @@ function setupImprovedSearch() {
 
   searchInput.addEventListener("input", (e) => {
     const searchTerm = e.target.value.toLowerCase().trim();
-    
-    // Clear previous suggestions
     suggestionsContainer.innerHTML = "";
-    
+
     if (searchTerm.length > 0) {
-      // Filter games for suggestions
       const suggestions = games.filter(
         (game) =>
           game.title.toLowerCase().includes(searchTerm) ||
           game.description.toLowerCase().includes(searchTerm) ||
           game.category.toLowerCase().includes(searchTerm)
-      ).slice(0, 5); // Limit to 5 suggestions
-      
+      ).slice(0, 5);
+
       if (suggestions.length > 0) {
         suggestions.forEach(suggestion => {
           const suggestionItem = document.createElement("div");
@@ -1025,24 +879,22 @@ function setupImprovedSearch() {
           suggestionItem.onclick = () => {
             searchInput.value = suggestion.title;
             suggestionsContainer.innerHTML = "";
-            const filteredGames = games.filter(
-              (game) =>
-                game.title.toLowerCase().includes(searchTerm) ||
-                game.description.toLowerCase().includes(searchTerm) ||
-                game.category.toLowerCase().includes(searchTerm)
-            );
-            renderGames(filteredGames);
+            filterGamesBySearch(suggestion.title.toLowerCase());
           };
           suggestionsContainer.appendChild(suggestionItem);
         });
         suggestionsContainer.style.display = "block";
       }
+
+      filterGamesBySearch(searchTerm);
     } else {
       suggestionsContainer.style.display = "none";
+      renderGamesWithRatings(games);
+      if (noResults) noResults.classList.add('hidden');
+      gamesGrid.classList.remove('hidden');
     }
   });
-  
-  // Hide suggestions when clicking outside
+
   document.addEventListener("click", (e) => {
     if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
       suggestionsContainer.style.display = "none";
@@ -1050,311 +902,141 @@ function setupImprovedSearch() {
   });
 }
 
+function filterGamesBySearch(searchTerm) {
+  const gamesGrid = document.getElementById("gamesGrid");
+  const noResults = document.getElementById("noResults");
+
+  const filteredGames = games.filter(
+    (game) =>
+      game.title.toLowerCase().includes(searchTerm) ||
+      game.description.toLowerCase().includes(searchTerm) ||
+      game.category.toLowerCase().includes(searchTerm)
+  );
+
+  renderGamesWithRatings(filteredGames);
+
+  if (filteredGames.length === 0 && searchTerm !== "") {
+    if (noResults) noResults.classList.remove('hidden');
+    gamesGrid.classList.add('hidden');
+  } else {
+    if (noResults) noResults.classList.add('hidden');
+    gamesGrid.classList.remove('hidden');
+  }
+}
+
 // ============================================
-// GAME RATING SYSTEM
+// RATING SYSTEM
 // ============================================
 
-// Initialize game ratings
 function initializeGameRatings() {
   if (!localStorage.getItem("gameRatings")) {
     const initialRatings = {};
     games.forEach(game => {
-      initialRatings[game.id] = {
-        average: 0,
-        totalRatings: 0,
-        userRating: null
-      };
+      initialRatings[game.id] = { average: 0, totalRatings: 0, userRating: null };
     });
     localStorage.setItem("gameRatings", JSON.stringify(initialRatings));
   }
 }
 
-// Rate a game
 function rateGame(gameId, rating) {
   const ratings = JSON.parse(localStorage.getItem("gameRatings") || "{}");
   const gameRating = ratings[gameId] || { average: 0, totalRatings: 0, userRating: null };
-  
-  // Store user's rating
   const oldUserRating = gameRating.userRating || 0;
   gameRating.userRating = rating;
-  
-  // Update average
+
   const totalRatings = gameRating.totalRatings;
   const currentAverage = gameRating.average;
-  
-  // Remove old user rating from total
   const totalStars = (currentAverage * totalRatings) - oldUserRating;
-  
-  // If this is a new rating, increment total count
-  if (oldUserRating === 0) {
-    gameRating.totalRatings = totalRatings + 1;
-  }
-  
-  // Add new rating
-  const newTotalStars = totalStars + rating;
-  gameRating.average = newTotalStars / gameRating.totalRatings;
-  
+
+  if (oldUserRating === 0) gameRating.totalRatings = totalRatings + 1;
+  gameRating.average = (totalStars + rating) / gameRating.totalRatings;
+
   ratings[gameId] = gameRating;
   localStorage.setItem("gameRatings", JSON.stringify(ratings));
 }
 
-// Get game rating
 function getGameRating(gameId) {
   const ratings = JSON.parse(localStorage.getItem("gameRatings") || "{}");
   return ratings[gameId] || { average: 0, totalRatings: 0, userRating: null };
 }
 
-// Create star rating element
 function createStarRating(gameId, size = "small") {
   const rating = getGameRating(gameId);
   const container = document.createElement("div");
   container.className = `star-rating ${size}`;
-  
-  // Create stars
+
   for (let i = 1; i <= 5; i++) {
     const star = document.createElement("span");
     star.className = "star";
     star.innerHTML = "★";
-    star.dataset.rating = i;
-    
-    if (i <= Math.floor(rating.average)) {
-      star.classList.add("filled");
-    } else if (i === Math.ceil(rating.average) && rating.average % 1 !== 0) {
-      star.classList.add("half");
-    }
-    
-    // Add click event for user rating
+    if (i <= Math.floor(rating.average)) star.classList.add("filled");
+    else if (i === Math.ceil(rating.average) && rating.average % 1 !== 0) star.classList.add("half");
+
     star.addEventListener("click", () => {
       rateGame(gameId, i);
-      // Re-render the rating display
       const parent = container.parentNode;
       const newRating = createStarRating(gameId, size);
       parent.replaceChild(newRating, container);
     });
-    
     container.appendChild(star);
   }
-  
-  // Add rating count
+
   const count = document.createElement("span");
   count.className = "rating-count";
   count.textContent = `(${rating.totalRatings})`;
   container.appendChild(count);
-  
   return container;
 }
 
 // ============================================
-// IMPROVED GAME CARD RENDERING WITH RATING
+// ANALYTICS AND UTILS
 // ============================================
 
-// Render games with ratings
-function renderGamesWithRatings(gamesToRender = games) {
-  const gamesGrid = document.getElementById("gamesGrid");
-  if (!gamesGrid) return;
-  
-  gamesGrid.innerHTML = "";
-
-  gamesToRender.forEach((game, index) => {
-    const gameCard = document.createElement("div");
-    gameCard.className = "game-card";
-    gameCard.setAttribute("data-aos", "fade-up");
-    gameCard.setAttribute("data-aos-delay", index * 100);
-
-    gameCard.innerHTML = `
-      <div class="relative overflow-hidden rounded-xl mb-4">
-        <img src="${game.image}" alt="${game.title}" class="w-full h-48 object-cover" loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-          <span class="text-white font-orbitron font-semibold">${game.category}</span>
-        </div>
-      </div>
-      <div class="text-center">
-        <h3 class="font-orbitron font-bold text-xl mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-          ${game.title}
-        </h3>
-        <p class="font-rajdhani text-gray-400 mb-2">${game.description}</p>
-        <div class="rating-container mb-2" id="rating-${game.id}"></div>
-        <button onclick="playGame('${game.file}')" class="pixel-btn glow-on-hover game-play-btn w-full">
-          <i class="fas fa-rocket mr-2"></i>Play Now
-        </button>
-      </div>
-    `;
-
-    gamesGrid.appendChild(gameCard);
-    
-    // Add rating after the card is added to DOM
-    const ratingContainer = gameCard.querySelector(`#rating-${game.id}`);
-    if (ratingContainer) {
-      const starRating = createStarRating(game.id, "small");
-      ratingContainer.appendChild(starRating);
-    }
-  });
-
-  // Refresh AOS if available
-  if (typeof AOS !== 'undefined') {
-    AOS.refresh();
-  }
-}
-
-// ============================================
-// ACCESSIBILITY ENHANCEMENTS
-// ============================================
-
-// Add keyboard navigation for game cards
-function setupGameCardAccessibility() {
-  const gameCards = document.querySelectorAll(".game-card");
-  
-  gameCards.forEach(card => {
-    // Make game cards focusable
-    card.setAttribute("tabindex", "0");
-    
-    // Add keyboard event listener
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        const playButton = card.querySelector(".game-play-btn");
-        if (playButton) {
-          playButton.click();
-        }
-      }
+function initializeGameStats() {
+  if (!localStorage.getItem("gameStats")) {
+    const initialStats = {};
+    games.forEach(game => {
+      initialStats[game.id] = { plays: 0, lastPlayed: null, totalTime: 0 };
     });
-  });
+    localStorage.setItem("gameStats", JSON.stringify(initialStats));
+  }
 }
 
-// Add focus styles for accessibility
-function addFocusStyles() {
-  const style = document.createElement("style");
-  style.textContent = `
-    .game-card:focus,
-    .category-btn:focus,
-    .search-input:focus {
-      outline: 2px solid var(--primary-accent);
-      outline-offset: 2px;
-      border-radius: 8px;
-    }
-    
-    .game-card:focus-visible,
-    .category-btn:focus-visible,
-    .search-input:focus-visible {
-      outline: 2px solid var(--primary-accent);
-      outline-offset: 2px;
-      border-radius: 8px;
-    }
-  `;
-  document.head.appendChild(style);
+function trackGamePlay(gameId) {
+  const stats = JSON.parse(localStorage.getItem("gameStats") || "{}");
+  const gameStat = stats[gameId] || { plays: 0, lastPlayed: null, totalTime: 0 };
+  gameStat.plays += 1;
+  gameStat.lastPlayed = new Date().toISOString();
+  stats[gameId] = gameStat;
+  localStorage.setItem("gameStats", JSON.stringify(stats));
 }
 
-// ============================================
-// IMPROVED RECENTLY PLAYED TRACKING
-// ============================================
-
-// Enhanced playGame function with statistics
-function playGame(gameFile) {
-  // ❗ 1) Block iframe scoring and redirect
-  if (window !== window.parent) return;
-
-  const game = games.find(g => g.file === gameFile);
-
-  if (game) {
-    // ❗ 2) Recently played
-    let recent = JSON.parse(localStorage.getItem("recentlyPlayed") || "[]");
-
-    recent = recent.filter(g => g.id !== game.id);
-    recent.unshift(game);
-    recent = recent.slice(0, 5);
-
-    localStorage.setItem("recentlyPlayed", JSON.stringify(recent));
-    
-    // Track game statistics
-    trackGamePlay(game.id);
-
-    // NOTE: Visit will be tracked by the individual game page on load to avoid duplicate counts.
-  }
-
-  // ❗ 4) Redirect to game
-  window.location.href = gameFile;
+function getTopPlayedGames(limit = 5) {
+  const stats = JSON.parse(localStorage.getItem("gameStats") || "{}");
+  return Object.entries(stats)
+    .sort((a, b) => b[1].plays - a[1].plays)
+    .slice(0, limit)
+    .map(([gameId, stat]) => {
+      const game = games.find(g => g.id === gameId);
+      return game ? { ...game, ...stat } : null;
+    })
+    .filter(Boolean);
 }
 
-// ============================================
-// INITIALIZE ALL SYSTEMS
-// ============================================
+function createParticles() {
+  const particleContainer = document.createElement("div");
+  particleContainer.className = "fixed inset-0 pointer-events-none z-0";
+  document.body.appendChild(particleContainer);
 
-// Initialize everything when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize AOS (Animate On Scroll)
-  if (typeof AOS !== 'undefined') {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
+  for (let i = 0; i < 50; i++) {
+    const particle = document.createElement("div");
+    particle.className = "absolute w-1 h-1 bg-purple-400 rounded-full opacity-30 floating";
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.top = Math.random() * 100 + "%";
+    particle.style.animationDelay = Math.random() * 6 + "s";
+    particleContainer.appendChild(particle);
   }
-  
-  // Initialize game statistics
-  initializeGameStats();
-  
-  // Initialize game ratings
-  initializeGameRatings();
-  
-  // Initialize theme FIRST (before anything else renders)
-  initializeTheme();
-  
-  // Setup theme toggle
-  setupThemeToggle();
-  
-  // Setup system theme listener
-  setupSystemThemeListener();
-  
-  // Render games with ratings
-  renderGamesWithRatings();
-  
-  // Setup improved search
-  setupImprovedSearch();
-  
-  // Create category filters
-  createCategoryFilters();
-  
-  // Create particles
-  createParticles();
-  
-  // Setup game card accessibility
-  setupGameCardAccessibility();
-  
-  // Add focus styles
-  addFocusStyles();
-
-  // Render progress section
-  renderProgressSection();
-  
-  // Update footer year if element exists
-  const footerYear = document.getElementById('footeryear');
-  if (footerYear) {
-    footerYear.textContent = new Date().getFullYear();
-  }
-  
-  console.log("✅ GameHub initialized successfully!");
-  console.log(`📊 Total games loaded: ${games.length}`);
-  
-  // Log top played games
-  const topGames = getTopPlayedGames(3);
-  if (topGames.length > 0) {
-    console.log("🔥 Top played games:", topGames.map(g => g.title));
-  }
-});
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  });
-});
-
+}
 
 function getCSRFToken() {
   return document.cookie
@@ -1364,40 +1046,103 @@ function getCSRFToken() {
     ?.split("=")[1] || "";
 }
 
-// Duplicate theme toggle system - REMOVED to prevent conflicts
+function playGame(gameFile) {
+  if (window !== window.parent) return;
+  const game = games.find(g => g.file === gameFile);
+  if (game) {
+    let recent = JSON.parse(localStorage.getItem("recentlyPlayed") || "[]");
+    recent = recent.filter(g => g.id !== game.id);
+    recent.unshift(game);
+    recent = recent.slice(0, 5);
+    localStorage.setItem("recentlyPlayed", JSON.stringify(recent));
+    trackGamePlay(game.id);
+  }
+  window.location.href = gameFile;
+}
+
+function setupGameCardAccessibility() {
+  document.querySelectorAll(".game-card").forEach(card => {
+    card.setAttribute("tabindex", "0");
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        card.querySelector(".game-play-btn")?.click();
+      }
+    });
+  });
+}
+
+function addFocusStyles() {
+  const style = document.createElement("style");
+  style.textContent = `
+    .game-card:focus, .category-btn:focus, .search-input:focus {
+      outline: 2px solid var(--neon-purple);
+      outline-offset: 2px;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof AOS !== 'undefined') {
+    AOS.init({ duration: 800, once: true });
+  }
+
+  initializeTheme();
+  setupThemeToggle();
+  setupSystemThemeListener();
+
+  initializeGameStats();
+  initializeGameRatings();
+
+  renderGamesWithRatings();
+  setupImprovedSearch();
+  createCategoryFilters();
+  createParticles();
+  setupGameCardAccessibility();
+  addFocusStyles();
+
+  // Render progress section
+  renderProgressSection();
+  
+  // Update footer year if element exists
+  const footerYear = document.getElementById('footeryear');
+  if (footerYear) footerYear.textContent = new Date().getFullYear();
+
+  console.log("✅ GameHub initialized successfully!");
+  console.log(`📊 Total games loaded: ${games.length}`);
+});
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute("href"));
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+});
 
 window.addEventListener("offline", () => {
-  alert("You are offline. Some features may not work.");
+  const banner = document.getElementById("network-status");
+  if (banner) {
+    banner.querySelector("#network-text").textContent = "You are offline";
+    banner.classList.remove("hidden");
+    banner.classList.add("offline");
+  }
 });
 
 window.addEventListener("online", () => {
-  location.reload();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
   const banner = document.getElementById("network-status");
-  const text = document.getElementById("network-text");
-
-  function showOffline() {
-    text.textContent = "You are offline";
-    banner.classList.remove("hidden", "online");
-    banner.classList.add("offline");
-  }
-
-  function showOnline() {
-    text.textContent = "You are back online";
+  if (banner) {
+    banner.querySelector("#network-text").textContent = "You are back online";
     banner.classList.remove("hidden", "offline");
     banner.classList.add("online");
-
-    setTimeout(() => {
-      banner.classList.add("hidden");
-    }, 3000);
+    setTimeout(() => banner.classList.add("hidden"), 3000);
   }
-
-  if (!navigator.onLine) {
-    showOffline();
-  }
-
-  window.addEventListener("offline", showOffline);
-  window.addEventListener("online", showOnline);
 });

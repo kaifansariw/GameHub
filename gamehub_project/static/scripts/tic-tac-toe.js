@@ -1,3 +1,18 @@
+function getCSRFToken() {
+    return document.cookie
+        .split(";")
+        .map(c => c.trim())
+        .find(c => c.startsWith("csrftoken="))
+        ?.split("=")[1] || "";
+}
+
+function saveScore(score) {
+    if (typeof saveScoreToServer === 'function') {
+        saveScoreToServer('tic-tac-toe', score);
+    }
+}
+
+
 // Tic Tac Toe Game Logic
 let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
@@ -33,6 +48,10 @@ function makeMove(cellIndex) {
         scores[currentPlayer.toLowerCase()]++;
         updateScoreDisplay();
         saveScores();
+        if (currentPlayer === 'X') {
+            saveScore(scores.x);
+        }
+
     } else if (board.every(cell => cell !== '')) {
         gameActive = false;
         showResult("It's a Draw! 🤝");
@@ -67,7 +86,7 @@ function resetGame() {
     board = ['', '', '', '', '', '', '', '', ''];
     currentPlayer = 'X';
     gameActive = true;
-    
+
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
         cell.textContent = '';
@@ -81,7 +100,7 @@ function resetGame() {
 // Update current player display
 function updateCurrentPlayerDisplay() {
     document.getElementById('currentPlayer').textContent = currentPlayer;
-    document.getElementById('currentPlayer').className = 
+    document.getElementById('currentPlayer').className =
         `stat-value ${currentPlayer === 'X' ? 'text-primary' : 'text-secondary'}`;
 }
 
