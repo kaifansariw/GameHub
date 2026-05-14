@@ -198,9 +198,14 @@ VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id.apps.googleusercontent.com
 ```env
 SECRET_KEY=your_django_secret_key
 DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
 GOOGLE_CLIENT_ID=your_google_oauth_client_id.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
 ```
+
+> [!IMPORTANT]
+> `DEBUG` now defaults to `False` in code. For local development, set `DEBUG=True` in `backend/.env`.
+> In production (`DEBUG=False`), you must provide both `SECRET_KEY` and `ALLOWED_HOSTS`.
 
 > [!TIP]
 > Get your Google OAuth credentials from [console.cloud.google.com/apis/credentials](https://console.cloud.google.com/apis/credentials).

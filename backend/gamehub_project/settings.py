@@ -5,17 +5,39 @@ Django settings for gamehub_project project.
 from pathlib import Path
 from datetime import timedelta
 import os
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
 
-SECRET_KEY = 'django-insecure-bht$bvpl4(l3j3zm3h^b1y%23j&tu^_gm#^i!e=ouf2h7e$e_3'
+def env_bool(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {'1', 'true', 't', 'yes', 'y', 'on'}
 
-DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+def env_list(name, default=''):
+    value = os.environ.get(name, default)
+    return [item.strip() for item in value.split(',') if item.strip()]
+
+
+DEBUG = env_bool('DEBUG', False)
+
+# Keep a dev-only fallback key to avoid breaking local onboarding.
+# In non-debug environments, SECRET_KEY must be explicitly provided.
+SECRET_KEY = os.environ.get('SECRET_KEY', '').strip()
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = 'django-insecure-dev-only-change-me'
+    else:
+        raise ImproperlyConfigured('SECRET_KEY environment variable must be set when DEBUG is False.')
+
+ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1') if DEBUG else env_list('ALLOWED_HOSTS')
+if not DEBUG and not ALLOWED_HOSTS:
+    raise ImproperlyConfigured('ALLOWED_HOSTS environment variable must be set when DEBUG is False.')
 
 
 INSTALLED_APPS = [
