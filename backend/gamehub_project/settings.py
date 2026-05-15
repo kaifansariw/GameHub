@@ -31,7 +31,19 @@ DEBUG = env_bool('DEBUG', False)
 SECRET_KEY = os.environ.get('SECRET_KEY', '').strip()
 if not SECRET_KEY:
     if DEBUG:
-        SECRET_KEY = 'django-insecure-dev-only-change-me'
+        # Generate an ephemeral, in-memory secret for development to avoid
+        # committing a fallback key in source control. This secret will
+        # not persist across process restarts — set `SECRET_KEY` in
+        # `backend/.env` for a persistent local value.
+        import secrets
+        import warnings
+
+        SECRET_KEY = secrets.token_urlsafe(50)
+        warnings.warn(
+            'DEBUG=True and SECRET_KEY not set; using ephemeral in-memory secret. '
+            'For persistent local sessions, set SECRET_KEY in backend/.env',
+            UserWarning
+        )
     else:
         raise ImproperlyConfigured('SECRET_KEY environment variable must be set when DEBUG is False.')
 

@@ -180,6 +180,9 @@ python -m venv venv
 source venv/bin/activate
 
 pip install -r requirements.txt
+# Copy the example environment file and edit values for local development
+cp .env.example .env
+# Edit backend/.env as needed (SECRET_KEY, DEBUG, ALLOWED_HOSTS, Google creds)
 python manage.py migrate
 python manage.py runserver
 # Runs on http://localhost:8000
