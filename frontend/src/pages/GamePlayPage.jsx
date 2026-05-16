@@ -72,6 +72,7 @@ const GamePlayPage = () => {
                         className="w-full h-full border-none"
                         title={game.title}
                         allow="autoplay; fullscreen; keyboard"
+                        sandbox="allow-scripts allow-forms"
                     />
                 </div>
 
