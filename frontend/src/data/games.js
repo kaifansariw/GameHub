@@ -35,7 +35,7 @@ export const games = [
         id: "2048",
         title: "2048 Fusion",
         description: "Logarithmic Tile Merging Logic",
-        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&h=250&fit=crop",
+        image: "/assets/TileMerging.jpg",
         file: "/games/2048.html",
         category: "puzzle"
     },
@@ -43,7 +43,7 @@ export const games = [
         id: 'sudoku',
         title: 'Sudoku Prime',
         description: 'Non-Repeating Numeric Grid Matrix',
-        image: 'https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=400&h=250&fit=crop',
+        image: '/assets/Suduko-Prime.jpg',
         file: "/games/sudoku.html",
         category: 'puzzle'
     },
@@ -107,7 +107,7 @@ export const games = [
         id: 'brick-breaker',
         title: 'Brick Breaker Pro',
         description: 'Physics-Based Structural Demolition',
-        image: 'https://images.unsplash.com/photo-1611996591259-77ddd90427ad?w=400&h=250&fit=crop',
+        image: '/assets/brick-breaker.jpg',
         file: "/games/Brick Breaker/index.html",
         category: 'arcade'
     },
@@ -139,7 +139,7 @@ export const games = [
         id: 'color-grid',
         title: 'Color Grid',
         description: 'Visual Spectrum Matrix Logic',
-        image: 'https://images.unsplash.com/photo-1502691876148-a84978f5d82b?w=400&h=250&fit=crop',
+        image: '/assets/color-grid.png',
         file: "/games/color grid/index.html",
         category: 'puzzle'
     },
@@ -155,7 +155,7 @@ export const games = [
         id: 'firefly-flow',
         title: 'Firefly Flow',
         description: 'Bioluminescent Pathfinding Navigation',
-        image: 'https://images.unsplash.com/photo-1464802686167-b939a67e06d1?w=400&h=250&fit=crop',
+        image: '/assets/firefly-flow.png',
         file: "/games/firefly-flow/index.html",
         category: 'puzzle'
     },
@@ -179,7 +179,7 @@ export const games = [
         id: 'hangman-hero',
         title: 'Hangman Hero',
         description: 'Linguistic Integrity Preservation',
-        image: 'https://images.unsplash.com/photo-1543004218-ee141104975a?w=400&h=250&fit=crop',
+        image: '/assets/hangman-hero.png',
         file: "/games/Hangman Hero/index.html",
         category: 'word'
     },
@@ -227,7 +227,7 @@ export const games = [
         id: 'pipe-twister',
         title: 'Pipe Twister',
         description: 'Hydraulic Conductivity Optimization',
-        image: 'https://images.unsplash.com/photo-1530124566582-a618bc2615ad?w=400&h=250&fit=crop',
+        image: '/assets/pipetwister.png',
         file: "/games/pipe-twister/index.html",
         category: 'puzzle'
     },
@@ -283,7 +283,7 @@ export const games = [
         id: 'color-pour',
         title: 'Color Pour Tube',
         description: 'Fluid Dynamics Chromatography Puzzle',
-        image: 'https://images.unsplash.com/photo-1541339907198-e08756cdfb3f?w=400&h=250&fit=crop',
+        image: '/assets/color-pour.png',
         file: "/games/color pour tube/index.html",
         category: 'puzzle'
     },
