@@ -318,5 +318,13 @@ export const games = [
         image: "/assets/memory_flip.png",
         file: "/games/memory.html",
         category: 'memory'
+    },
+    {
+        id: "OneLine",
+        title: "OneLine",
+        description: "Drag across every node and cover every edge exactly once — 36 handcrafted puzzles across Easy, Medium & Hard.",
+        image: "/assets/OneLine.png",
+        file: "/games/OneLine/index.html",
+        category: "puzzle"
     }
 ];
