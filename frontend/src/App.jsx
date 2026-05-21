@@ -17,6 +17,7 @@ import ContactPage from './pages/ContactPage';
 import FAQPage from './pages/FAQPage';
 import DevLogsPage from './pages/DevLogsPage';
 import ForgotPassword from './pages/ForgotPassword';
+import NotFoundPage from './pages/NotFoundPage';
 import ResetPassword from './pages/ResetPassword';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop/BackToTop';
@@ -56,6 +57,7 @@ const AppLayout = () => {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/devlogs" element={<DevLogsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
 
