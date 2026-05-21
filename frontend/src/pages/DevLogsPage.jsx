@@ -1,9 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { History, Zap, Cpu, Shield, Globe, Terminal, Rocket } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 
-const DevLogItem = ({ date, version, title, items, icon: Icon, color, index }) => (
+const DevLogItem = ({ date, version, title, items, color, index }) => (
     <motion.div
         initial={{ opacity: 0, x: -30 }}
         whileInView={{ opacity: 1, x: 0 }}

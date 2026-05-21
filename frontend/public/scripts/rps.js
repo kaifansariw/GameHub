@@ -176,5 +176,9 @@ function enableGameButtons() {
   button.forEach((btn) => (btn.disable = false));
 }
 
+const saveScoreToServer = window.saveScoreToServer || (() => {});
 // Initialize game when page loads
 document.addEventListener("DOMContentLoaded", initGame);
+
+window.playGame = playGame;
+window.resetGame = resetGame;

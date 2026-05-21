@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Lock, CheckCircle, AlertCircle, ArrowRight, Shield } from 'lucide-react';
 import api from '../api/axios';
 import SEO from '../components/SEO/SEO';
@@ -25,7 +25,7 @@ const ResetPassword = () => {
         setStatus('loading');
 
         try {
-            const response = await api.post('auth/password-reset-confirm/', {
+            await api.post('auth/password-reset-confirm/', {
                 uid,
                 token,
                 password

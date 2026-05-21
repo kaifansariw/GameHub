@@ -86,9 +86,7 @@ function beep(freq, duration, type = "sine") {
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
     oscillator.start(audioCtx.currentTime);
     oscillator.stop(audioCtx.currentTime + duration);
-  } catch (e) {
-    // Silent fail if audio issues
-  }
+  } catch {/*ignore*/}
 }
 
 function showToast(msg, duration = 1400) {
@@ -275,7 +273,7 @@ function spawnMole() {
   }, moleSpeed);
 }
 
-function showMole(hole, index) {
+function showMole(hole) {
   hole.active = true;
   hole.moleElement.classList.add("active");
 }
@@ -406,3 +404,5 @@ if (document.readyState === "loading") {
 } else {
   initGame();
 }
+
+const saveScoreToServer = window.saveScoreToServer || (() => {});

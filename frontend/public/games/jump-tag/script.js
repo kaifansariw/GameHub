@@ -263,8 +263,6 @@
 
     // chasing logic: chaser accelerates toward runner if alive
     if (runner.state === 'alive' && chaser.state !== 'caught'){
-      // chaser tries to approach runner.x
-      const dir = (runner.x - chaser.x) > 0 ? 1 : -1;
       // chaser moves right if behind, left if ahead moderately
       chaser.x += (100 + Math.min(220, elapsed*6)) * dt * Math.sign(runner.x - chaser.x);
       // clamp
@@ -438,7 +436,7 @@
       data[gameName].plays += 1;
       localStorage.setItem('gamePlays', JSON.stringify(data));
       // update pro badges if page hub script listens (it does)
-    } catch(e){}
+    } catch { /* ignore */ }
   }
 
   // initialize

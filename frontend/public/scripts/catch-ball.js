@@ -86,3 +86,6 @@ function gameOver() {
     highScoreEl.textContent = highScore;
   }
 }
+
+window.startGame = startGame;
+window.resetGame = resetGame;

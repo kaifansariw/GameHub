@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { games } from '../data/games';
 import GameCard from '../components/GameGrid/GameCard';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Search, Filter, Gamepad2 } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 

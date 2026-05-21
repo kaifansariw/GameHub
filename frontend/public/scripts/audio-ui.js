@@ -361,9 +361,6 @@ class AudioControlUI {
     toggleMaster() {
         if (!window.gameAudio) return;
         
-        const settings = window.gameAudio.getSettings();
-        const newState = !settings.musicEnabled || !settings.sfxEnabled;
-        
         window.gameAudio.toggle('music');
         window.gameAudio.toggle('sfx');
         

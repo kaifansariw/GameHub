@@ -46,10 +46,10 @@ class Particle {
 }
 
 // Mouse events
-canvas.addEventListener("mousedown", e => drawing = true);
-canvas.addEventListener("mouseup", e => drawing = false);
-canvas.addEventListener("mouseleave", e => drawing = false);
-canvas.addEventListener("mousemove", e => {
+canvas.addEventListener("mousedown", () => drawing = true);
+canvas.addEventListener("mouseup", () => drawing = false);
+canvas.addEventListener("mouseleave", () => drawing = false);
+canvas.addEventListener("mousemove", (e) => {
     if(drawing){
         const particle = new Particle(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop, color, thickness);
         particles.push(particle);

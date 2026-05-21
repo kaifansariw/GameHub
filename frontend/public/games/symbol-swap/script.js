@@ -106,3 +106,5 @@ restartBtn.addEventListener("click", () => {
   renderLine();
   clearInterval(interval);
   startTimer();
+  
+});

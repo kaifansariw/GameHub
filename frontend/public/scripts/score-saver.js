@@ -45,3 +45,6 @@ function saveScoreToServer(gameId, score) {
         })
         .catch(err => console.error("Error saving score:", err));
 }
+
+const showToast = window.showToast || (() => {});
+window.saveScoreToServer = saveScoreToServer;

@@ -8,7 +8,6 @@ const message = document.getElementById("message");
 
 const tapSound = document.getElementById("tap-sound");
 const winSound = document.getElementById("win-sound");
-const failSound = document.getElementById("fail-sound");
 
 let count = 0;
 let maxCount = 100;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Target, Users, Zap, Shield, Rocket, Globe } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 

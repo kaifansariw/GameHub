@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Terminal, Scale, AlertTriangle, CheckCircle2, Zap } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 

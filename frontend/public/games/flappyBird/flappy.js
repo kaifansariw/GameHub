@@ -156,3 +156,6 @@ function toggleMute() {
         audioElements[i].muted = !audioElements[i].muted;
     }
 }
+
+window.restartGame = restartGame;
+window.toggleMute = toggleMute;

@@ -613,7 +613,7 @@ function initAchievements() {
     const achievementsList = document.getElementById('achievementsList');
     achievementsList.innerHTML = '';
 
-    achievements.forEach((achievement, index) => {
+    achievements.forEach((achievement) => {
         const isUnlocked = unlockedAchievements.includes(achievement.id);
         const achievementEl = document.createElement('div');
         achievementEl.className = `achievement ${isUnlocked ? 'unlocked' : 'locked'}`;
@@ -666,5 +666,12 @@ function newGame() {
     generateNewPuzzle();
 }
 
+const saveScoreToServer = window.saveScoreToServer || (() => {});
+
 // Initialize game when page loads
 document.addEventListener('DOMContentLoaded', initGame);
+
+window.getHint = getHint;
+window.validateSolution = validateSolution;
+window.newGame = newGame;
+window.showFailureMessage = showFailureMessage;

@@ -228,3 +228,7 @@ function backToMenu() {
     moves = 0;
     isWon = false;
 }
+
+window.startGame = startGame;
+window.restartGame = restartGame;
+window.backToMenu = backToMenu;

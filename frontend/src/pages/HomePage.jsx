@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useSpring, useTransform, useInView } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { useSpring, useTransform, useInView } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import { games } from '../data/games';
 import GameCard from '../components/GameGrid/GameCard';

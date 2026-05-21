@@ -180,3 +180,5 @@ document.head.appendChild(style);
 
 // Initialize game when page loads
 document.addEventListener('DOMContentLoaded', initGame);
+
+window.resetGame = resetGame;

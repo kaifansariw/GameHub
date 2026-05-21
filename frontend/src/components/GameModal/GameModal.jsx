@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { X, Maximize2, RotateCcw } from 'lucide-react';
 
 const GameModal = ({ isOpen, onClose, game }) => {

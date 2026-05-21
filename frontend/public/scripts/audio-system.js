@@ -475,6 +475,6 @@ class GameHubAudio {
 window.gameAudio = new GameHubAudio();
 
 // Also expose it as a global variable for better compatibility
-if (typeof global !== 'undefined') {
-    global.gameAudio = window.gameAudio;
+if (typeof globalThis !== 'undefined') {
+    globalThis.gameAudio = window.gameAudio;
 }

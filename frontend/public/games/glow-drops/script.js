@@ -184,7 +184,16 @@
   }
 
   function drawRipples() {
-    // ripples are dynamically added into drops when popped (handled elsewhere)
+    state.ripples.forEach(r => {
+      const elapsed = now() - r.t;
+      const p = elapsed / r.ttl;
+      const radius = p * r.maxR;
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, radius, 0, Math.PI*2);
+      ctx.lineWidth = Math.max(1, (1-p)*6);
+      ctx.strokeStyle = `hsla(${r.hue},80%,60%,${0.25*(1-p)})`;
+      ctx.stroke();
+    });
   }
 
   // Pop handling (create ripple + audio + score)
@@ -292,18 +301,8 @@
     // scale for drawing shapes consistent with CSS pixels
     // draw drops
     state.drops.forEach(drawDrop);
-
-    // draw ripples
-    state.ripples.forEach(r => {
-      const elapsed = now() - r.t;
-      const p = elapsed / r.ttl;
-      const radius = p * r.maxR;
-      ctx.beginPath();
-      ctx.arc(r.x, r.y, radius, 0, Math.PI*2);
-      ctx.lineWidth = Math.max(1, (1-p)*6);
-      ctx.strokeStyle = `hsla(${r.hue},80%,60%,${0.25*(1-p)})`;
-      ctx.stroke();
-    });
+    
+    drawRipples();
 
     // pulses
     state.pulses.forEach((p, idx) => {
@@ -410,7 +409,7 @@
       // success if score > 0
       if (state.score > 0) playData[name].success += 1;
       localStorage.setItem('gamePlays', JSON.stringify(playData));
-    } catch (err) { /* ignore */ }
+    } catch{ /* ignore */ }
   }
 
   // Hook up controls

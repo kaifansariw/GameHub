@@ -240,7 +240,7 @@ function buildRotateControls(size){
 
   // wire row buttons
   rowButtonsWrap.querySelectorAll('button').forEach(b=>{
-    b.addEventListener('click', (e)=>{
+    b.addEventListener('click', ()=>{
       const row = parseInt(b.dataset.row,10);
       const dir = b.dataset.dir === 'left' ? 'left' : 'right';
       rotateRow(row, dir);

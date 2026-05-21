@@ -752,6 +752,7 @@ class Breakout {
     }
 }
 
+const saveScoreToServer = window.saveScoreToServer || (() => {});
 // Initialize game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.breakout = new Breakout();

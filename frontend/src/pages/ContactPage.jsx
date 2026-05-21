@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Mail, MessageSquare, Send, Globe, Github, Twitter, Headset } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 

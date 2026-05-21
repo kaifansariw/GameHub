@@ -37,7 +37,7 @@ class Minesweeper {
     setupEventListeners() {
         // Difficulty selector
         document.querySelectorAll('.difficulty-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', () => {
                 document.querySelector('.difficulty-btn.active')?.classList.remove('active');
                 btn.classList.add('active');
                 this.currentDifficulty = btn.dataset.difficulty;
@@ -432,6 +432,8 @@ class Minesweeper {
         return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 }
+
+const saveScoreToServer = window.saveScoreToServer || (() => {});
 
 // Initialize game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {

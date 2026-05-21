@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Download, X, Share } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 // localStorage keys
 const DISMISSED_KEY = 'pwa_prompt_dismissed';
@@ -9,7 +8,7 @@ const INSTALLED_KEY = 'pwa_installed';
 const PWAInstallPrompt = () => {
     const [installPrompt, setInstallPrompt] = useState(null);
     const [isVisible, setIsVisible] = useState(false);
-    const [isIOS, setIsIOS] = useState(false);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
     useEffect(() => {
         // If user already dismissed or installed — never show again
@@ -27,9 +26,6 @@ const PWAInstallPrompt = () => {
             return;
         }
 
-        const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        setIsIOS(isIOSDevice);
-
         // Android / Desktop Chrome: listen for the native install event
         const handleBeforeInstallPrompt = (e) => {
             e.preventDefault();
@@ -44,7 +40,7 @@ const PWAInstallPrompt = () => {
 
         // iOS: show manual instructions after delay (only once ever)
         let iosTimer;
-        if (isIOSDevice) {
+        if (isIOS) {
             iosTimer = setTimeout(() => setIsVisible(true), 8000);
         }
 
@@ -52,7 +48,7 @@ const PWAInstallPrompt = () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
             if (iosTimer) clearTimeout(iosTimer);
         };
-    }, []); // ← runs ONCE on mount, never again on route change
+    }, [isIOS]); // ← runs ONCE on mount, never again on route change
 
     const handleDismiss = () => {
         setIsVisible(false);
@@ -80,14 +76,9 @@ const PWAInstallPrompt = () => {
     if (!isVisible) return null;
 
     return (
-        <AnimatePresence>
-            <motion.div
-                key="pwa-prompt"
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 100, opacity: 0 }}
-                className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[1000] w-[92%] max-w-md"
-            >
+        <div
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[1000] w-[92%] max-w-md"
+        >
                 <div className="relative group p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 shadow-[0_0_30px_rgba(124,58,237,0.3)]">
                     <div className="bg-[#050508]/95 backdrop-blur-2xl rounded-[14px] p-5 border border-white/10">
                         {/* Close / Dismiss Button */}
@@ -131,8 +122,7 @@ const PWAInstallPrompt = () => {
                         </div>
                     </div>
                 </div>
-            </motion.div>
-        </AnimatePresence>
+        </div>
     );
 };
 

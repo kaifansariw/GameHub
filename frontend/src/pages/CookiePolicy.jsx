@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Cpu, Database, HardDrive, Info, Layers } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 

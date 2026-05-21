@@ -6,7 +6,6 @@ canvas.height = 400;
 
 let bulbs = [];
 let obstacles = [];
-let lines = [];
 let score = 0;
 let time = 60;
 let gameInterval, timerInterval;

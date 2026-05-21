@@ -9,7 +9,6 @@ class Game2048 {
         this.gameWon = false;
         this.gameOver = false;
         this.canUndo = false;
-
         this.init();
         this.loadBestScore();
         this.setupEventListeners();
@@ -436,32 +435,6 @@ class Game2048 {
         document.getElementById('bestScore').textContent = this.bestScore;
     }
 
-    showGameWon() {
-        const overlay = document.getElementById('game-over');
-        const text = document.getElementById('game-over-text');
-
-        text.textContent = 'You Win!';
-        text.style.color = '#f9f6f2';
-        overlay.classList.add('game-won');
-        overlay.style.display = 'flex';
-
-        // Auto-hide after 3 seconds and continue playing
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            overlay.classList.remove('game-won');
-        }, 3000);
-    }
-
-    showGameOver() {
-        const overlay = document.getElementById('game-over');
-        const text = document.getElementById('game-over-text');
-
-        text.textContent = 'Game Over!';
-        text.style.color = '#776e65';
-        overlay.classList.add('game-lost');
-        overlay.style.display = 'flex';
-    }
-
     undoMove() {
         if (!this.canUndo || this.gameOver) return;
 
@@ -646,6 +619,7 @@ class Game2048 {
 
 // Global game instance
 let game;
+const saveScoreToServer = window.saveScoreToServer;
 
 // Initialize game when page loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -670,3 +644,7 @@ function undoMove() {
         game.undoMove();
     }
 }
+
+window.move = move;
+window.newGame = newGame;
+window.undoMove = undoMove;

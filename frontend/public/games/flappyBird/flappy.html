@@ -54,9 +54,9 @@
         <canvas id="board"></canvas>
 
         <div class="flex gap-4 mt-8">
-            <button onclick="restartGame()" class="neon-btn"
+            <button onclick="window.restartGame()" class="neon-btn"
                 style="background: #4ade80; box-shadow: 0 0 20px rgba(74, 222, 128, 0.4); color: black;">Re-Activate</button>
-            <button id="muteButton" onclick="toggleMute()"
+            <button id="muteButton" onclick="window.toggleMute()"
                 class="bg-white/5 border border-white/10 text-gray-400 px-6 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold tracking-widest hover:bg-white/10 transition-all">Mute
                 System</button>
         </div>
@@ -67,7 +67,7 @@
     <audio id="jumpSound" src="jump.wav"></audio>
     <audio id="collisionSound" src="collision.wav"></audio>
 
-    <script src='flappy.js'></script>
+    <script type="module" src='flappy.js'></script>
 </body>
 
 </html>

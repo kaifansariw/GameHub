@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
 
 const GameCard = ({ game, onClick }) => {

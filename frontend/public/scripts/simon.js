@@ -6,7 +6,6 @@ let highScore = localStorage.getItem('simonHighScore') || 0;
 let gameActive = false;
 let showingSequence = false;
 
-const colors = ['red', 'blue', 'green', 'yellow'];
 const buttons = document.querySelectorAll('.simon-btn');
 
 // Initialize game
@@ -161,7 +160,7 @@ function updateDisplay() {
 }
 
 // Add button hover effects
-buttons.forEach((button, index) => {
+buttons.forEach((button) => {
     button.addEventListener('mouseenter', () => {
         if (!showingSequence && gameActive) {
             button.classList.add('scale-105');
@@ -175,3 +174,7 @@ buttons.forEach((button, index) => {
 
 // Initialize game when page loads
 document.addEventListener('DOMContentLoaded', initGame);
+
+window.startGame = startGame;
+window.resetGame = resetGame;
+window.playerInput = playerInput;

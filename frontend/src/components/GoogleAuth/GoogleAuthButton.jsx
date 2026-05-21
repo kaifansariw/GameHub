@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { useAuthStore } from '../../store/authStore';
 import api from '../../api/axios';
 import { GoogleLogin } from '@react-oauth/google';

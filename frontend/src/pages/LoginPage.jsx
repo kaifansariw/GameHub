@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { LogIn, User, Lock, ArrowRight, Gamepad2, AlertCircle, ArrowLeft } from 'lucide-react';

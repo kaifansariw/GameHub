@@ -414,7 +414,7 @@ export const GridScan = ({
             if (scanOnClick) el.removeEventListener('click', onClick);
             if (leaveTimer) clearTimeout(leaveTimer);
         };
-    }, [uiFaceActive, snapBackDelay, scanOnClick, enableGyro]);
+    }, [uiFaceActive, snapBackDelay, scanOnClick, enableGyro, s]);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -726,9 +726,7 @@ export const GridScan = ({
                             const nym = median(bufY.current);
 
                             const look = new THREE.Vector2(Math.tanh(nxm), Math.tanh(nym));
-
-                            const faceSize = Math.min(1, Math.hypot(box.width / vw, box.height / vh));
-                            const depthResponse = THREE.MathUtils.lerp(0.25, 0.45, s);
+                            const depthScale = Math.hypot(box.width, box.height) * 0.5;
                             lookTarget.current.copy(look.multiplyScalar(depthScale));
 
                             const leftEye = res.landmarks.getLeftEye();

@@ -3,7 +3,6 @@ const ctx = canvas.getContext("2d");
 const status = document.getElementById("status");
 const rotateSound = document.getElementById("rotate-sound");
 const successSound = document.getElementById("success-sound");
-const failSound = document.getElementById("fail-sound");
 
 const restartBtn = document.getElementById("restart");
 const pauseBtn = document.getElementById("pause");

@@ -95,9 +95,7 @@ function beep(freq, duration, type = "sine") {
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
     oscillator.start(audioCtx.currentTime);
     oscillator.stop(audioCtx.currentTime + duration);
-  } catch (e) {
-    // Silent fail if audio issues
-  }
+  } catch {/*ignore*/}
 }
 
 /* tiny toast */
@@ -584,3 +582,5 @@ window.changeDirection = (dir) => {
   if (!nd) return;
   setDirectionIfNotOpposite(nd.dx, nd.dy);
 };
+
+const saveScoreToServer = window.saveScoreToServer || (() => {});

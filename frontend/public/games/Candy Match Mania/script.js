@@ -138,7 +138,6 @@ function swapTiles(a,b){
 
 function findAllMatches(){
   const matches = []; // array of positions {r,c}
-  const addMatch = (positions) => positions.forEach(p => matches.push(p));
 
   // horizontal
   for(let r=0;r<ROWS;r++){
@@ -146,13 +145,9 @@ function findAllMatches(){
     let runStart = 0;
     for(let c=0;c<=COLS;c++){
       const val = (c<COLS) ? grid[r][c] : null;
-      if(val === runVal){
-        // continue run
-      } else {
+      if(val !== runVal){
         const runLen = c - runStart;
         if(runVal !== null && runLen >= 3){
-          for(let k=runStart;k<c;k++) addMatch([{r, c:k}][0] = {r,c:k}); // not used
-          // simpler push:
           for(let k=runStart;k<c;k++) matches.push({r, c:k});
         }
         runVal = val;
@@ -167,11 +162,10 @@ function findAllMatches(){
     let runStart = 0;
     for(let r=0;r<=ROWS;r++){
       const val = (r<ROWS) ? grid[r][c] : null;
-      if(val === runVal){
-      } else {
+      if(val !== runVal){
         const runLen = r - runStart;
         if(runVal !== null && runLen >= 3){
-          for(let k=runStart;k<r;k++) matches.push({r:k, c});
+          for(let k=runStart;k<r;k++) matches.push({r, c:k});
         }
         runVal = val;
         runStart = r;

@@ -5,7 +5,6 @@ const startBtn = document.getElementById("start-btn");
 const pauseBtn = document.getElementById("pause-btn");
 const resumeBtn = document.getElementById("resume-btn");
 const restartBtn = document.getElementById("restart-btn");
-const scoreEl = document.getElementById("score");
 
 let animationId;
 let paused = false;

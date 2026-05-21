@@ -74,6 +74,7 @@ canvas.addEventListener("click", (e) => {
             balloons.splice(i, 1);
             score++;
             document.getElementById("score").textContent = score;
+            addGamePoints("balloon_popper", "pop_balloon");
         }
     });
 });

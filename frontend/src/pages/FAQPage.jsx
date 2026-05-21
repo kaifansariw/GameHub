@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { HelpCircle, ChevronDown, Cpu, Shield, Zap, Globe, MessageSquare } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 
-const FAQItem = ({ question, answer, icon: Icon, index }) => {
+const FAQItem = ({ question, answer, index }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (

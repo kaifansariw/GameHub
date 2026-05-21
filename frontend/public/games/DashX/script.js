@@ -324,3 +324,12 @@ function resetHighScore() {
   highScore = 0;
   document.getElementById("highScore").textContent = "High Score: 0";
 }
+
+window.startGame = startGame;
+window.restartGame = restartGame;
+window.openShop = openShop;
+window.closeShop = closeShop;
+window.buyShield = buyShield;
+window.buyLife = buyLife;
+window.buyMagnet = buyMagnet;
+window.resetHighScore = resetHighScore;

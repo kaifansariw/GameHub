@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { games } from '../data/games';
 import { ArrowLeft, RotateCcw } from 'lucide-react';
@@ -8,9 +8,6 @@ const GamePlayPage = () => {
     const { gameId } = useParams();
     const navigate = useNavigate();
     const game = games.find(g => g.id === gameId);
-
-    /* useEffect removed: we want scrolling now to see the footer */
-
 
     if (!game) {
         return (
@@ -54,7 +51,7 @@ const GamePlayPage = () => {
 
                 <div className="flex items-center gap-3">
                     <button
-                        onClick={() => { const f = document.getElementById('game-iframe'); if (f) f.src = f.src; }}
+                        onClick={() => { const f = document.getElementById('game-iframe'); if (f) { const currentSrc = f.src; f.src = currentSrc; } }}
                         className="p-2.5 rounded-xl glass-panel bg-white/5 hover:bg-white/20 text-white/50 hover:text-white transition-all border border-white/10"
                         title="Reload Interface"
                     >

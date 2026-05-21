@@ -39,7 +39,7 @@ function beep(freq=440, duration=0.06, type='sine', vol=0.02){
     o.connect(g); g.connect(audioCtx.destination);
     o.start();
     setTimeout(()=>{ o.stop(); }, duration*1000);
-  } catch(e){}
+  } catch { /* ignore */ }
 }
 
 // Dark mode from localStorage
