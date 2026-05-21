@@ -55,6 +55,41 @@
       text-align: center;
       min-width: 100px;
     }
+
+    .hover-scale {
+        transform: scale(1.03);
+        opacity: 0.85;
+    }
+
+    .playback-active {
+    opacity: 1 !important;
+    transform: scale(1.08);
+    box-shadow: 0 0 35px currentColor;
+    filter: brightness(1.4);
+    }
+
+    .player-active {
+    opacity: 1 !important;
+    transform: scale(0.96);
+    box-shadow: 0 0 20px currentColor;
+    }
+    .simon-btn:disabled {
+    cursor: not-allowed;
+    }
+
+    #boardOverlay {
+    animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+    }
   </style>
 </head>
 
@@ -79,9 +114,14 @@
       </div>
     </div>
   </header>
-
+  <div id="countdownText"
+     class="hidden text-center text-5xl font-orbitron font-black text-purple-500 animate__animated animate__pulse mb-6">
+  </div>
   <div class="flex flex-col lg:flex-row items-center gap-12 max-w-5xl w-full">
-    <div class="glass-ui p-10 rounded-[32px] w-full max-w-md">
+    <div class="glass-ui p-10 rounded-[32px] w-full max-w-md relative">
+      <div id="boardOverlay" class="hidden absolute inset-0 bg-black/50 backdrop-blur-sm rounded-[32px] flex items-center justify-center z-20">
+        <p class="text-white font-orbitron uppercase tracking-widest text-sm"></p>
+      </div>
       <div class="simon-board">
         <button id="btn-0" class="simon-btn bg-red-500 text-red-400" onclick="playerInput(0)"></button>
         <button id="btn-1" class="simon-btn bg-blue-500 text-blue-400" onclick="playerInput(1)"></button>
@@ -92,8 +132,18 @@
 
     <div class="flex flex-col gap-6 w-full max-w-sm">
       <div id="gameResult" class="hidden animate__animated animate__pulse">
-        <div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl text-center">
-          <span id="resultText" class="text-red-500 font-orbitron text-xs font-bold uppercase tracking-widest"></span>
+        <div class="bg-red-500/10 border border-red-500/20 p-6 rounded-xl text-center">
+
+            <h2 class="text-red-500 font-orbitron text-lg font-black uppercase mb-4">
+            Wrong Tile Clicked
+            </h2>
+
+            <span id="resultText"
+                class="text-red-300 font-orbitron text-xs font-bold uppercase tracking-widest block mb-6">
+            </span>
+
+            <p>Click reboot to play again </p>
+
         </div>
       </div>
 
@@ -104,15 +154,22 @@
           Observe the chromatic pulse sequence and replicate precisely. The complexity matrix increases with each
           successful cycle.
         </p>
-        <div class="flex gap-4">
-          <button id="startBtn" onclick="startGame()" class="neon-btn flex-1">Start Protocol</button>
-          <button onclick="resetGame()"
-            class="bg-white/5 border border-white/10 text-gray-400 px-6 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold tracking-widest hover:bg-white/10 transition-all">Reboot</button>
+        <div class="flex flex-wrap gap-4">
+          <button id="startBtn" onclick="startGame()" class="neon-btn w-full flex items-center justify-center text-center">
+            Start Protocol
+          </button>
+
+          <button id="replayBtn" onclick="replaySequence()" class="bg-blue-500/10 border border-blue-500/20 text-blue-400 px-6 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold tracking-widest hover:bg-blue-500/20 transition-all flex-1 min-w-[180px]">
+            Replay Sequence
+          </button>
+
+          <button onclick="resetGame()" class="bg-white/5 border border-white/10 text-gray-400 px-6 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold tracking-widest hover:bg-white/10 transition-all flex-1 min-w-[180px]">
+            Reboot
+          </button>
         </div>
       </div>
     </div>
   </div>
-
   <script src="../scripts/simon.js"></script>
 </body>
 
