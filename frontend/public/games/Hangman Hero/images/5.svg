@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="200" height="200">
+<line x1="40" y1="280" x2="260" y2="280" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+<line x1="100" y1="280" x2="100" y2="30" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+<line x1="100" y1="30" x2="220" y2="30" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+<line x1="220" y1="30" x2="220" y2="60" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+<line x1="220" y1="60" x2="220" y2="90" stroke="#666" stroke-width="2" stroke-dasharray="4,2"/>
+<circle cx="220" cy="110" r="20" fill="none" stroke="#333" stroke-width="3"/>
+<circle cx="213" cy="106" r="2" fill="#333"/>
+<circle cx="227" cy="106" r="2" fill="#333"/>
+<path d="M213 118 Q220 124 227 118" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+<line x1="220" y1="130" x2="220" y2="200" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+<line x1="220" y1="150" x2="190" y2="180" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+<line x1="220" y1="150" x2="250" y2="180" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+<line x1="220" y1="200" x2="195" y2="250" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+</svg>
