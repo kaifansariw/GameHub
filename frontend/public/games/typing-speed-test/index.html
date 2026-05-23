@@ -5,134 +5,96 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Typing Sprint - GameHub</title>
+
   <link rel="stylesheet" href="../common-game.css">
   <link rel="stylesheet" href="style.css">
-  <style>
-    :root {
-      --primary: #fbbf24;
-    }
-
-    body {
-      background: #050508;
-      overflow-y: auto !important;
-      /* Allow scroll for long typing text */
-    }
-
-    /* Adjusted Header to avoid top-bar overlap */
-    .topbar {
-      margin-top: 20px;
-      background: rgba(255, 255, 255, 0.03) !important;
-      padding: 15px 30px !important;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      width: 95%;
-      max-width: 800px;
-    }
-
-    .topbar h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem !important;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
-    }
-
-    .container {
-      margin-top: 20px !important;
-      padding: 0 1rem 4rem 1rem !important;
-    }
-
-    button {
-      font-family: 'Orbitron', sans-serif !important;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border-radius: 12px !important;
-      transition: all 0.3s !important;
-    }
-
-    #start,
-    #restart {
-      padding: 12px 30px !important;
-      background: var(--primary) !important;
-      color: black !important;
-      font-weight: 900 !important;
-    }
-
-    #box {
-      font-family: 'Rajdhani', sans-serif !important;
-      font-size: 1.4rem !important;
-      line-height: 1.8 !important;
-      background: rgba(255, 255, 255, 0.02) !important;
-      border: 1px solid rgba(255, 255, 255, 0.05) !important;
-      color: #94a3b8 !important;
-    }
-
-    .meta {
-      font-family: 'Orbitron', sans-serif !important;
-      color: var(--primary) !important;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      font-size: 0.75rem !important;
-    }
-  </style>
 </head>
 
 <body class="game-wrapper">
   <div class="bg-glow"></div>
 
   <header class="topbar">
-    <h1 class="glow-text" style="color: #fbbf24;">TYPING <span style="color:white">SPRINT</span></h1>
-    <div class="controls-top">
-      <select id="mode"
-        style="background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px;">
-        <option value="normal">FREE RUN</option>
-        <option value="timed-30">TIMED — 30S</option>
-        <option value="timed-60">TIMED — 60S</option>
-      </select>
-    </div>
+    <h1 class="logo">
+      TYPING <span>SPRINT</span>
+    </h1>
+
+    <select id="mode">
+      <option value="normal">FREE RUN</option>
+      <option value="timed-30">TIMED — 30S</option>
+      <option value="timed-60">TIMED — 60S</option>
+    </select>
   </header>
 
-  <main class="container glass-ui">
-    <section class="config">
-      <div class="flex flex-col gap-2 mb-4">
-        <label class="text-[10px] uppercase font-bold text-gray-500 tracking-widest">Input Mission Parameters</label>
-        <textarea id="customText" placeholder="Inject custom linguistic data..." rows="2"
-          style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 12px; padding: 15px; font-family: 'Rajdhani', sans-serif; resize: none;"></textarea>
-      </div>
-      <div class="buttons-row flex gap-4">
-        <button id="start">Engage</button>
-        <button id="restart"
-          style="background: rgba(255,255,255,0.05) !important; color: white !important; border: 1px solid rgba(255,255,255,0.1) !important;">Reset</button>
-      </div>
-    </section>
-
+  <main class="container">
     <section class="test-area">
-      <div id="box" class="box" aria-live="polite"></div>
+
+      <div class="stage-header">
+        <div id="sessionStatus" class="session-status">
+          Ready. Press Engage to begin.
+        </div>
+      </div>
+
+      <div id="box" class="box" aria-live="polite">
+        Paste custom text below and press Engage.
+      </div>
 
       <div class="input-row">
-        <input id="input" placeholder="Initiate input sequence..." autocomplete="off"
-          style="background: #000; border: 1px solid #fbbf24; border-radius: 12px; padding: 15px; color: #fbbf24; font-family: 'Rajdhani', sans-serif;" />
+        <input
+          id="input"
+          type="text"
+          placeholder="Start typing here..."
+          autocomplete="off"
+        />
       </div>
 
-      <div id="meta" class="meta flex justify-between items-center py-4 border-b border-white/5 mb-4">
-        <div id="time">TIME: 0S</div>
-        <div id="wpm">THROUGHPUT: —</div>
-        <div id="accuracy">PRECISION: —</div>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">TIME</span>
+          <div id="time" class="metric-value">0S</div>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-label">THROUGHPUT</span>
+          <div id="wpm" class="metric-value">—</div>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-label">PRECISION</span>
+          <div id="accuracy" class="metric-value">—</div>
+        </div>
       </div>
 
-      <div id="progress-container" class="progress-container"
-        style="background: rgba(255,255,255,0.05); border-radius: 10px;">
-        <div id="progress-bar" class="progress-bar" style="background: #fbbf24;"></div>
+      <div class="progress-track">
+        <div id="progress-bar" class="progress-bar"></div>
       </div>
 
-      <div class="extras flex gap-6 mt-6 justify-center">
-        <label
-          class="flex items-center gap-2 text-[10px] text-gray-500 font-bold uppercase tracking-widest cursor-pointer hover:text-white transition-all"><input
-            type="checkbox" id="soundToggle" checked /> ACOUSTICS</label>
-        <label
-          class="flex items-center gap-2 text-[10px] text-gray-500 font-bold uppercase tracking-widest cursor-pointer hover:text-white transition-all"><input
-            type="checkbox" id="highlightWords" checked /> DATA FOCUS</label>
+      <div class="controls-panel">
+
+        <textarea
+          id="customText"
+          placeholder="Inject custom linguistic data..."
+          rows="2"
+        ></textarea>
+
+        <div class="controls-actions">
+          <button id="start">Engage</button>
+          <button id="restart">Reset</button>
+        </div>
+
       </div>
+
+      <div class="extras">
+        <label>
+          <input type="checkbox" id="soundToggle" checked />
+          ACOUSTICS
+        </label>
+
+        <label>
+          <input type="checkbox" id="highlightWords" checked />
+          DATA FOCUS
+        </label>
+      </div>
+
     </section>
   </main>
 
