@@ -16,6 +16,7 @@ frontend/dist-ssr/
 frontend/*.local
 frontend/.env
 frontend/.env.*
+!frontend/.env.example
 frontend/.eslintcache
 frontend/.vite/
 frontend/dev-dist/
