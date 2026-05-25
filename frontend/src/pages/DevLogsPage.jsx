@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { History, Zap, Cpu, Shield, Globe, Terminal, Rocket } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 

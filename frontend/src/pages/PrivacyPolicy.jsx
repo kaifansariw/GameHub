@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Shield, Eye, Lock, FileText, Globe } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 

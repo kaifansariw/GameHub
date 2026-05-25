@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle, ChevronDown, Cpu, Shield, Zap, Globe, MessageSquare } from 'lucide-react';
 import SEO from '../components/SEO/SEO';
 

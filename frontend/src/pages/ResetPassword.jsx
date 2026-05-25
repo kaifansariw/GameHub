@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, CheckCircle, AlertCircle, ArrowRight, Shield } from 'lucide-react';
 import api from '../api/axios';
 import SEO from '../components/SEO/SEO';
