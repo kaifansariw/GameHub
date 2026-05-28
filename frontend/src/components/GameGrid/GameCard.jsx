@@ -1,18 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Play } from 'lucide-react';
 
+const FALLBACK_IMAGE = '/assets/game-controller.png';
+
 const GameCard = ({ game, onClick }) => {
+    const [failedImages, setFailedImages] = useState(() => new Set());
+    const [loadedSrc, setLoadedSrc] = useState('');
+
+    const imageSrc = failedImages.has(game.image) ? FALLBACK_IMAGE : game.image;
+    const isLoaded = loadedSrc === imageSrc;
+
+    const handleImageError = () => {
+        if (imageSrc !== FALLBACK_IMAGE) {
+            setFailedImages((current) => {
+                const next = new Set(current);
+                next.add(game.image);
+                return next;
+            });
+            return;
+        }
+        setLoadedSrc(FALLBACK_IMAGE);
+    };
+
     return (
-        <motion.div
-            whileHover={{ y: -10 }}
-            className="group cursor-pointer relative"
+        <div
+            className="group cursor-pointer relative transition-transform duration-300 hover:-translate-y-2"
             onClick={() => onClick(game)}
         >
             <div className="relative overflow-hidden rounded-2xl glass-panel border-white/5 bg-black/40">
+                {!isLoaded && (
+                    <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/10 via-white/5 to-transparent" />
+                )}
                 <img
-                    src={game.image}
+                    src={imageSrc}
                     alt={game.title}
-                    className="w-full h-52 object-cover group-hover:scale-110 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                    loading="lazy"
+                    onLoad={() => setLoadedSrc(imageSrc)}
+                    onError={handleImageError}
+                    className={`w-full h-52 object-cover group-hover:scale-110 transition-all duration-500 ${
+                        isLoaded ? 'opacity-80 group-hover:opacity-100' : 'opacity-0'
+                    }`}
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
@@ -38,7 +65,7 @@ const GameCard = ({ game, onClick }) => {
                     {game.description}
                 </p>
             </div>
-        </motion.div>
+        </div>
     );
 };
 
