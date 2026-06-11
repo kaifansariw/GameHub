@@ -18,6 +18,8 @@ let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
 let gameActive = true;
 let scores = JSON.parse(localStorage.getItem('ticTacToeScores')) || { x: 0, o: 0, draws: 0 };
+const statusTextEl = document.getElementById('statusText');
+const currentPlayerEl = document.getElementById('currentPlayer');
 
 // Winning combinations
 const winningConditions = [
@@ -30,6 +32,7 @@ const winningConditions = [
 function initGame() {
     updateScoreDisplay();
     updateCurrentPlayerDisplay();
+    updateStatusPill('Current Turn:', 'text-purple-400');
 }
 
 // Make a move
@@ -45,6 +48,7 @@ function makeMove(cellIndex) {
     if (checkWinner()) {
         gameActive = false;
         showResult(`Player ${currentPlayer} Wins! 🎉`);
+        updateStatusPill(`Winner: ${currentPlayer}`, currentPlayer === 'X' ? 'text-primary' : 'text-secondary');
         scores[currentPlayer.toLowerCase()]++;
         updateScoreDisplay();
         saveScores();
@@ -55,6 +59,7 @@ function makeMove(cellIndex) {
     } else if (board.every(cell => cell !== '')) {
         gameActive = false;
         showResult("It's a Draw! 🤝");
+        updateStatusPill('Game Over: Draw', 'text-pink-400');
         scores.draws++;
         updateScoreDisplay();
         saveScores();
@@ -95,13 +100,36 @@ function resetGame() {
 
     document.getElementById('gameResult').classList.add('hidden');
     updateCurrentPlayerDisplay();
+    updateStatusPill('Current Turn:', 'text-purple-400');
 }
 
 // Update current player display
 function updateCurrentPlayerDisplay() {
-    document.getElementById('currentPlayer').textContent = currentPlayer;
-    document.getElementById('currentPlayer').className =
+    currentPlayerEl.textContent = currentPlayer;
+    currentPlayerEl.className =
         `stat-value ${currentPlayer === 'X' ? 'text-primary' : 'text-secondary'}`;
+}
+
+function updateStatusPill(label, toneClass) {
+    if (statusTextEl) {
+        statusTextEl.textContent = label;
+    }
+
+    const pill = document.getElementById('status-pill');
+    if (!pill) return;
+
+    pill.className = `inline-block border px-4 py-1.5 rounded-full text-[10px] font-orbitron uppercase tracking-widest mb-4 ${toneClass}`;
+    pill.classList.remove('bg-purple-500/10', 'border-purple-500/20', 'text-purple-400');
+
+    if (toneClass === 'text-primary') {
+        pill.classList.add('bg-purple-500/10', 'border-purple-500/30');
+    } else if (toneClass === 'text-secondary') {
+        pill.classList.add('bg-blue-500/10', 'border-blue-500/30');
+    } else if (toneClass === 'text-pink-400') {
+        pill.classList.add('bg-pink-500/10', 'border-pink-500/30');
+    } else {
+        pill.classList.add('bg-purple-500/10', 'border-purple-500/20');
+    }
 }
 
 // Update score display
