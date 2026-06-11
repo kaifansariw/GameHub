@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuthStore } from '../store/authStore';
-import { UserPlus, User, Mail, Lock, Gamepad2, AlertCircle, ArrowLeft } from 'lucide-react';
+import { UserPlus, User, Mail, Lock, Eye, EyeOff, Gamepad2, AlertCircle, ArrowLeft } from 'lucide-react';
 import api from '../api/axios';
 import SEO from '../components/SEO/SEO';
 import GoogleAuthButton from '../components/GoogleAuth/GoogleAuthButton';
@@ -17,6 +18,8 @@ const RegisterPage = () => {
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const { setAuth } = useAuthStore();
     const navigate = useNavigate();
 
@@ -172,14 +175,22 @@ const RegisterPage = () => {
                         <label className="text-[10px] font-orbitron font-bold text-gray-400 uppercase tracking-widest pl-1">Password</label>
                         <div className="relative group">
                             <input
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 required
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 pl-12 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all border-white/10"
+                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 pl-12 pr-14 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all border-white/10"
                                 placeholder="••••••••"
                             />
                             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 group-focus-within:text-purple-400" />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword((value) => !value)}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-300 transition-colors"
+                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                            >
+                                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                            </button>
                         </div>
                     </div>
 
@@ -187,14 +198,22 @@ const RegisterPage = () => {
                         <label className="text-[10px] font-orbitron font-bold text-gray-400 uppercase tracking-widest pl-1">Confirm Password</label>
                         <div className="relative group">
                             <input
-                                type="password"
+                                type={showConfirmPassword ? 'text' : 'password'}
                                 required
                                 value={formData.confirmPassword}
                                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 pl-12 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all border-white/10"
+                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 pl-12 pr-14 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all border-white/10"
                                 placeholder="••••••••"
                             />
                             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 group-focus-within:text-purple-400" />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword((value) => !value)}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-300 transition-colors"
+                                aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
+                            >
+                                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                            </button>
                         </div>
                     </div>
 

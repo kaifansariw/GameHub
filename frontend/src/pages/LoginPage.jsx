@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuthStore } from '../store/authStore';
-import { LogIn, User, Lock, ArrowRight, Gamepad2, AlertCircle, ArrowLeft } from 'lucide-react';
+import { LogIn, User, Lock, Eye, EyeOff, ArrowRight, Gamepad2, AlertCircle, ArrowLeft } from 'lucide-react';
 import api from '../api/axios';
 import SEO from '../components/SEO/SEO';
 import GoogleAuthButton from '../components/GoogleAuth/GoogleAuthButton';
@@ -10,6 +11,7 @@ const LoginPage = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const { setAuth } = useAuthStore();
     const navigate = useNavigate();
 
@@ -110,14 +112,22 @@ const LoginPage = () => {
                         </div>
                         <div className="relative group">
                             <input
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 required
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 pl-12 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all group-hover:border-white/20"
+                                className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 pl-12 pr-14 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all group-hover:border-white/20"
                                 placeholder="••••••••"
                             />
                             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5 transition-colors group-focus-within:text-purple-400" />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword((value) => !value)}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-300 transition-colors"
+                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                            >
+                                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                            </button>
                         </div>
                     </div>
 
