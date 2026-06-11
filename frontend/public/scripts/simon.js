@@ -8,6 +8,8 @@ let showingSequence = false;
 let inputLocked = false;
 let canReplaySequence = false;
 let clickCooldown = false;
+let sessionToken = 0;
+const pendingTimeouts = new Set();
 
 const colors = ['red', 'blue', 'green', 'yellow'];
 const buttons = document.querySelectorAll('.simon-btn');
@@ -18,13 +20,42 @@ function initGame() {
     updateDisplay();
 }
 
+function beginSession() {
+    sessionToken += 1;
+    return sessionToken;
+}
+
+function clearPendingTimeouts() {
+    pendingTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    pendingTimeouts.clear();
+}
+
+function schedule(callback, delay, token = sessionToken) {
+    const timeoutId = setTimeout(() => {
+        pendingTimeouts.delete(timeoutId);
+
+        if (token !== sessionToken) {
+            return;
+        }
+
+        callback();
+    }, delay);
+
+    pendingTimeouts.add(timeoutId);
+    return timeoutId;
+}
+
 // Start game
 async function startGame() {
     if (gameActive) return;
-    
+
+    const token = beginSession();
+
     gameActive = true;
     showingSequence = false;
     inputLocked = true;
+    canReplaySequence = false;
+    clickCooldown = false;
 
     sequence = [];
     playerSequence = [];
@@ -33,34 +64,59 @@ async function startGame() {
     document.getElementById('startBtn').disabled = true;
     document.getElementById('gameResult').classList.add('hidden');
     updateDisplay();
-    await startCountdown();
-    nextLevel();
+    document.getElementById('replayBtn').disabled = true;
+
+    await startCountdown(token);
+
+    if (token !== sessionToken || !gameActive) {
+        return;
+    }
+
+    nextLevel(token);
 }
 
 // Countdown before game starts
-async function startCountdown() {
+async function startCountdown(token = sessionToken) {
     document.getElementById('countdownText').classList.remove('hidden');
 
     const countdownValues = ['3', '2', '1', 'START'];
 
     for (const value of countdownValues) {
+        if (token !== sessionToken) {
+            return;
+        }
+
         document.getElementById('countdownText').textContent = value;
-        await wait(700);
+
+        const stillCurrent = await wait(700, token);
+        if (!stillCurrent) {
+            return;
+        }
     }
 
     document.getElementById('countdownText').classList.add('hidden');
 }
 
-function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function wait(ms, token = sessionToken) {
+    return new Promise(resolve => {
+        const timeoutId = setTimeout(() => {
+            pendingTimeouts.delete(timeoutId);
+            resolve(token === sessionToken);
+        }, ms);
+
+        pendingTimeouts.add(timeoutId);
+    });
 }
 
 // Next level
-function nextLevel() {
+function nextLevel(token = sessionToken) {
+    if (token !== sessionToken || !gameActive) return;
+
     playerSequence = [];
     addToSequence();
     canReplaySequence = true;
-    showSequence();
+    document.getElementById('replayBtn').disabled = false;
+    showSequence(token);
 }
 
 // Add random color to sequence
@@ -73,7 +129,7 @@ function replaySequence() {
     if (!gameActive || showingSequence || !canReplaySequence) return;
 
     playerSequence = [];
-    showSequence();
+    showSequence(sessionToken);
 }
 // Lock board visually
 function lockBoard(message = 'Watch Sequence') {
@@ -93,13 +149,15 @@ function unlockBoard() {
     document.getElementById('boardOverlay').classList.add('hidden');
 
     if (gameActive) {
-    buttons.forEach(btn => {
-        btn.disabled = false;
-    });
-}
+        buttons.forEach(btn => {
+            btn.disabled = false;
+        });
+    }
 }
 // Show sequence to player
-async function showSequence() {
+async function showSequence(token = sessionToken) {
+    if (token !== sessionToken || !gameActive) return;
+
     showingSequence = true;
     lockBoard('Memorize the Sequence');
     document.getElementById('gameStatus').textContent = 'Watch...';
@@ -108,11 +166,23 @@ async function showSequence() {
     const flashDelay = Math.max(250, 700 - (level * 25));
 
     for (let i = 0; i < sequence.length; i++) {
-        await wait(flashDelay);
+        const shouldContinue = await wait(flashDelay, token);
+        if (!shouldContinue || token !== sessionToken || !gameActive) {
+            return;
+        }
+
         flashButton(sequence[i], true);
-        await wait(350);
+
+        const flashVisible = await wait(350, token);
+        if (!flashVisible || token !== sessionToken || !gameActive) {
+            return;
+        }
     }
     
+    if (token !== sessionToken || !gameActive) {
+        return;
+    }
+
     showingSequence = false;
     unlockBoard();
     document.getElementById('gameStatus').textContent = 'Your Turn';
@@ -128,7 +198,7 @@ function flashButton(buttonIndex, playback = false) {
         button.classList.add('player-active');
     }
 
-    setTimeout(() => {
+    schedule(() => {
         button.classList.remove('playback-active');
         button.classList.remove('player-active');
     }, 300);
@@ -140,7 +210,7 @@ async function playerInput(buttonIndex) {
 
     clickCooldown = true;
 
-    setTimeout(() => {
+    schedule(() => {
         clickCooldown = false;
     }, 250);
 
@@ -170,7 +240,10 @@ async function playerInput(buttonIndex) {
 
         document.getElementById('gameStatus').textContent = 'Level Complete!';
 
-        await wait(1000);
+        const sameSession = await wait(1000);
+        if (!sameSession || !gameActive) {
+            return;
+        }
 
         nextLevel();
     }
@@ -181,9 +254,12 @@ function gameOver() {
     gameActive = false;
     showingSequence = false;
     inputLocked = true;
+    canReplaySequence = false;
+    clickCooldown = false;
 
     buttons.forEach(btn => btn.disabled = true);
     document.getElementById('startBtn').disabled = false;
+    document.getElementById('replayBtn').disabled = true;
     
     lockBoard('Restart Required');
     // Show result
@@ -197,10 +273,14 @@ function gameOver() {
 
 // Reset game
 function resetGame() {
+    clearPendingTimeouts();
+    beginSession();
+
     gameActive = false;
     showingSequence = false;
     inputLocked = false;
     clickCooldown = false;
+    canReplaySequence = false;
     sequence = [];
     playerSequence = [];
     level = 1;
@@ -215,6 +295,7 @@ function resetGame() {
     });
     
     document.getElementById('startBtn').disabled = false;
+    document.getElementById('replayBtn').disabled = true;
     document.getElementById('gameResult').classList.add('hidden');
     document.getElementById('boardOverlay').classList.add('hidden');
     document.getElementById('countdownText').classList.add('hidden');
