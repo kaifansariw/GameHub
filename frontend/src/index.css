@@ -120,3 +120,75 @@
   scrollbar-width: thin;
   scrollbar-color: #7c3aed #0a0a12;
 }
+
+/* ==========================================
+   Responsive Enhancements
+   ========================================== */
+
+/* Small Laptops */
+@media screen and (max-width: 992px) {
+  body {
+    padding: 0 1rem;
+  }
+
+  .glass-panel {
+    border-radius: 1.25rem;
+  }
+
+  .neon-btn {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 0 0.75rem;
+  }
+
+  .glass-panel {
+    padding: 1rem;
+  }
+
+  .neon-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .scanline-effect {
+    background-size: 100% 3px, 2px 100%;
+  }
+
+  h1, h2, h3 {
+    line-height: 1.2;
+  }
+}
+
+/* Mobile Devices */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 0 0.5rem;
+  }
+
+  .glass-panel {
+    padding: 0.75rem;
+    border-radius: 1rem;
+  }
+
+  .neon-btn {
+    width: 100%;
+    font-size: 0.85rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .neon-btn-primary,
+  .neon-btn-secondary {
+    box-shadow: none;
+  }
+
+  .animate-gradient-x {
+    background-size: 150% 150%;
+  }
+}
+
