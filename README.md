@@ -28,8 +28,9 @@
     <img src="https://img.shields.io/badge/JWT-Auth-ec4899?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT">
   </p>
 
+
   <p align="center">
-    <a href="[https://gamehub-cosmic.vercel.app](https://game-hub-jade-three.vercel.app)">
+    <a href="https://game-hub-jade-three.vercel.app">
       <img src="https://img.shields.io/badge/Live%20Demo-Deploy%20Sync-7c3aed?style=for-the-badge&logo=rocket&logoColor=white" alt="Live Demo">
     </a>
   </p>
