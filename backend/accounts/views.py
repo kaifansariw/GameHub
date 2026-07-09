@@ -162,8 +162,8 @@ def api_register(request):
                 'last_name': user.last_name,
             }
         }, status=status.HTTP_201_CREATED)
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception:
+        return Response({'error': 'Registration failed. Please try again.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @extend_schema(
@@ -219,8 +219,8 @@ def api_forgot_password(request):
         
         try:
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
-        except Exception as e:
-            return Response({'error': f'Failed to send email: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception:
+            return Response({'error': 'Failed to send email. Please try again later.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     # Return success message
     response_data = {'message': 'If an account exists with this email, a reset link has been sent.'}
@@ -412,8 +412,8 @@ def api_add_visit(request):
         profile.save()
         score = profile.visits + (profile.plays * 5)
         return Response({'status': 'success', 'visits': profile.visits, 'plays': profile.plays, 'score': score})
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception:
+        return Response({'error': 'Failed to record visit. Please try again.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @extend_schema(
@@ -434,8 +434,8 @@ def api_add_play(request):
         profile.save()
         score = profile.visits + (profile.plays * 5)
         return Response({'status': 'success', 'visits': profile.visits, 'plays': profile.plays, 'score': score})
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception:
+        return Response({'error': 'Failed to record play. Please try again.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @extend_schema(
@@ -473,8 +473,8 @@ def api_save_score(request):
             game_score.save()
             return Response({'status': 'success', 'message': 'New high score!', 'high_score': game_score.score})
         return Response({'status': 'success', 'message': 'Score saved', 'high_score': game_score.score})
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception:
+        return Response({'error': 'Failed to save score. Please try again.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # ============================================================
@@ -602,9 +602,9 @@ def api_google_login(request):
             status=status.HTTP_401_UNAUTHORIZED
         )
     except Exception as e:
-        logger.error(f"Google token verification unexpected error: {str(e)}", exc_info=True)
+        logger.error(f"Google token verification unexpected error: {e}", exc_info=True)
         return Response(
-            {'error': f'Could not verify Google token: {str(e)}'},
+            {'error': 'Could not verify Google token. Please try again.'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
@@ -643,8 +643,8 @@ def api_google_login(request):
             is_new_user = True
             logger.info(f"New user created via Google: {username} ({verified_email})")
         except Exception as e:
-            logger.error(f"Failed to create user: {str(e)}", exc_info=True)
-            return Response({'error': f'Failed to create account: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logger.error(f"Failed to create user: {e}", exc_info=True)
+            return Response({'error': 'Failed to create account. Please try again.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     else:
         updated = False
         if not user.first_name and verified_first_name:
