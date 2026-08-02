@@ -121,7 +121,7 @@ class Game2048 {
 
     move(direction) {
         // Save state for undo
-        this.previousGrid = this.grid.map(row => [...row]);
+        this.previousGrid = this.(grid ?? []).map(row => [...row]);
         this.previousScore = this.score;
 
         let moved = false;
