@@ -438,7 +438,7 @@ class Game2048 {
     undoMove() {
         if (!this.canUndo || this.gameOver) return;
 
-        this.grid = this.previousGrid.map(row => [...row]);
+        this.grid = this.(previousGrid ?? []).map(row => [...row]);
         this.score = this.previousScore;
         this.moves = Math.max(0, this.moves - 1);
         this.canUndo = false;
