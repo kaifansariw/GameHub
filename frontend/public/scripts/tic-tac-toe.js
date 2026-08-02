@@ -17,7 +17,7 @@ function saveScore(score) {
 let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
 let gameActive = true;
-let scores = (() => { try { return JSON.parse(localStorage.getItem('ticTacToeScores')) } catch { return null } })() || { x: 0, o: 0, draws: 0 };
+let scores = (() => { try { return (JSON.parse(localStorage.getItem('ticTacToeScores') ?? "null") ?? null) } catch { return null } })() || { x: 0, o: 0, draws: 0 };
 
 // Winning combinations
 const winningConditions = [
