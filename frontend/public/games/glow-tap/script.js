@@ -21,7 +21,7 @@ function createBulb() {
     gameArea.appendChild(bulb);
 
     let fall = setInterval(() => {
-        let top = parseInt(bulb.style.top);
+        let top = parseInt(bulb.style.top, 10);
         if (top >= gameArea.clientHeight - 50) {
             failSound.play();
             gameArea.removeChild(bulb);
@@ -49,7 +49,7 @@ function createObstacle() {
     gameArea.appendChild(obs);
 
     let fall = setInterval(() => {
-        let top = parseInt(obs.style.top);
+        let top = parseInt(obs.style.top, 10);
         if (top >= gameArea.clientHeight - 50) {
             gameArea.removeChild(obs);
             clearInterval(fall);
