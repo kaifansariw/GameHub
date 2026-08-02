@@ -48,7 +48,7 @@ function makeSolvedGrid(size){
 
 // deep copy
 function cloneGrid(g){
-  return g.map(row => row.slice());
+  return (g ?? []).map(row => row.slice());
 }
 
 function setGrid(newGrid){
