@@ -46,7 +46,7 @@ let obstacles = [];
 let coinsArr = [];
 let drones = [];
 let highScore = localStorage.getItem("dashXHighScore")
-  ? parseInt(localStorage.getItem("dashXHighScore"))
+  ? parseInt(localStorage.getItem("dashXHighScore", 10))
   : 0;
 
 // ================= LANES =================
@@ -190,17 +190,17 @@ function gameLoop() {
   speed = Math.min(maxSpeed, baseSpeed + (score / 800));
 
   obstacles.forEach((o, i) => {
-    o.style.top = parseInt(o.style.top) + speed + "px";
+    o.style.top = parseInt(o.style.top, 10) + speed + "px";
     if (collides(player, o)) hitPlayer(o, obstacles, i);
   });
 
   coinsArr.forEach((c, i) => {
-    c.style.top = parseInt(c.style.top) + (speed - 2) + "px";
+    c.style.top = parseInt(c.style.top, 10) + (speed - 2) + "px";
 
     if (magnetActive) {
       let dx = player.offsetLeft - c.offsetLeft;
       if (Math.abs(dx) < magnetRadius) {
-        c.style.left = parseInt(c.style.left) + dx * 0.15 + "px";
+        c.style.left = parseInt(c.style.left, 10) + dx * 0.15 + "px";
       }
     }
 
@@ -213,8 +213,8 @@ function gameLoop() {
   });
 
   drones.forEach((d, i) => {
-    let lane = parseInt(d.dataset.lane);
-    let droneY = parseInt(d.style.top);
+    let lane = parseInt(d.dataset.lane, 10);
+    let droneY = parseInt(d.style.top, 10);
 
     const playerY = window.innerHeight - 60;
     const lockDistance = 300;
