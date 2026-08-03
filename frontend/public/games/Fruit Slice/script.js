@@ -98,6 +98,6 @@ canvas.addEventListener("mousemove", (e) => {
 document.getElementById("restart-btn").addEventListener("click", resetGame);
 
 // Spawn fruits continuously
-setInterval(spawnFruit, 900);
+clearInterval(window.__interval); window.__interval = setInterval(spawnFruit, 900);
 
 update();
