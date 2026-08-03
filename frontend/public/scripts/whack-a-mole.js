@@ -47,7 +47,7 @@ function trackVisit() {
     },
     credentials: "include",
     body: JSON.stringify({ game: "whack-a-mole" })
-  }).catch(() => { });
+  }).catch( => console.error());
 }
 
 function trackPlay() {
