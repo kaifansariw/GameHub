@@ -195,7 +195,7 @@ function checkWin(){
   if(isSolved()){
     // update best if necessary
     const key = bestKey(SIZE);
-    const prevBest = parseInt(localStorage.getItem(key) || '0',10) || 0;
+    const prevBest = parseInt(localStorage.getItem(key, 10) || '0',10) || 0;
     if(prevBest===0 || moves < prevBest){
       localStorage.setItem(key, moves);
       bestEl.textContent = moves;
