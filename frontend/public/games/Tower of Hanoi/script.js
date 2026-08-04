@@ -61,7 +61,7 @@ pegs.forEach((peg, index) => {
             let disk = towers[from].pop();
             towers[to].push(disk);
             moves++;
-            movesText.innerText = "Moves: " + moves;
+            movesText.textContent = "Moves: " + moves;
             message.innerText = "";
             render();
             checkWin();
