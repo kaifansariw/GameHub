@@ -5,7 +5,7 @@ class Game2048 {
         this.previousScore = 0;
         this.score = 0;
         this.moves = 0;
-        this.bestScore = parseInt(localStorage.getItem('2048-best-score')) || 0;
+        this.bestScore = parseInt(localStorage.getItem('2048-best-score', 10)) || 0;
         this.gameWon = false;
         this.gameOver = false;
         this.canUndo = false;
