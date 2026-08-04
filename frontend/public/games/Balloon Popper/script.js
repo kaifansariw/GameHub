@@ -96,6 +96,6 @@ function resetGame() {
 document.getElementById("restart-btn").addEventListener("click", resetGame);
 
 // Balloon spawner
-setInterval(spawnBalloon, 800);
+clearInterval(window.__interval); window.__interval = setInterval(spawnBalloon, 800);
 
 update();
