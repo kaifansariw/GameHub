@@ -17,7 +17,7 @@ tiles.forEach(tile => {
     userSequence.push(id);
     flash(tile);
 
-    if (userSequence[userSequence.length - 1] != sequence[userSequence.length - 1]) {
+    if (userSequence.at(-1) != sequence[userSequence.length - 1]) {
       endGame();
       return;
     }
