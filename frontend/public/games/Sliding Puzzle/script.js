@@ -12,7 +12,7 @@ function createPuzzle() {
 }
 
 function render() {
-    puzzle.innerHTML = "";
+    puzzle.textContent = "";
     tiles.forEach((num, i) => {
         let tile = document.createElement("div");
         tile.classList.add("tile");
