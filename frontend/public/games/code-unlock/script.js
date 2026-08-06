@@ -71,7 +71,7 @@ function handleClick(index) {
 
   userSequence.push(index);
 
-  if (userSequence[userSequence.length - 1] !== sequence[userSequence.length - 1]) {
+  if (userSequence.at(-1) !== sequence[userSequence.length - 1]) {
     failSound.play();
     statusEl.textContent = 'Wrong bulb! Try again.';
     userSequence = [];
