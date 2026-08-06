@@ -28,7 +28,7 @@ function render() {
 
 function getTopDisk(pegIndex) {
     let peg = towers[pegIndex];
-    return peg[peg.length - 1];
+    return peg.at(-1);
 }
 
 function canMove(from, to) {
