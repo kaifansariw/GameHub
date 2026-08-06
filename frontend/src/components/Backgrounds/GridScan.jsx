@@ -891,3 +891,5 @@ function dist2(a, b) {
 }
 
 export default GridScan;
+
+.catch(err => console.error("Promise.all failed:", err));
