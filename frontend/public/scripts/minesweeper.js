@@ -329,7 +329,7 @@ class Minesweeper {
             // Restore board content
             document.querySelectorAll('.cell').forEach(cell => {
                 cell.style.background = cell.style.originalBackground || '';
-                const row = parseInt(cell.dataset.row);
+                const row = parseInt(cell.dataset.row, 10);
                 const col = parseInt(cell.dataset.col);
                 this.updateCellDisplay(row, col);
             });
