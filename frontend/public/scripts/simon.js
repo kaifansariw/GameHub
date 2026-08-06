@@ -2,7 +2,7 @@
 let sequence = [];
 let playerSequence = [];
 let level = 1;
-let highScore = parseInt(localStorage.getItem('simonHighScore')) || 0;
+let highScore = parseInt(localStorage.getItem('simonHighScore', 10)) || 0;
 let gameActive = false;
 let showingSequence = false;
 let inputLocked = false;
