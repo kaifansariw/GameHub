@@ -27,7 +27,8 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     .game-wrapper {
@@ -35,8 +36,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
-      padding: 20px;
+      justify-content: center;
+      gap: 15px;
+      padding: 15px;
     }
 
     .game-container {
@@ -44,28 +46,27 @@
       border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 0 50px rgba(124, 58, 237, 0.2);
-      padding: 3rem;
       backdrop-filter: blur(10px);
     }
 
     .cell {
       background-color: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
+      border-radius: 12px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 100px;
-      height: 100px;
-      font-size: 2.5rem;
+      width: 90px;
+      height: 90px;
+      font-size: 2rem;
     }
 
-    .cell:hover {
+    .cell:not(:disabled):hover {
       background: rgba(124, 58, 237, 0.1);
       border-color: #7c3aed;
       transform: scale(1.02);
       box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
     }
 
-    .cell:active {
+    .cell:not(:disabled):active {
       transform: scale(0.98);
     }
 
@@ -84,112 +85,52 @@
       max-width: 500px;
     }
 
+    .compact-glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
     .glow-text {
       font-family: 'Orbitron', sans-serif;
       text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
       color: white;
+    }
+
+    @media (min-width: 640px) {
+      .cell {
+        width: 100px;
+        height: 100px;
+        font-size: 2.25rem;
+        border-radius: 14px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .cell {
+        width: 108px;
+        height: 108px;
+        font-size: 2.5rem;
+        border-radius: 16px;
+      }
     }
   </style>
 </head>
 
 <body class="min-h-screen">
   <div class="bg-glow"></div>
+  <div id="root"></div>
 
-  <div class="game-wrapper">
-    <!-- Header/Status -->
-    <div class="w-full max-w-md mb-4 text-center">
-      <h1 class="text-3xl font-black font-orbitron mb-2 tracking-tighter glow-text">TIC <span
-          class="text-purple-500">TAC</span> TOE</h1>
-      <div id="status-pill"
-        class="inline-block bg-purple-500/10 border border-purple-500/20 px-4 py-1.5 rounded-full text-[10px] font-orbitron text-purple-400 uppercase tracking-widest mb-4">
-        Current Turn: <span id="currentPlayer">X</span>
-      </div>
-    </div>
-
-    <!-- Main Game Context -->
-    <div class="flex flex-col lg:flex-row items-stretch justify-center gap-8">
-      <div class="game-container animate__animated animate__zoomIn">
-        <!-- Game Board -->
-        <div class="grid grid-cols-3 gap-4 mb-8">
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(0)"></button>
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(1)"></button>
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(2)"></button>
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(3)"></button>
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(4)"></button>
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(5)"></button>
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(6)"></button>
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(7)"></button>
-          <button class="cell btn text-purple-400 font-orbitron flex items-center justify-center p-0"
-            onclick="makeMove(8)"></button>
-        </div>
-
-        <!-- Game Result Overlay style -->
-        <div id="gameResult" class="text-center hidden mb-6 animate__animated animate__bounceIn">
-          <div
-            class="p-4 rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-orbitron font-black text-sm uppercase tracking-widest shadow-lg shadow-purple-500/20">
-            <span id="resultText"></span>
-          </div>
-        </div>
-
-        <!-- Score Board -->
-        <div class="grid grid-cols-3 gap-4">
-          <div class="stat p-4 text-center">
-            <div class="text-[8px] text-gray-500 font-orbitron font-bold uppercase tracking-widest mb-1">X WINS</div>
-            <div class="text-xl font-orbitron font-black text-purple-500" id="xWins">0</div>
-          </div>
-          <div class="stat p-4 text-center">
-            <div class="text-[8px] text-gray-500 font-orbitron font-bold uppercase tracking-widest mb-1">O WINS</div>
-            <div class="text-xl font-orbitron font-black text-blue-500" id="oWins">0</div>
-          </div>
-          <div class="stat p-4 text-center">
-            <div class="text-[8px] text-gray-500 font-orbitron font-bold uppercase tracking-widest mb-1">DRAWS</div>
-            <div class="text-xl font-orbitron font-black text-pink-500" id="draws">0</div>
-          </div>
-        </div>
-
-        <button onclick="resetGame()"
-          class="w-full mt-8 bg-white/5 border border-white/10 hover:border-purple-500 hover:text-white text-gray-400 py-3 rounded-xl font-orbitron text-xs font-black uppercase tracking-widest transition-all duration-300">
-          Reset Round
-        </button>
-      </div>
-
-      <section class="rules-section animate__animated animate__fadeInRight">
-        <h2
-          class="font-orbitron font-black text-sm text-purple-400 uppercase tracking-widest mb-6 flex items-center gap-3">
-          <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-          Battle Protocols
-        </h2>
-        <ul class="space-y-4">
-          <li class="flex gap-4">
-            <span class="text-purple-500/30 font-orbitron font-black select-none">01</span>
-            <p class="text-xs text-gray-400 leading-relaxed font-rajdhani font-medium uppercase tracking-wider">Each
-              player takes turns marking one empty cell with their symbol (X or O).</p>
-          </li>
-          <li class="flex gap-4">
-            <span class="text-purple-500/30 font-orbitron font-black select-none">02</span>
-            <p class="text-xs text-gray-400 leading-relaxed font-rajdhani font-medium uppercase tracking-wider">Align 3
-              symbols in any direction (horizontal, vertical, diagonal) to claim victory.</p>
-          </li>
-          <li class="flex gap-4">
-            <span class="text-purple-500/30 font-orbitron font-black select-none">03</span>
-            <p class="text-xs text-gray-400 leading-relaxed font-rajdhani font-medium uppercase tracking-wider">A full
-              grid with no winner signals a tactical stalemate.</p>
-          </li>
-        </ul>
-      </section>
-    </div>
-  </div>
-
+  <!-- React, ReactDOM, and Babel CDNs -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="../scripts/score-saver.js"></script>
-  <script src="../scripts/tic-tac-toe.js"></script>
+  <script type="text/babel" src="../scripts/tic-tac-toe.js"></script>
 </body>
 
 </html>
