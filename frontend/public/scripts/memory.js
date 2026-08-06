@@ -120,7 +120,7 @@ function gameWon() {
     gameActive = false;
     
     // Check for best score
-    if (!bestScore || moves < parseInt(bestScore)) {
+    if (!bestScore || moves < parseInt(bestScore, 10)) {
         bestScore = moves;
         localStorage.setItem('memoryBestScore', bestScore);
         document.getElementById('bestScore').textContent = bestScore;
