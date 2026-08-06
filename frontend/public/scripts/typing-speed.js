@@ -1,6 +1,8 @@
 // ELEMENTS
 const box = document.getElementById('box');
 const input = document.getElementById('input');
+const testArea = document.querySelector('.test-area');
+const sessionStatus = document.getElementById('sessionStatus');
 const timeEl = document.getElementById('time');
 const wpmEl = document.getElementById('wpm');
 const accEl = document.getElementById('accuracy');
@@ -8,6 +10,7 @@ const progress = document.getElementById('progress-bar');
 const startBtn = document.getElementById('start');
 const restartBtn = document.getElementById('restart');
 const customText = document.getElementById('customText');
+const customTextError = document.getElementById('customTextError');
 const modeSelect = document.getElementById('mode');
 const darkToggle = document.getElementById('darkToggle');
 const soundToggle = document.getElementById('soundToggle');
@@ -26,6 +29,30 @@ let intervalId = null;
 let countdown = null; // seconds remaining for timed mode
 let audioCtx = null;
 let soundsOn = true;
+let sessionActive = false;
+let allowFocusRelease = false;
+let startTimestamp = 0;
+let liveTypedChars = 0;
+let liveCorrectChars = 0;
+
+function focusTypingInput(){
+  if(!input.disabled){
+    input.focus();
+  }
+}
+
+function isInsideGameUI(target){
+  return !!(target && target.closest && target.closest('.topbar, .container'));
+}
+
+function setSessionUI(active, message){
+  if(testArea){
+    testArea.classList.toggle('session-active', !!active);
+  }
+  if(sessionStatus && message){
+    sessionStatus.textContent = message;
+  }
+}
 
 // UTIL: basic beep using WebAudio
 function beep(freq=440, duration=0.06, type='sine', vol=0.02){
@@ -58,18 +85,27 @@ darkToggle.addEventListener('click', ()=>{
 // Sound toggle
 soundToggle.addEventListener('change', (e)=>{ soundsOn = e.target.checked; });
 
+function hasValidCustomText(){
+  return /\S/.test(customText.value || '');
+}
+
+function showCustomTextError(message){
+  if(!customTextError) return;
+  customTextError.textContent = message;
+  customTextError.hidden = false;
+  customText.classList.add('invalid');
+}
+
+function clearCustomTextError(){
+  if(!customTextError) return;
+  customTextError.hidden = true;
+  customText.classList.remove('invalid');
+}
+
 // Build text content (custom or random)
 function buildText(){
-  const custom = (customText.value || '').trim();
-  if(custom.length>0){
-    text = custom.replace(/\s+/g,' ').trim();
-  } else {
-    // build random words sentence of ~25 words
-    const count = 20 + Math.floor(Math.random()*8);
-    let arr=[];
-    for(let i=0;i<count;i++) arr.push(wordsDefault[Math.floor(Math.random()*wordsDefault.length)]);
-    text = arr.join(' ');
-  }
+  const custom = (customText.value || '').replace(/\s+/g,' ').trim();
+  text = custom;
   wordList = text.split(' ');
   renderWords();
 }
@@ -104,18 +140,74 @@ function resetState(){
   started = false;
   elapsed = 0;
   countdown = null;
+  sessionActive = false;
+  allowFocusRelease = false;
+  startTimestamp = 0;
+  liveTypedChars = 0;
+  liveCorrectChars = 0;
   input.value = '';
   timeEl.textContent = 'Time: 0s';
   wpmEl.textContent = 'WPM: —';
   accEl.textContent = 'Accuracy: —';
   progress.style.width = '0%';
+  setSessionUI(false, 'Session reset. Press Engage to start a run.');
+}
+
+function calculateLiveStats(value){
+  const typedChars = value.length;
+  const compareLength = Math.min(typedChars, text.length);
+  let correctChars = 0;
+
+  for(let i=0; i<compareLength; i++){
+    if(value[i] === text[i]) correctChars++;
+  }
+
+  return { typedChars, correctChars };
+}
+
+function updateLiveMetrics(){
+  const typedValue = input.value;
+  const stats = calculateLiveStats(typedValue);
+  liveTypedChars = stats.typedChars;
+  liveCorrectChars = stats.correctChars;
+
+  if(!started || startTimestamp === 0 || liveTypedChars === 0){
+    wpmEl.textContent = 'WPM: —';
+    accEl.textContent = 'Accuracy: —';
+    updateProgress(0);
+    return;
+  }
+
+  const elapsedSeconds = Math.max((performance.now() - startTimestamp) / 1000, 0);
+  const effectiveSeconds = Math.max(elapsedSeconds, 1);
+  const rawWpm = (liveCorrectChars / 5) / (effectiveSeconds / 60);
+  const safeWpm = Number.isFinite(rawWpm) ? Math.max(0, Math.round(rawWpm)) : 0;
+  const rawAccuracy = (liveCorrectChars / Math.max(1, liveTypedChars)) * 100;
+  const safeAccuracy = Number.isFinite(rawAccuracy) ? Math.min(100, Math.max(0, rawAccuracy)) : 0;
+
+  wpmEl.textContent = `WPM: ${safeWpm}`;
+  accEl.textContent = `Accuracy: ${safeAccuracy.toFixed(1)}%`;
+  updateProgress(liveCorrectChars);
 }
 
 function startTest(){
+  if(!hasValidCustomText()){
+    resetState();
+    input.disabled = true;
+    renderStartState();
+    showCustomTextError('Enter custom text to start. Spaces-only input is not allowed.');
+    setSessionUI(false, 'Add custom text, then press Engage.');
+    customText.focus();
+    return;
+  }
+
+  clearCustomTextError();
   resetState();
   buildText();
   input.disabled = false;
-  input.focus();
+  sessionActive = true;
+  setSessionUI(true, 'Session active. Start typing now.');
+  focusTypingInput();
   // prepare timer mode
   const mode = modeSelect.value;
   if(mode.startsWith('timed')){
@@ -146,25 +238,18 @@ function tick(){
     elapsed += 1;
     timeEl.textContent = `Time: ${elapsed}s`;
   }
+
+  updateLiveMetrics();
 }
 
 // Finishing the test
 function finishTest(timed=false){
   if(intervalId) clearInterval(intervalId);
+  sessionActive = false;
+  allowFocusRelease = false;
   input.disabled = true;
-  // calculate correct chars
-  const val = input.value;
-  let correctChars = 0;
-  for(let i=0;i<val.length;i++){
-    if(val[i] === text[i]) correctChars++;
-  }
-  // WPM: (correctChars/5) / minutes
-  const secondsUsed = timed ? ((modeSelect.value==='timed-30')?30:60) : Math.max(1, elapsed);
-  const wpm = Math.round((correctChars / 5) / (secondsUsed / 60));
-  const acc = text.length===0 ? 0 : ((correctChars / text.length) * 100).toFixed(1);
-  wpmEl.textContent = `WPM: ${wpm}`;
-  accEl.textContent = `Accuracy: ${acc}%`;
-  updateProgress(correctChars);
+  setSessionUI(false, 'Session complete. Press Reset to run again.');
+  updateLiveMetrics();
   beep(880, 0.08, 'sine', 0.04); // completion sound
 }
 
@@ -174,6 +259,7 @@ input.addEventListener('input', (e)=>{
   // begin timer on first character
   if(!started){
     started = true;
+    startTimestamp = performance.now();
     // set interval per second
     intervalId = setInterval(tick, 1000);
     beep(520, 0.02, 'sine', 0.01); // start sound
@@ -215,8 +301,31 @@ input.addEventListener('input', (e)=>{
   // check for full completion
   if(val.trim() === text.trim()){
     finishTest(false);
+    return;
   }
+
+  updateLiveMetrics();
 });
+
+input.addEventListener('blur', ()=>{
+  if(!sessionActive){
+    allowFocusRelease = false;
+    return;
+  }
+  if(allowFocusRelease){
+    allowFocusRelease = false;
+    return;
+  }
+  requestAnimationFrame(focusTypingInput);
+});
+
+document.addEventListener('pointerdown', (e)=>{
+  if(!sessionActive){
+    allowFocusRelease = false;
+    return;
+  }
+  allowFocusRelease = !isInsideGameUI(e.target);
+}, true);
 
 // Buttons
 startBtn.addEventListener('click', ()=>{
@@ -231,6 +340,14 @@ restartBtn.addEventListener('click', ()=>{
 
 // UI toggles
 highlightToggle.addEventListener('change', ()=>{ markCurrentWord(); });
+customText.addEventListener('input', ()=>{
+  if(hasValidCustomText()){
+    clearCustomTextError();
+    if(!sessionActive){
+      setSessionUI(false, 'Ready. Press Engage, then start typing in the input field.');
+    }
+  }
+});
 
 // initialize default run
 (function init(){
@@ -238,7 +355,8 @@ highlightToggle.addEventListener('change', ()=>{ markCurrentWord(); });
   soundsOn = document.getElementById('soundToggle').checked;
   // load theme icon state (visual only)
   applySavedTheme();
-  buildText();
+  input.disabled = true;
+  setSessionUI(false, 'Session idle. Press Engage to begin.');
   renderStartState();
 })();
 
