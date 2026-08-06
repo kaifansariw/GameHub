@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
@@ -10,9 +10,6 @@ import RegisterPage from './pages/RegisterPage';
 import AboutPage from './pages/AboutPage';
 import GamesPage from './pages/GamesPage';
 import ProfilePage from './pages/ProfilePage';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import ProtocolTerms from './pages/ProtocolTerms';
-import CookiePolicy from './pages/CookiePolicy';
 import ContactPage from './pages/ContactPage';
 import FAQPage from './pages/FAQPage';
 import DevLogsPage from './pages/DevLogsPage';
@@ -22,6 +19,9 @@ import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop/BackToTop';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const ProtocolTerms = lazy(() => import('./pages/ProtocolTerms'));
+const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
 const AppLayout = () => {
   const location = useLocation();
   const isPlaying = location.pathname.startsWith('/play/');
@@ -40,22 +40,22 @@ const AppLayout = () => {
 
       <main className="relative z-10">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/play/:gameId" element={<GamePlayPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/games" element={<GamesPage />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<ProtocolTerms />} />
-          <Route path="/cookies" element={<CookiePolicy />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/faq" element={<FAQPage />} />
-          <Route path="/devlogs" element={<DevLogsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+           <Route path="/" element={<HomePage />} />
+           <Route path="/leaderboard" element={<LeaderboardPage />} />
+           <Route path="/play/:gameId" element={<GamePlayPage />} />
+           <Route path="/login" element={<LoginPage />} />
+           <Route path="/register" element={<RegisterPage />} />
+           <Route path="/forgot-password" element={<ForgotPassword />} />
+           <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
+           <Route path="/about" element={<AboutPage />} />
+           <Route path="/games" element={<GamesPage />} />
+           <Route path="/privacy" element={<Suspense fallback={null}><PrivacyPolicy /></Suspense>} />
+           <Route path="/terms" element={<Suspense fallback={null}><ProtocolTerms /></Suspense>} />
+           <Route path="/cookies" element={<Suspense fallback={null}><CookiePolicy /></Suspense>} />
+           <Route path="/contact" element={<ContactPage />} />
+           <Route path="/faq" element={<FAQPage />} />
+           <Route path="/devlogs" element={<DevLogsPage />} />
+           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </main>
 

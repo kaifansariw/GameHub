@@ -10,6 +10,20 @@ export default defineConfig(() => {
       tailwindcss(),
     ],
 
+    optimizeDeps: {
+      include: ['framer-motion'],
+    },
+
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'framer-motion': ['framer-motion'],
+          },
+        },
+      },
+    },
+
     server: {
       headers: {
         'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
