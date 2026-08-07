@@ -56,7 +56,7 @@ function trackVisit() {
     },
     credentials: "include",
     body: JSON.stringify({ game: "snake" })
-  }).catch(() => { });
+  }).catch( => console.error());
 }
 
 function trackPlay() {
