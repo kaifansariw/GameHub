@@ -52,7 +52,7 @@
 
   function playBgMusic() {
     if (!audioCtx) return;
-    if (bgAudio) { bgAudio.play().catch(()=>{}); return; }
+    if (bgAudio) { bgAudio.play().catch( => console.error()); return; }
     bgAudio = new Audio(bgMusicUrl);
     bgAudio.loop = true;
     bgAudio.crossOrigin = 'anonymous';
