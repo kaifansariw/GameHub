@@ -104,7 +104,7 @@ function handleKeyPress(e) {
 
     const key = e.key;
     if (key >= '1' && key <= '9') {
-        inputNumber(parseInt(key));
+        inputNumber(parseInt(key, 10));
     } else if (key === 'Delete' || key === 'Backspace') {
         clearCell();
     }
