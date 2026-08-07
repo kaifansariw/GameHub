@@ -106,7 +106,7 @@
     if (player.onGround && player.state === 'alive') {
       player.vy = -720;
       player.onGround = false;
-      if (!muted) audioJump.currentTime = 0, audioJump.play().catch(()=>{});
+      if (!muted) audioJump.currentTime = 0, audioJump.play().catch( => console.error());
     }
   }
 
