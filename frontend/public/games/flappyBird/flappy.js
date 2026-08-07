@@ -52,7 +52,7 @@ bottomPipeImg= new Image();
 bottomPipeImg.src="bottompipe.png";
 
 requestAnimationFrame(update);
-setInterval(placePipes, 1500); //1.5 sec
+clearInterval(window.__interval); window.__interval = setInterval(placePipes, 1500); //1.5 sec
 document.addEventListener("keydown",moveBird);
 };
 context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
