@@ -14,7 +14,7 @@ let towers = [
 
 function render() {
     pegs.forEach((peg, index) => {
-        peg.innerHTML = "";
+        peg.textContent = "";
         towers[index].forEach((disk, i) => {
             let d = document.createElement("div");
             d.classList.add("disk", "disk" + disk);
