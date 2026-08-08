@@ -20,7 +20,7 @@ function render() {
         if (num === "") {
             tile.classList.add("empty");
         } else {
-            tile.innerText = num;
+            tile.textContent = num;
             tile.addEventListener("click", () => moveTile(i));
         }
 
