@@ -46,7 +46,7 @@ let obstacles = [];
 let coinsArr = [];
 let drones = [];
 let highScore = localStorage.getItem("dashXHighScore")
-  ? parseInt(localStorage.getItem("dashXHighScore"))
+  ? parseInt(localStorage.getItem("dashXHighScore", 10))
   : 0;
 
 // ================= LANES =================
