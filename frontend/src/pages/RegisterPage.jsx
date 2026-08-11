@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { UserPlus, User, Mail, Lock, Gamepad2, AlertCircle, ArrowLeft } from 'lucide-react';
 import api from '../api/axios';
+import { motion } from 'framer-motion';
 import SEO from '../components/SEO/SEO';
 import GoogleAuthButton from '../components/GoogleAuth/GoogleAuthButton';
 

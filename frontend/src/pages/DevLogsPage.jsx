@@ -1,5 +1,6 @@
 import React from 'react';
 import { History, Zap, Cpu, Shield, Globe, Terminal, Rocket } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SEO from '../components/SEO/SEO';
 
 const DevLogItem = ({ date, version, title, items, color, index }) => (

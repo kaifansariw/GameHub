@@ -1,6 +1,8 @@
 import React from 'react';
 import { Cpu, Database, HardDrive, Info, Layers } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SEO from '../components/SEO/SEO';
+
 
 const CookiePolicy = () => {
     return (

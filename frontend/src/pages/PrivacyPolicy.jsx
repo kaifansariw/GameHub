@@ -1,5 +1,6 @@
 import React from 'react';
 import { Shield, Eye, Lock, FileText, Globe } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SEO from '../components/SEO/SEO';
 
 const PrivacyPolicy = () => {

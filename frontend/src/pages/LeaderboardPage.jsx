@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Trophy, Medal, User, Activity } from 'lucide-react';
+import { motion } from 'framer-motion';
 import api from '../api/axios';
 import SEO from '../components/SEO/SEO';
 

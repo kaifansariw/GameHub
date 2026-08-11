@@ -4,6 +4,7 @@ import { games } from '../data/games';
 import GameCard from '../components/GameGrid/GameCard';
 import { AnimatePresence } from 'framer-motion';
 import { Search, Filter, Gamepad2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SEO from '../components/SEO/SEO';
 
 const GamesPage = () => {
