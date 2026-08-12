@@ -47,55 +47,53 @@
 
 ### Protocol Guidelines
 > [!IMPORTANT]
-> *   **Star the Repo**: Your contribution only counts if you've starred the repository. ⭐
-> *   **Documentation**: Proper docs are required for every new feature. Share them via mail.
-> *   **Meaningful Issues**: Only high-impact issues will be considered.
-> *   **Leaderboard Priority**: Priority is given to contributors with lower ranks.
-
+> *   **Star the Repo**: Star the repo if you are contributing to it. 
+> *   **Issue**: Issue should be written in detail, so that maintainers can review it correctly.
+> *   **Meaningful Issues**: Only high-impact issues will be considered only 5 issue per day will assigned don't try to raise above it.
 ---
 
 ## Table of Contents
-- [💡 About GameHub](#-about-gamehub)
-- [✨ Features](#-features)
-- [🛠️ Tech Stack](#-tech-stack)
-- [📁 Project Structure](#-project-structure)
-- [🚀 Quick Start](#-quick-start)
-- [🔑 Environment Variables](#-environment-variables)
-- [📡 API Reference](#-api-reference)
-- [🎮 Adding New Games](#-adding-new-games)
-- [🌟 Contributing](#-contributing)
-- [✨ Contributors](#-contributors)
-- [📄 License](#-license)
+- [About GameHub](#-about-gamehub)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Quick Start](#-quick-start)
+- [Environment Variables](#-environment-variables)
+- [API Reference](#-api-reference)
+- [Adding New Games](#-adding-new-games)
+- [Contributing](#-contributing)
+- [Contributors](#-contributors)
+- [License](#-license)
 
 ---
 
-## 💡 About GameHub
+## About GameHub
 **GameHub** is an elite, open-source collection of classic and modern browser games. Re-imagined with a **Cosmic Blue Neon** aesthetic, it combines the nostalgia of retro gaming with the performance of industry-standard web tech.
 
 Originally a Vanilla JS project, GameHub has been upgraded to a **React + Django REST Framework** hybrid architecture supporting massive scalability, premium animations, a global leaderboard system, full JWT authentication, Google OAuth 2.0, PWA installability, and a password reset flow.
 
 ---
 
-## ✨ Features
+## Features
 
 <div align="left">
 
 | Feature | Description |
 | :--- | :--- |
-| 🚀 **Modern Engine** | Built with **React 19** + Vite 7 for sub-millisecond responsiveness. |
-| 🎨 **Cosmic UI** | High-end Glassmorphism and Neon design system with Framer Motion animations. |
-| 🕹️ **50+ Titles** | Instant play library including retro classics and modern games. |
-| 🏆 **Leaderboards** | Global competition powered by a Django REST backend. |
-| � **Full Auth** | JWT login/register + **Google OAuth 2.0** (`id_token` flow). |
-| 🔑 **Password Reset** | Secure email-based forgot/reset password flow. |
-| 📱 **PWA Ready** | Installable as a native app on any device. Dismiss-once prompt. |
-| 🛠️ **Modular Code** | Clean architecture designed for easy open-source contribution. |
+|  **Modern Engine** | Built with **React 19** + Vite 7 for sub-millisecond responsiveness. |
+|  **Cosmic UI** | High-end Glassmorphism and Neon design system with Framer Motion animations. |
+|  **50+ Titles** | Instant play library including retro classics and modern games. |
+|  **Leaderboards** | Global competition powered by a Django REST backend. |
+|  **Full Auth** | JWT login/register + **Google OAuth 2.0** (`id_token` flow). |
+|  **Password Reset** | Secure email-based forgot/reset password flow. |
+|  **PWA Ready** | Installable as a native app on any device. Dismiss-once prompt. |
+|  **Modular Code** | Clean architecture designed for easy open-source contribution. |
 
 </div>
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Tier | Technology | Notes |
 | :--- | :--- | :--- |
@@ -109,7 +107,7 @@ Originally a Vanilla JS project, GameHub has been upgraded to a **React + Django
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 ```text
 GameHub/
 ├── frontend/                   # React Application (Vite)
