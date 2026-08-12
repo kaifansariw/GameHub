@@ -1,6 +1,6 @@
 <a name="-top"></a>
 
-  <h1>GameHub: Cosmic Edition</h1>
+  <h1 align="center"> GameHub </h1>
   
   <p align="center">
     <b>Experience the next generation of browser gaming. High-performance, low-latency, and stunning cosmic aesthetics.</b>
