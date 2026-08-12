@@ -1,14 +1,5 @@
 <a name="-top"></a>
 
-<div align="center">
-<a href="https://www.star-history.com/?repos=kaifansariw%2FGameHub&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=kaifansariw/GameHub&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=kaifansariw/GameHub&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=kaifansariw/GameHub&type=date&legend=top-left" />
- </picture>
-</a>
-
   <h1>GameHub: Cosmic Edition</h1>
   
   <p align="center">
