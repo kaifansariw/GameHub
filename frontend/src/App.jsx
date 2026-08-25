@@ -18,6 +18,7 @@ import FAQPage from './pages/FAQPage';
 import DevLogsPage from './pages/DevLogsPage';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import NotFoundPage from './pages/NotFoundPage';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop/BackToTop';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
@@ -56,6 +57,7 @@ const AppLayout = () => {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/devlogs" element={<DevLogsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
 
