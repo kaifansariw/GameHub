@@ -48,7 +48,7 @@ function makeSolvedGrid(size){
 
 // deep copy
 function cloneGrid(g){
-  return g.map(row => row.slice());
+  return (g ?? []).map(row => row.slice());
 }
 
 function setGrid(newGrid){
@@ -195,7 +195,7 @@ function checkWin(){
   if(isSolved()){
     // update best if necessary
     const key = bestKey(SIZE);
-    const prevBest = parseInt(localStorage.getItem(key) || '0',10) || 0;
+    const prevBest = parseInt(localStorage.getItem(key, 10) || '0',10) || 0;
     if(prevBest===0 || moves < prevBest){
       localStorage.setItem(key, moves);
       bestEl.textContent = moves;
