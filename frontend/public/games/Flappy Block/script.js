@@ -54,7 +54,7 @@ function update() {
       pipes.splice(i, 1);
       createPipe();
       score++;
-      document.getElementById("score").innerText = `Score: ${score}`;
+      document.getElementById("score").textContent = `Score: ${score}`;
     }
 
     if (block.x < pipe.x + pipe.width &&
