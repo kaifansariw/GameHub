@@ -90,6 +90,6 @@ document.addEventListener("keydown", e => {
 
 document.getElementById("startBtn").addEventListener("click", () => {
   resetGame();
-  setInterval(update, 20);
+  clearInterval(window.__interval); window.__interval = setInterval(update, 20);
   draw();
 });
