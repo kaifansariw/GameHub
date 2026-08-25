@@ -83,6 +83,8 @@
             padding: 1.5rem;
             border: 2px solid rgba(99, 102, 241, 0.2);
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            touch-action: none;
+            user-select: none;
         }
 
         .game-board {
@@ -159,6 +161,64 @@
             margin-top: 1rem;
         }
 
+        .touch-controls {
+            display: none;
+            grid-template-areas:
+                ". rotate ."
+                "left down right"
+                ". drop .";
+            grid-template-columns: repeat(3, minmax(64px, 1fr));
+            gap: 0.75rem;
+            width: min(100%, 260px);
+            margin: 0 auto;
+        }
+
+        .touch-btn {
+            min-height: 64px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.08);
+            transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .touch-btn:active {
+            transform: translateY(1px) scale(0.98);
+            background: rgba(99, 102, 241, 0.25);
+            border-color: rgba(99, 102, 241, 0.6);
+        }
+
+        .touch-left {
+            grid-area: left;
+        }
+
+        .touch-right {
+            grid-area: right;
+        }
+
+        .touch-rotate {
+            grid-area: rotate;
+        }
+
+        .touch-down {
+            grid-area: down;
+        }
+
+        .touch-drop {
+            grid-area: drop;
+        }
+
         .control-item {
             text-align: center;
         }
@@ -187,6 +247,32 @@
 
             .stats-panel {
                 order: -1;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .controls-grid {
+                display: none;
+            }
+
+            .touch-controls {
+                display: grid;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .game-layout {
+                gap: 1.25rem;
+            }
+
+            .action-row {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .game-board {
+                width: min(88vw, 300px);
+                height: min(176vw, 600px);
             }
         }
     </style>
@@ -241,12 +327,31 @@
                 <div class="game-board" id="game-board"></div>
             </div>
 
-            <div class="flex gap-4">
+            <div class="action-row flex gap-4">
                 <button id="start-btn" class="neon-btn">Initiate</button>
                 <button id="pause-btn"
                     class="bg-white/5 border border-white/10 text-gray-400 px-6 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold tracking-widest hover:bg-white/10 transition-all">Pause</button>
                 <button id="reset-btn"
                     class="bg-white/5 border border-white/10 text-gray-400 px-6 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold tracking-widest hover:bg-white/10 transition-all">Reboot</button>
+            </div>
+
+            <div class="touch-controls" aria-label="Touch controls">
+                <button class="touch-btn touch-left" type="button" data-tetris-action="left" aria-label="Move left">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <button class="touch-btn touch-rotate" type="button" data-tetris-action="rotate" aria-label="Rotate piece">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+                <button class="touch-btn touch-right" type="button" data-tetris-action="right" aria-label="Move right">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button class="touch-btn touch-down" type="button" data-tetris-action="down" aria-label="Soft drop">
+                    <i class="fa-solid fa-arrow-down"></i>
+                </button>
+                <button class="touch-btn touch-drop" type="button" data-tetris-action="drop" aria-label="Hard drop">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Drop</span>
+                </button>
             </div>
         </div>
 
@@ -394,7 +499,10 @@
 
             bindEvents() {
                 document.addEventListener('keydown', e => {
-                    if (this.gameOver) return;
+                    if (!this.currentPiece || this.gameOver) return;
+                    if (['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', ' '].includes(e.key)) {
+                        e.preventDefault();
+                    }
                     if (e.key === 'ArrowLeft') this.move(-1);
                     if (e.key === 'ArrowRight') this.move(1);
                     if (e.key === 'ArrowDown') this.drop();
@@ -411,6 +519,78 @@
                     this.reset();
                     this.start();
                 };
+
+                this.bindTouchControls();
+            }
+
+            bindTouchControls() {
+                const buttons = document.querySelectorAll('[data-tetris-action]');
+                buttons.forEach(button => {
+                    const trigger = (event) => {
+                        event.preventDefault();
+                        this.handleAction(button.dataset.tetrisAction);
+                    };
+
+                    button.addEventListener('pointerdown', trigger);
+                });
+
+                const boardWrapper = document.querySelector('.board-wrapper');
+                if (!boardWrapper) return;
+
+                let touchStartX = 0;
+                let touchStartY = 0;
+
+                boardWrapper.addEventListener('touchstart', (event) => {
+                    if (!event.touches || event.touches.length === 0) return;
+                    const touch = event.touches[0];
+                    touchStartX = touch.clientX;
+                    touchStartY = touch.clientY;
+                }, { passive: true });
+
+                boardWrapper.addEventListener('touchend', (event) => {
+                    if (!event.changedTouches || event.changedTouches.length === 0) return;
+                    const touch = event.changedTouches[0];
+                    const deltaX = touch.clientX - touchStartX;
+                    const deltaY = touch.clientY - touchStartY;
+                    const absX = Math.abs(deltaX);
+                    const absY = Math.abs(deltaY);
+                    const threshold = 28;
+
+                    if (Math.max(absX, absY) < threshold) return;
+
+                    if (absX > absY) {
+                        this.handleAction(deltaX > 0 ? 'right' : 'left');
+                    } else {
+                        this.handleAction(deltaY < 0 ? 'rotate' : 'down');
+                    }
+                }, { passive: true });
+            }
+
+            handleAction(action) {
+                if (!this.currentPiece || this.gameOver || this.paused) return;
+
+                switch (action) {
+                    case 'left':
+                        this.move(-1);
+                        break;
+                    case 'right':
+                        this.move(1);
+                        break;
+                    case 'rotate':
+                        this.rotate();
+                        break;
+                    case 'down':
+                        this.drop();
+                        break;
+                    case 'drop':
+                        this.hardDrop();
+                        break;
+                    case 'hold':
+                        this.hold();
+                        break;
+                    default:
+                        break;
+                }
             }
 
             start() {
@@ -432,12 +612,14 @@
             }
 
             move(dir) {
+                if (!this.currentPiece || this.gameOver) return;
                 this.currentPiece.x += dir;
                 if (this.collide()) this.currentPiece.x -= dir;
                 this.draw();
             }
 
             rotate() {
+                if (!this.currentPiece || this.gameOver) return;
                 const prevShape = this.currentPiece.shape;
                 this.currentPiece.shape = this.currentPiece.shape[0].map((_, i) =>
                     this.currentPiece.shape.map(row => row[i]).reverse()
@@ -447,6 +629,7 @@
             }
 
             drop() {
+                if (!this.currentPiece || this.gameOver) return;
                 this.currentPiece.y++;
                 if (this.collide()) {
                     this.currentPiece.y--;
@@ -458,6 +641,7 @@
             }
 
             hardDrop() {
+                if (!this.currentPiece || this.gameOver) return;
                 while (!this.collide()) this.currentPiece.y++;
                 this.currentPiece.y--;
                 this.merge();
@@ -466,7 +650,7 @@
             }
 
             hold() {
-                if (!this.canHold) return;
+                if (!this.currentPiece || this.gameOver || !this.canHold) return;
                 if (this.holdPiece) {
                     const temp = this.currentPiece.type;
                     this.currentPiece = {
