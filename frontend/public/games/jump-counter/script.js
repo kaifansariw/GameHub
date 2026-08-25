@@ -90,7 +90,7 @@ function createObstacle() {
 
     const moveObstacle = setInterval(() => {
         if (gamePaused) return;
-        let obstacleLeft = parseInt(obstacle.style.left);
+        let obstacleLeft = parseInt(obstacle.style.left, 10);
         if (obstacleLeft <= -40) {
             obstacle.remove();
             obstacles.shift();
