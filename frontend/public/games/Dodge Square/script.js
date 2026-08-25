@@ -41,7 +41,7 @@ function update() {
     if (o.y > canvas.height) {
       obstacles.splice(i, 1);
       score++;
-      document.getElementById("score").innerText = `Score: ${score}`;
+      document.getElementById("score").textContent = `Score: ${score}`;
       speed += 0.01;
     }
 
