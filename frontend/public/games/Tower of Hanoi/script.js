@@ -14,7 +14,7 @@ let towers = [
 
 function render() {
     pegs.forEach((peg, index) => {
-        peg.innerHTML = "";
+        peg.textContent = "";
         towers[index].forEach((disk, i) => {
             let d = document.createElement("div");
             d.classList.add("disk", "disk" + disk);
@@ -54,7 +54,7 @@ pegs.forEach((peg, index) => {
     peg.addEventListener("dragover", (e) => e.preventDefault());
 
     peg.addEventListener("drop", (e) => {
-        let from = parseInt(e.dataTransfer.getData("fromPeg"));
+        let from = parseInt(e.dataTransfer.getData("fromPeg", 10));
         let to = index;
 
         if (canMove(from, to)) {
