@@ -26,13 +26,13 @@ const Footer = () => {
                             The next dimension of browser gaming. High-performance protocols meet a high-fidelity community experience.
                         </p>
                         <div className="flex gap-5">
-                            <a href="#" className="text-gray-500 hover:text-white transition-all hover:-translate-y-1">
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-all hover:-translate-y-1">
                                 <Twitter className="w-5 h-5" />
                             </a>
                             <a href="https://github.com/kaifansariw/GameHub" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-all hover:-translate-y-1">
                                 <Github className="w-5 h-5" />
                             </a>
-                            <a href="#" className="text-gray-500 hover:text-white transition-all hover:-translate-y-1">
+                            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white transition-all hover:-translate-y-1">
                                 <Youtube className="w-5 h-5" />
                             </a>
                         </div>
