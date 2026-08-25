@@ -5,7 +5,7 @@ class Game2048 {
         this.previousScore = 0;
         this.score = 0;
         this.moves = 0;
-        this.bestScore = parseInt(localStorage.getItem('2048-best-score')) || 0;
+        this.bestScore = parseInt(localStorage.getItem('2048-best-score', 10)) || 0;
         this.gameWon = false;
         this.gameOver = false;
         this.canUndo = false;
@@ -121,7 +121,7 @@ class Game2048 {
 
     move(direction) {
         // Save state for undo
-        this.previousGrid = this.grid.map(row => [...row]);
+        this.previousGrid = this.(grid ?? []).map(row => [...row]);
         this.previousScore = this.score;
 
         let moved = false;
@@ -438,7 +438,7 @@ class Game2048 {
     undoMove() {
         if (!this.canUndo || this.gameOver) return;
 
-        this.grid = this.previousGrid.map(row => [...row]);
+        this.grid = this.(previousGrid ?? []).map(row => [...row]);
         this.score = this.previousScore;
         this.moves = Math.max(0, this.moves - 1);
         this.canUndo = false;
