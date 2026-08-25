@@ -5,7 +5,7 @@ const choices = {
   scissors: { emoji: "✂️", name: "Scissors" },
 };
 
-let scores = JSON.parse(localStorage.getItem("rpsScores")) || {
+let scores = (() => { try { return JSON.parse(localStorage.getItem("rpsScores")) } catch { return null } })() || {
   player: 0,
   computer: 0,
   draws: 0,
