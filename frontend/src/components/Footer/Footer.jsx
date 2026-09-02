@@ -15,11 +15,11 @@ const Footer = () => {
                     {/* Brand Meta - Corrected Left Alignment */}
                     <div className="max-w-xs space-y-6">
                         <Link to="/" className="flex items-center gap-3 group">
-                            <div className="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(124,58,237,0.3)] group-hover:scale-105 transition-all duration-500">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(124,58,237,0.3)] group-hover:scale-105 transition-all duration-500">
                                 <Gamepad2 className="text-white w-6 h-6" />
                             </div>
                             <span className="font-orbitron font-black text-2xl tracking-tighter text-white">
-                                GAMEHUB<span className="text-purple-500">.</span>
+                                GAMEHUB
                             </span>
                         </Link>
                         <p className="text-gray-400 font-rajdhani text-base leading-relaxed opacity-70">

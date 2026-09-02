@@ -37,7 +37,7 @@ const Navbar = () => {
                 {/* Left: Brand & Links */}
                 <div className="flex items-center gap-12">
                     <Link to="/" className="flex items-center gap-3 group">
-                        <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-500 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:scale-110 transition-all duration-300">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.4)] group-hover:scale-110 transition-all duration-300">
                             <Gamepad2 className="text-white w-6 h-6" />
                         </div>
                         <span className="font-orbitron font-black text-2xl tracking-tighter text-white uppercase group-hover:text-purple-400 transition-colors">
