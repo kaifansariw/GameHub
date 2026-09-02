@@ -1,5 +1,9 @@
 <a name="-top"></a>
 
+  <p align="center">
+     <img src="frontend/public/assets/favicon.png" width="120" alt="GameHub logo">
+  </p>
+  
   <h1 align="center"> GameHub </h1>
   
   <p align="center">
@@ -36,12 +40,18 @@
 </div>
 
 ---
-
 <p align="center">
-  <img src="frontend/public/homepage.png" width="900" alt="GameHub Cosmic Edition Screenshot" style="border-radius: 20px; border: 2px solid #7c3aed33;">
-  <br>
-  <i>The Cosmic Neon Library Interface</i>
+
+<img src="frontend/public/assets/homepage.png" width="900" alt="GameHub screenshot">
+ <br>
+ <i>The Cosmic Neon Library Interface</i>
 </p>
+ 
+<!-- <p align="center">
+  <img src="frontend/public/assets/homepage.png" width="900" alt="GameHub Cosmic Edition Screenshot" style="border-radius: 20px; border: 2px solid #7c3aed33;">
+ 
+</p>  -->
+
 
 ---
 
