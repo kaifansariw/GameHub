@@ -255,6 +255,9 @@ def api_forgot_password(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def api_reset_password(request):
+    from django.contrib.auth.password_validation import validate_password
+    from django.core.exceptions import ValidationError as DjangoValidationError
+
     uidb64 = request.data.get('uid')
     token = request.data.get('token')
     new_password = request.data.get('password')
@@ -269,7 +272,11 @@ def api_reset_password(request):
         user = None
 
     if user and default_token_generator.check_token(user, token):
-        user.set_password(new_password)
+        try:
+            validate_password(new_password, user=user)
+            user.set_password(new_password)
+        except DjangoValidationError as e:
+            return Response({'error': e.messages}, status=status.HTTP_400_BAD_REQUEST)
         user.save()
         return Response({'message': 'Password has been reset successfully.'})
     else:
@@ -466,6 +473,10 @@ def api_save_score(request):
 
         if not game_id or score is None:
             return Response({'error': 'Missing game_id or score'}, status=status.HTTP_400_BAD_REQUEST)
+
+        MAX_ALLOWED_SCORE = 1_000_000
+        if isinstance(score, bool) or not isinstance(score, int) or not (0 <= score <= MAX_ALLOWED_SCORE):
+            return Response({'error': 'Invalid score value'}, status=status.HTTP_400_BAD_REQUEST)
 
         game_score, created = GameScore.objects.get_or_create(user=request.user, game_id=game_id)
         if score > game_score.score:
