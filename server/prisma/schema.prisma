@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String?
+  firstName String?  @map("first_name")
+  lastName  String?  @map("last_name")
+
+  profile  Profile?
+  scores   GameScore[]
+  messages UserMessage[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Profile {
+  id     Int @id @default(autoincrement())
+  userId Int @unique @map("user_id")
+  visits Int @default(0)
+  plays  Int @default(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model GameScore {
+  id     Int @id @default(autoincrement())
+  userId Int @map("user_id")
+  gameId String @map("game_id")
+  score  Int @default(0)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, gameId])
+  @@map("game_scores")
+}
+
+model UserMessage {
+  id        Int      @id @default(autoincrement())
+  userId    Int?     @map("user_id")
+  content   String
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("user_messages")
+}
