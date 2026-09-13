@@ -1,110 +1,296 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors - GameHub</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: #0a0a0f;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            scrollbar-width: none;
+        }
+
+        body::-webkit-scrollbar { display: none; }
+
+        /* ── Page title ── */
+        .page-title {
+            text-align: center;
+            padding: 36px 0 20px;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .page-title span {
+            color: #a855f7;
+        }
+
+        /* ── Score board ── */
+        .scoreboard {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 0 24px 32px;
+        }
+
+        .score-card {
+            background: #111118;
+            border: 1px solid #1e1e2e;
+            border-radius: 12px;
+            padding: 20px 32px;
+            text-align: center;
+            min-width: 130px;
+        }
+
+        .score-label {
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .score-value.player  { color: #a855f7; }
+        .score-value.computer { color: #ec4899; }
+        .score-value.draws   { color: #06b6d4; }
+
+        /* ── Game arena ── */
+        .arena {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 24px;
+            max-width: 640px;
+            margin: 0 auto 32px;
+            padding: 0 24px;
+        }
+
+        .player-side {
+            text-align: center;
+        }
+
+        .player-label {
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+
+        .choice-display {
+            font-size: 5rem;
+            line-height: 1;
+        }
+
+        .vs-badge {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #a855f7;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── Result banner ── */
+        #gameResult {
+            max-width: 480px;
+            margin: 0 auto 28px;
+            padding: 0 24px;
+        }
+
+        #gameResult.hidden { display: none; }
+
+        .result-banner {
+            background: #111118;
+            border: 1px solid #2a2a3e;
+            border-radius: 12px;
+            padding: 16px 24px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .result-banner.win  { border-color: #a855f7; color: #a855f7; }
+        .result-banner.lose { border-color: #ec4899; color: #ec4899; }
+        .result-banner.draw { border-color: #06b6d4; color: #06b6d4; }
+
+        /* ── Choice buttons ── */
+        .choices-section {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 0 24px;
+        }
+
+        .choices-label {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .choices-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .rps-button {
+            background: #111118;
+            border: 1px solid #2a2a3e;
+            color: #e2e8f0;
+            padding: 16px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: border-color 0.2s, transform 0.15s, background 0.2s;
+        }
+
+        .rps-button span { font-size: 1.8rem; }
+
+        .rps-button:hover {
+            border-color: #7c3aed;
+            background: #1a1a2e;
+            transform: translateY(-3px);
+        }
+
+        .rps-button:active { transform: translateY(0); }
+
+        /* ── Top spacing (header comes from the React wrapper) ── */
+        body { padding-top: 0; }
+
+        /* ── Rules card ── */
+        .rules-card {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 24px 40px;
+        }
+
+        .rules-inner {
+            background: #111118;
+            border: 1px solid #1e1e2e;
+            border-radius: 12px;
+            padding: 18px 24px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .rules-inner i {
+            color: #a855f7;
+            margin-top: 3px;
+        }
+
+        .rules-inner h3 {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #a855f7;
+            margin-bottom: 6px;
+        }
+
+        .rules-inner p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .arena { grid-template-columns: 1fr; gap: 8px; }
+            .vs-badge { padding: 8px 0; }
+            .scoreboard { flex-direction: column; align-items: center; }
+            .score-card { width: 100%; max-width: 300px; }
+        }
+    </style>
 </head>
 
-<body class="bg-base-100 min-h-screen">
-    <!-- Header -->
-    <div class="navbar bg-primary text-primary-content shadow-lg">
-        <div class="navbar-start">
-            <!-- Changed the routing to home page -->
-            <a href="/" class="btn btn-ghost">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Home
-            </a>
+<body>
+    <!-- Title -->
+    <h1 class="page-title">Rock <span>Paper</span> Scissors</h1>
+
+    <!-- Score Board -->
+    <div class="scoreboard">
+        <div class="score-card">
+            <div class="score-label">Your Wins</div>
+            <div class="score-value player" id="playerWins">0</div>
         </div>
-        <div class="navbar-center">
-            <h1 class="text-xl font-bold">✂️ Rock Paper Scissors</h1>
+        <div class="score-card">
+            <div class="score-label">Computer Wins</div>
+            <div class="score-value computer" id="computerWins">0</div>
         </div>
-        <div class="navbar-end">
-            <button onclick="resetGame()" class="btn btn-ghost">
-                <i class="fas fa-redo mr-2"></i>Reset
+        <div class="score-card">
+            <div class="score-label">Draws</div>
+            <div class="score-value draws" id="draws">0</div>
+        </div>
+    </div>
+
+    <!-- Game Arena -->
+    <div class="arena">
+        <div class="player-side">
+            <div class="player-label">You</div>
+            <div id="playerChoice" class="choice-display animate__animated">❓</div>
+        </div>
+        <div class="vs-badge">VS</div>
+        <div class="player-side">
+            <div class="player-label">Computer</div>
+            <div id="computerChoice" class="choice-display animate__animated">❓</div>
+        </div>
+    </div>
+
+    <!-- Result -->
+    <div id="gameResult" class="hidden">
+        <div class="result-banner">
+            <span id="resultText"></span>
+        </div>
+    </div>
+
+    <!-- Choice Buttons -->
+    <div class="choices-section">
+        <div class="choices-label">Make Your Choice</div>
+        <div class="choices-row">
+            <button onclick="playGame('rock')" class="rps-button">
+                <span>🪨</span> Rock
+            </button>
+            <button onclick="playGame('paper')" class="rps-button">
+                <span>📄</span> Paper
+            </button>
+            <button onclick="playGame('scissors')" class="rps-button">
+                <span>✂️</span> Scissors
             </button>
         </div>
     </div>
 
-    <!-- Game Container -->
-    <div class="container mx-auto px-4 py-8">
-        <div class="max-w-2xl mx-auto">
-            <!-- Score Board -->
-            <div class="stats shadow mb-8 w-full">
-                <div class="stat">
-                    <div class="stat-title">Your Wins</div>
-                    <div class="stat-value text-primary" id="playerWins">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-title">Computer Wins</div>
-                    <div class="stat-value text-secondary" id="computerWins">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-title">Draws</div>
-                    <div class="stat-value text-accent" id="draws">0</div>
-                </div>
-            </div>
-
-            <!-- Game Area -->
-            <div class="text-center mb-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                    <!-- Player Choice -->
-                    <div class="text-center">
-                        <h3 class="text-xl font-bold mb-4">You</h3>
-                        <div id="playerChoice" class="text-8xl mb-4 animate__animated">❓</div>
-                    </div>
-
-                    <!-- VS -->
-                    <div class="text-center">
-                        <div class="text-4xl font-bold text-primary">VS</div>
-                    </div>
-
-                    <!-- Computer Choice -->
-                    <div class="text-center">
-                        <h3 class="text-xl font-bold mb-4">Computer</h3>
-                        <div id="computerChoice" class="text-8xl mb-4 animate__animated">❓</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Result -->
-            <div id="gameResult" class="text-center mb-8 hidden">
-                <div class="alert">
-                    <i class="fas fa-trophy"></i>
-                    <span id="resultText" class="text-xl font-bold"></span>
-                </div>
-            </div>
-
-            <!-- Choice Buttons -->
-            <div class="text-center mb-8">
-                <h3 class="text-xl font-bold mb-4">Make Your Choice:</h3>
-                <div class="flex justify-center gap-4 flex-wrap">
-                    <button onclick="playGame('rock')"
-                        class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
-                        <span class="text-4xl mr-2">🪨</span>Rock
-                    </button>
-                    <button onclick="playGame('paper')"
-                        class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
-                        <span class="text-4xl mr-2">📄</span>Paper
-                    </button>
-                    <button onclick="playGame('scissors')"
-                        class="btn btn-outline btn-lg hover:btn-primary transition-all hover:scale-110 rps-button">
-                        <span class="text-4xl mr-2">✂️</span>Scissors
-                    </button>
-                </div>
-            </div>
-
-            <!-- Instructions -->
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle"></i>
-                <div>
-                    <h3 class="font-bold">Rules:</h3>
-                    <p>Rock beats Scissors • Paper beats Rock • Scissors beats Paper</p>
-                </div>
+    <!-- Rules -->
+    <div class="rules-card">
+        <div class="rules-inner">
+            <i class="fas fa-info-circle"></i>
+            <div>
+                <h3>Rules</h3>
+                <p>Rock beats Scissors &bull; Paper beats Rock &bull; Scissors beats Paper</p>
             </div>
         </div>
     </div>
