@@ -16,7 +16,7 @@ function startGame() {
     guessedLetters = [];
     wrongAttempts = 0;
     statusText.textContent = "";
-    hangmanImg.src = `images/0.png`;
+    hangmanImg.src = `Assets/0.png`;
     displayWord();
     generateKeyboard();
 }
@@ -52,7 +52,7 @@ function handleGuess(btn) {
         }
     } else {
         wrongAttempts++;
-        hangmanImg.src = `images/${wrongAttempts}.png`;
+        hangmanImg.src = `./Assets/${wrongAttempts}.png`;
 
         if (wrongAttempts >= maxAttempts) {
             statusText.textContent = `💀 Game Over! Word: ${selectedWord}`;
