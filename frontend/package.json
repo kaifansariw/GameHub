@@ -14,7 +14,7 @@
     "@tailwindcss/postcss": "^4.2.1",
     "@tailwindcss/vite": "^4.2.1",
     "axios": "^1.13.6",
-    "face-api.js": "^0.22.2",
+    "face-api.js": "^0.20.0",
     "framer-motion": "^12.35.0",
     "lucide-react": "^0.577.0",
     "postprocessing": "^6.36.6",
